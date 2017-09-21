@@ -1,10 +1,12 @@
 ﻿Public Class Frm_main
     'Idem fmr_loguin
     Dim usuario As Usuario
+    Dim bandera_eliminado = False
+    Dim bandera_modificado = True
+    Dim form_logueo As New frm_login
 
     Private Sub Frm_main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Al cargar el formulario principal cargamos y mostramos el formulario: Frm_login en forma MODAL.
-        Dim form_logueo As New frm_login
         form_logueo.ShowDialog()
         If form_logueo.getValidado Then
             usuario = form_logueo.getUsuario()
@@ -26,6 +28,12 @@
         Dim form_ajuste_perfil As New Frm_perfil_usuario
         form_ajuste_perfil.seleccionar_usuario(usuario)
         form_ajuste_perfil.ShowDialog()
+        If bandera_eliminado Then
+            form_logueo.limpiarCampos()
+            form_logueo.ShowDialog()
+            Me.Hide()
+
+        End If
 
         'Si el usuario en lugar de modificar sus datos elimino la cuenta, entonces le cerramos
         'sesion y mostramos el login
@@ -40,5 +48,8 @@
 
     Public Sub setUsuario(ByVal user As Usuario)
         usuario = user
+    End Sub
+    Public Sub setEliminado(valor As Boolean)
+        bandera_eliminado = valor
     End Sub
 End Class

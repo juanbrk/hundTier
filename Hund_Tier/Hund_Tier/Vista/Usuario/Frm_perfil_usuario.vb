@@ -63,7 +63,9 @@
     End Sub
 
     Private Sub llenar_campos()
-        Dim nombre_barrio = BDHelper.getDBHelper.ConsultaSQL("SELECT  b.nombre AS 'nombre_barrio' From Barrios b Where b.id_barrio =" & usuario.getBarrio.ToString).Rows(0).Item("nombre_barrio").ToString
+        Dim barrioService As New BarriosService
+
+        Dim nombre_barrio = barrioService.getNombreBarrio(usuario.getBarrio)
         txt_nombre.Text = usuario.getNombre
         txt_apellido.Text = usuario.getApellido
         txt_email.Text = usuario.getEmail
@@ -77,7 +79,9 @@
         txt_depto.Text = usuario.getDepartamento
         txt_piso.Text = usuario.getPiso
         txt_telefono.Text = usuario.getNumTelefono
-        frm_UsuarioABM.llenarCombo(cmb_barrio, BDHelper.getDBHelper.ConsultaSQL("SELECT * From Barrios WHERE 1 = 1"), "nombre", "id_barrio")
+        'Cargamos el combo mediante la funcion publica del formulario frm_UsuarioABM que acepta
+        'el combo que queremos cargar como parametro
+        frm_UsuarioABM.cargarBarrios(cmb_barrio)
         cmb_barrio.Text = nombre_barrio
 
     End Sub
@@ -141,6 +145,8 @@
             Dim d As DialogResult
             d = MessageBox.Show("¿Desea modificar sus datos?", "Aviso", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
             If (d = DialogResult.OK) Then
+                Dim usrService As New UsuariosService
+
                 usuario.setNombre(txt_nombre.Text)
                 usuario.setApellido(txt_apellido.Text)
                 usuario.setEmail(txt_email.Text)
@@ -151,17 +157,16 @@
                 usuario.setDepartamento(txt_depto.Text)
                 usuario.set_numTelefono(txt_telefono.Text)
 
-                strSql += "Update Usuarios "
-                strSql += "SET nombre ='" & usuario.getNombre & "', apellido ='" & usuario.getApellido & "', num_telefono='" & usuario.getNumTelefono & "', email='" & usuario.getEmail & "', id_barrio=" & usuario.getBarrio & ", calle='" & usuario.getCalle & "', numero='" & usuario.getNumeroCalle & "',piso=" & usuario.getPiso & ", departamento='" & usuario.getDepartamento & "'"
-                strSql += "WHERE id_usuario = " & usuario.getIdUsuario
-                If BDHelper.getDBHelper.EjecutarSQL(strSql) > 0 Then
-                    MessageBox.Show("Sus datos fueron actualizados!", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    bandera_edicion = False
-                    permitir_edicion(bandera_edicion)
-                    bandera_datos_modificados = True
-                    Frm_main.setUsuario(usuario)
-                    Me.Close()
-                End If
+                Try
+                    'Actualizamos al cliente mediante la clase UsuariosService,
+                    '
+                    If usrService.updateUsuario(usuario) = 1 Then
+                        MessageBox.Show("Sus datos fueron actualizados!", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    End If
+                Catch ex As Exception
+                    MsgBox("Error al Actualizar el cliente", MsgBoxStyle.OkOnly, "Base de Datos")
+                End Try
 
             End If
         End If
@@ -243,18 +248,31 @@
         'Si responde que si, lo borramos
         If (d = DialogResult.OK) Then
             Dim str_sql_borrado = ""
+            Dim usrService As New UsuariosService
             ' el borrado es solo borrado logico, se cambia el valor del campo habilitado en la BD
             'se actualiza a 0. Lo que indica que no esta habilitado
             'ACTUALIZAR PARA QUE LO HAGA CON DAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-            str_sql_borrado += "Update Usuarios "
-            str_sql_borrado += "SET habilitado= 0"
-            str_sql_borrado += " WHERE id_usuario=" & usuario.getIdUsuario
-            If BDHelper.getDBHelper.EjecutarSQL(str_sql_borrado) > 0 Then
-                MessageBox.Show("Lamentamos verte ir, ¡buen viaje!", "Cuenta eliminada", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                bandera_eliminado = True
-                Frm_main.setUsuario(usuario)
-                Me.Close()
-            End If
+            Try
+                If usrService.darDeBajaUsuario(usuario) = 1 Then
+                    MessageBox.Show("Lamentamos verte ir, ¡buen viaje!", "Cuenta eliminada", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Frm_main.setEliminado(True)
+                    Me.Close()
+                Else
+                    MessageBox.Show("Ocurrio un error con la operacíon ", "Base de datos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            Catch ex As Exception
+
+            End Try
+
+
+            'str_sql_borrado += "Update Usuarios "
+            'str_sql_borrado += "SET habilitado= 0"
+            'str_sql_borrado += " WHERE id_usuario=" & usuario.getIdUsuario
+            'If BDHelper.getDBHelper.EjecutarSQL(str_sql_borrado) > 0 Then
+            '    bandera_eliminado = True
+            '    Frm_main.setUsuario(usuario)
+            '    Me.Close()
+            'End If
 
         End If
     End Sub

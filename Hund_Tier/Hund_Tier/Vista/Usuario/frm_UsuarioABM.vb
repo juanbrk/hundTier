@@ -14,10 +14,10 @@
     'Definimos una variable _error con un valor por defecto
     Private _error As Err = Err.email_existente
 
-    'Funcion que se ejecuta cuando se carga el formulario, es la primer funcion que se ejecuta
-    'carga el combo barrio con los barrios de la BD
+
     Private Sub frm_UsuarioABM_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        llenarCombo(cmb_barrio, BDHelper.getDBHelper.ConsultaSQL("SELECT * From Barrios WHERE 1 = 1"), "nombre", "id_barrio")
+        'Se carga el combo con los barrios provistos por la clase barriosDAO
+        cargarBarrios(cmb_barrio)
     End Sub
 
 
@@ -25,10 +25,13 @@
     Private Sub btn_add_user_Click(sender As Object, e As EventArgs) Handles btn_add_user.Click
         Dim id_usuario = 0
         If validar_campos() Then
+            'Usamos un service y un DAO para no hacer codigo en esta capa sino dejarlo todo a la capa de los
+            'Dao
+            Dim usrService As UsuariosService = New UsuariosService()
 
-            If existe_mail() Then
+            If usrService.existeMail(txt_email.Text) Then
                 informar_error(Err.email_existente)
-            ElseIf existe_username() Then
+            ElseIf usrService.existeUsername(txt_username.Text) Then
                 informar_error(Err.username_existente)
             Else
                 'El id del usuario a agregar en la BD se generará automaticamente mediante una funcion
@@ -47,9 +50,7 @@
                 'El 1 es el valor de la columna habilitado, que habilita al usuario.
                 usuario.setHabilitado(1)
 
-                'Usamos un service y un DAO para no hacer codigo en esta capa sino dejarlo todo a la capa de los
-                'Dao
-                Dim usrService As UsuariosService = New UsuariosService()
+
 
                 Try
                     'Si se ejecuto bien la insercion a la BD, devolvera un int distinto de 0 y se muestra un
@@ -63,7 +64,7 @@
                         MsgBox("Error al agregar el usuario")
                     End If
                 Catch ex As Exception
-                    MsgBox("Error al agregar barrio, probablemente el nombre ya exista", MsgBoxStyle.OkOnly, "Error")
+                    MsgBox("Error al agregar el usuario, probablemente el nombre de usuario ya exista", MsgBoxStyle.OkOnly, "Error")
                 End Try
 
 
@@ -74,15 +75,19 @@
 
     End Sub
 
-    'Funcion que permite determinar si el mail ingresado ya ha sido utilizado por otro usuario
-    'No deberian estar estas funciones friend en algun otro lugar separado????????????????
-    Friend Function existe_mail() As Boolean
-        Return BDHelper.getDBHelper.ConsultaSQL("Select * from Usuarios where email = '" + txt_email.Text + "'").Rows.Count > 0
-    End Function
-    'Funcion que permite determinar si el nombre de usuario ingresado ya ha sido utilizado por otro usuario
-    Private Function existe_username() As Boolean
-        Return BDHelper.getDBHelper.ConsultaSQL("Select * from Usuarios where username = '" + txt_username.Text + "'").Rows.Count > 0
-    End Function
+    'Funcion que carga los barrios en el combo a partir de una lista de objetos retornada por el 
+    'metodo barriosService.listarBarrios
+    'Funcion que se ejecuta cuando se carga el formulario, es la primer funcion que se ejecuta
+    'carga el combo barrio con los barrios de la BD
+    Public Sub cargarBarrios(comboACargar As ComboBox)
+        Dim barriosService As BarriosService = New BarriosService
+        comboACargar.DataSource = New List(Of Object) 'sirve de clear'
+        comboACargar.DataSource = barriosService.listarBarrios
+        comboACargar.DisplayMember = "nombre"
+        comboACargar.ValueMember = "ID_BARRIO"
+        comboACargar.SelectedIndex = -1
+
+    End Sub
 
     'Funcion que sirve para validar que se hayan rellenado todos los campos obligatorios, caso contrario
     'se informa con una ventana para que cada campo se complete
@@ -170,7 +175,7 @@
 
     'Funcion que, dependiendo del error que este sucediendo, lo informa. El tipo de error se pasa por
     'parametro como una variable del tipo Err definida arriba de todo en esta clase.
-    Friend Function informar_error(ByVal identificador As Err)
+    Friend Sub informar_error(ByVal identificador As Err)
         Select Case identificador
             Case Err.email_existente
                 MessageBox.Show("La direccion de email ingresada ya tiene una cuenta asociada, por favor ingrese otra direccion",
@@ -183,18 +188,6 @@
                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Select
 
-    End Function
-
-    'Definimos un procedimiento Friend (Amigo) para poder utilizarlo desde otro formulario, que permita cargar un combo a partir de:
-    'Componente combo
-    'Source, una lista de objetos
-    'Nombre de la property a mostrar en el displayMember del componente
-    'Nombre de la property a almacenar en el valueMember del componente
-    Friend Sub llenarCombo(ByVal cbo As ComboBox, ByVal source As Object, ByVal display As String, ByVal value As String)
-        cbo.DataSource = source
-        cbo.DisplayMember = display
-        cbo.ValueMember = value
-        cbo.SelectedIndex = -1
     End Sub
 
 End Class

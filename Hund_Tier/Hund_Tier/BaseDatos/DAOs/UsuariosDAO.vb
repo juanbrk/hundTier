@@ -28,11 +28,10 @@
     End Function
 
 
-    Friend Function darDeBaja(id As Integer) As Integer
+    Friend Function darDeBaja(usuario As Usuario) As Integer
         Dim str_sql_borrado = "Update Usuarios "
         str_sql_borrado += "SET habilitado= 0"
-        str_sql_borrado += " WHERE id_usuario=" & id
-        Dim str As String = "DELETE FROM Articulo WHERE Id_articulo=" + id.ToString
+        str_sql_borrado += " WHERE id_usuario=" & usuario.getIdUsuario
         Try
             Return BDHelper.getDBHelper.EjecutarSQL(str_sql_borrado)
         Catch e As Exception
@@ -74,5 +73,16 @@
             Return 0
         End Try
     End Function
+
+    'Funcion que permite determinar si el mail ingresado ya ha sido utilizado por otro usuario
+    Friend Function existeMail(mailIngresado As String) As Boolean
+        Return BDHelper.getDBHelper.ConsultaSQL("Select * from Usuarios where email = '" + mailIngresado + "'").Rows.Count > 0
+    End Function
+
+    'Funcion que permite determinar si el nombre de usuario ingresado ya ha sido utilizado por otro usuario
+    Friend Function existeUsername(usernameIngresado As String) As Boolean
+        Return BDHelper.getDBHelper.ConsultaSQL("Select * from Usuarios where username = '" + usernameIngresado + "'").Rows.Count > 0
+    End Function
+
 
 End Class

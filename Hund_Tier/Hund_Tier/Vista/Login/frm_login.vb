@@ -77,4 +77,10 @@
     Private Sub lbl_info_username_Click(sender As Object, e As EventArgs) Handles lbl_info_username.Click
         MessageBox.Show("Si no recuerda su nombre de usuario puede intentar con su email", "Inicio de sesión", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
+
+    'Funcion que elimina los valores de los campos de texto de la form
+    Public Sub limpiarCampos()
+        txt_email.Text = ""
+        txt_password.Text = ""
+    End Sub
 End Class
