@@ -6,6 +6,8 @@
         username_existente
         email_existente
     End Enum
+    Dim usuario As Usuario
+    Dim agregado As Integer
 
     Dim str_sql As String = ""
 
@@ -33,26 +35,39 @@
                 'de la clase bd helper que chequea cuantas filas hay en la tabla, segun ese resultado
                 'le suma uno y ese es el nuevo id que tendra el usuario
                 id_usuario = BDHelper.getDBHelper.generarId("Usuarios")
-
+                usuario = New Usuario
                 'Agregamos los valores a la string que ira a la BD como comando
-                str_sql = "INSERT INTO Usuarios (id_usuario, nombre, apellido, email, id_barrio, username, password, habilitado) VALUES("
-                str_sql += id_usuario.ToString() + ",'"
-                str_sql += txt_nombre.Text + "','"
-                str_sql += txt_apellido.Text + "','"
-                str_sql += txt_email.Text + "',"
-                str_sql += cmb_barrio.SelectedValue.ToString + ", '"
-                str_sql += txt_username.Text + "','"
-                str_sql += txt_password.Text + "',"
+                usuario.setId(id_usuario)
+                usuario.setNombre(txt_nombre.Text)
+                usuario.setApellido(txt_apellido.Text)
+                usuario.setEmail(txt_email.Text)
+                usuario.setBarrio(cmb_barrio.SelectedValue)
+                usuario.setUsername(txt_username.Text)
+                usuario.setPassword(txt_password.Text)
                 'El 1 es el valor de la columna habilitado, que habilita al usuario.
-                str_sql += "1)"
+                usuario.setHabilitado(1)
 
-                'Si se ejecuto bien la insercion a la BD, devolvera un int distinto de 0 y se muestra un
-                'mensaje que lo informa
-                If BDHelper.getDBHelper.EjecutarSQL(str_sql) > 0 Then
-                    MessageBox.Show("Se registro el usuario!", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Me.Close()
-                    frm_login.solicitar_iniciar_sesion()
-                End If
+                'Usamos un service y un DAO para no hacer codigo en esta capa sino dejarlo todo a la capa de los
+                'Dao
+                Dim usrService As UsuariosService = New UsuariosService()
+
+                Try
+                    'Si se ejecuto bien la insercion a la BD, devolvera un int distinto de 0 y se muestra un
+                    'mensaje que lo informa
+                    If usrService.agregarUsuario(usuario) = 1 Then
+                        MessageBox.Show("Se registro el usuario!", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        Me.Close()
+                        frm_login.solicitar_iniciar_sesion()
+                        Me.Close()
+                    Else
+                        MsgBox("Error al agregar el usuario")
+                    End If
+                Catch ex As Exception
+                    MsgBox("Error al agregar barrio, probablemente el nombre ya exista", MsgBoxStyle.OkOnly, "Error")
+                End Try
+
+
+
             End If
         End If
 

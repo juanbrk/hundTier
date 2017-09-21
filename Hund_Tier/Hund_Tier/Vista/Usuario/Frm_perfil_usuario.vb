@@ -245,6 +245,7 @@
             Dim str_sql_borrado = ""
             ' el borrado es solo borrado logico, se cambia el valor del campo habilitado en la BD
             'se actualiza a 0. Lo que indica que no esta habilitado
+            'ACTUALIZAR PARA QUE LO HAGA CON DAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
             str_sql_borrado += "Update Usuarios "
             str_sql_borrado += "SET habilitado= 0"
             str_sql_borrado += " WHERE id_usuario=" & usuario.getIdUsuario

@@ -13,3 +13,4 @@ C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\o
 C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\obj\Debug\Hund_Tier.Frm_main.resources
 C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\perrosEnAdpocion\Hund_Tier\Hund_Tier\obj\Debug\Hund_Tier.Frm_perfil_usuario.resources
 C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\obj\Debug\Hund_Tier.frm_modificar_contrasena.resources
+C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\obj\Debug\Hund_Tier.frm_seleccion_tipo_aviso.resources

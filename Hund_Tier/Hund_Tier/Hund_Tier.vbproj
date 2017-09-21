@@ -72,6 +72,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDatos\DAOs\UsuariosDAO.vb" />
     <Compile Include="BaseDatos\Helper\BDHelper.vb" />
     <Compile Include="Modelo\Usuario.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -89,6 +90,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Servicios\UsuariosService.vb" />
     <Compile Include="Vista\Avisos\frm_seleccion_tipo_aviso.Designer.vb">
       <DependentUpon>frm_seleccion_tipo_aviso.vb</DependentUpon>
     </Compile>

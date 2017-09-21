@@ -12,6 +12,8 @@
     Private Property piso As Integer
     Private Property departamento As String
     Private Property habilitado As Integer
+    Private Property barrioAsString As String
+
 
 
 
@@ -20,6 +22,10 @@
     Public Function getIdUsuario() As Integer
         Return idUsuario
     End Function
+
+    Friend Sub setNumeroTelefono(v As String)
+        num_telefono = v
+    End Sub
 
     Public Function getBarrio() As Integer
         Return barrio_id
@@ -40,6 +46,11 @@
     Public Function getEmail() As String
         Return email
     End Function
+
+    Friend Sub setBarrioString(v As String)
+        barrioAsString = v
+    End Sub
+
     Public Function getPassword() As String
         Return contrasena
     End Function
@@ -98,11 +109,7 @@
         piso = piso_nuevo
     End Sub
     Public Sub setHabilitado(ByVal valor As Integer)
-        If valor <> 1 Or valor <> 2 Then
-            MessageBox.Show("El valor de habilitado debe ser 1 o 2")
-        Else
-            habilitado = valor
-        End If
+        habilitado = valor
     End Sub
 
     Public Sub setId(ByVal id_user As Integer)
