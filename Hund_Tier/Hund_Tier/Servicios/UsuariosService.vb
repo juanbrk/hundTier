@@ -31,6 +31,17 @@
         Return usrDao.existeUsername(usernameIngresado)
     End Function
 
+    Public Function existeUsuario(mailOUsername As String, pwd As String) As Boolean
+        Return usrDao.existeUsuario(mailOUsername, pwd)
+    End Function
+
+    Public Function obtenerUsuario(mailOUsername As String, pwd As String) As Usuario
+        Return usrDao.getUsuario(mailOUsername, pwd)
+    End Function
+
+
+
+
 
 
 End Class

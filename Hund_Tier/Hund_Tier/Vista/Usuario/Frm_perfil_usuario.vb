@@ -92,7 +92,8 @@
     End Sub
 
     Private Sub permitir_edicion(ByVal valor As Boolean)
-
+        'Si valor es verdadero, quiere decir que hay que permitir la edicion de los campos, si es falso, hay que negar
+        'la edicion de los campos. 
         'TODO poner visibilidad del campo correo electronico en visible en modo edicion y lo contrario
         'en modo visualizacion
         If valor Then
@@ -162,6 +163,9 @@
                     '
                     If usrService.updateUsuario(usuario) = 1 Then
                         MessageBox.Show("Sus datos fueron actualizados!", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        llenar_campos()
+                        permitir_edicion(False)
+                        Frm_main.setModificado(True)
 
                     End If
                 Catch ex As Exception
@@ -251,7 +255,6 @@
             Dim usrService As New UsuariosService
             ' el borrado es solo borrado logico, se cambia el valor del campo habilitado en la BD
             'se actualiza a 0. Lo que indica que no esta habilitado
-            'ACTUALIZAR PARA QUE LO HAGA CON DAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
             Try
                 If usrService.darDeBajaUsuario(usuario) = 1 Then
                     MessageBox.Show("Lamentamos verte ir, ¡buen viaje!", "Cuenta eliminada", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -263,17 +266,14 @@
             Catch ex As Exception
 
             End Try
-
-
-            'str_sql_borrado += "Update Usuarios "
-            'str_sql_borrado += "SET habilitado= 0"
-            'str_sql_borrado += " WHERE id_usuario=" & usuario.getIdUsuario
-            'If BDHelper.getDBHelper.EjecutarSQL(str_sql_borrado) > 0 Then
-            '    bandera_eliminado = True
-            '    Frm_main.setUsuario(usuario)
-            '    Me.Close()
-            'End If
-
         End If
+    End Sub
+
+    Private Sub btn_salir_Click(sender As Object, e As EventArgs)
+        Me.Close()
+    End Sub
+
+    Private Sub btn_salir_Click_1(sender As Object, e As EventArgs) Handles btn_salir.Click
+        Me.Close()
     End Sub
 End Class

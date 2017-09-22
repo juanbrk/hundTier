@@ -2,13 +2,20 @@
     'Idem fmr_loguin
     Dim usuario As Usuario
     Dim bandera_eliminado = False
-    Dim bandera_modificado = True
+    Dim bandera_modificado = False
     Dim form_logueo As New frm_login
+    'Bandera que sirve para saber si esta form esta escondida para poder mostrarla despues del logueo
+    Dim bandera_escondida = False
+
 
     Private Sub Frm_main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        bandera_escondida = True
         'Al cargar el formulario principal cargamos y mostramos el formulario: Frm_login en forma MODAL.
         form_logueo.ShowDialog()
         If form_logueo.getValidado Then
+            If bandera_escondida Then
+                Me.Show()
+            End If
             usuario = form_logueo.getUsuario()
             actualizarUsuarioLogueado(usuario.getUsername)
         Else
@@ -28,10 +35,17 @@
         Dim form_ajuste_perfil As New Frm_perfil_usuario
         form_ajuste_perfil.seleccionar_usuario(usuario)
         form_ajuste_perfil.ShowDialog()
+        'Si el usuario elimino su cuenta tenemos que cerrar este formulario, borrar los datos del usuario y mandarlo
+        'al form login de vuelta. 
         If bandera_eliminado Then
-            form_logueo.limpiarCampos()
-            form_logueo.ShowDialog()
             Me.Hide()
+            bandera_escondida = True
+            'Si el usuario lo unico que hizo fueron modificar sus datos, cuando se cierre la ventana en la que estaba haciendo cambios
+            'hay que actualizar el usuario de este form por el modificado. 
+        ElseIf bandera_modificado Then
+            Dim usrService As New UsuariosService
+            usuario = usrService.obtenerUsuario(usuario.getUsername, usuario.getPassword)
+
 
         End If
 
@@ -51,5 +65,8 @@
     End Sub
     Public Sub setEliminado(valor As Boolean)
         bandera_eliminado = valor
+    End Sub
+    Public Sub setModificado(valor As Boolean)
+        bandera_modificado = True
     End Sub
 End Class

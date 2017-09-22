@@ -347,7 +347,7 @@ Partial Class Frm_perfil_usuario
         '
         'btn_guardar_cambios
         '
-        Me.btn_guardar_cambios.Location = New System.Drawing.Point(202, 374)
+        Me.btn_guardar_cambios.Location = New System.Drawing.Point(202, 373)
         Me.btn_guardar_cambios.Name = "btn_guardar_cambios"
         Me.btn_guardar_cambios.Size = New System.Drawing.Size(75, 23)
         Me.btn_guardar_cambios.TabIndex = 10

@@ -9,8 +9,6 @@
     Private Property validado = False
 
 
-    'TODO permitir iniciar sesion con username ademas de mail. 
-
     Private Sub btn_ingresar_Click(sender As Object, e As EventArgs) Handles btn_ingresar.Click
         Dim strSQL As String
         Dim tabla As DataTable
@@ -19,33 +17,24 @@
         If txt_password.Text = String.Empty Or txt_email.Text = String.Empty Then
             MessageBox.Show("Olvidó ingresar email y/o password", "Validación de datos", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Else
-            ' El usuario puede loguearse con email o username
-            strSQL = "Select * From USUARIOS u Where  ((u.email = '" & txt_email.Text & "' AND u.password = '" & txt_password.Text & "') AND u.habilitado=1) OR ((u.username = '" & txt_email.Text & "' AND u.password = '" & txt_password.Text & "') AND u.habilitado=1)"
-            '"Select u.id_usuario,u.email AS 'email_usuario' , u.nombre AS 'nombre_usuario', username From Usuarios u Where (u.email = '" & txt_email.Text & "' OR u.username = '" & txt_email.Text & "') AND u.password = '" & txt_password.Text & "'"
-            '
-            tabla = BDHelper.getDBHelper().ConsultaSQL(strSQL)
-            If tabla.Rows.Count > 0 Then
-                'Si la tabla devuelve una fila con un usuario, creamos un objeto usuario de Visual
-                ' y le asignamos las variables nombre, username y email a las del usuario
-                'que devolvio la tabla desde la BD. 
-                usuario = New Usuario
-                usuario.setNombre(tabla.Rows(0).Item("nombre").ToString())
-                usuario.setEmail(tabla.Rows(0).Item("email").ToString())
-                usuario.setBarrio(tabla.Rows(0).Item("id_barrio").ToString())
-                usuario.setUsername(tabla.Rows(0).Item("username").ToString())
-                usuario.setPassword(tabla.Rows(0).Item("password").ToString)
-                'Seteamos validado a true, entonces desde frm_main podremos saber si
-                'fue efectivo el login, para saber si actualizar el lbl de nombre de usuario
-                'o si se cancela el inicio de sesion para que la frm_main no se muestre
-                validado = True
-                Me.Close()
-            Else
-                MessageBox.Show("Usuario y/o password incorrectos", "Validación de datos", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                'Limpiamos las cajas de texto y dejamos el cursor sobre el control: txt_usuario.
-                txt_password.Text = String.Empty
-                txt_email.Text = String.Empty
-                txt_email.Focus()
-            End If
+            'Creamos un servicio de usuario para hacer todo lo relativo a la BD del usuario desde ahi
+            Dim usrService As New UsuariosService
+            Try
+                'Verificamos si el usuario existe
+                If usrService.existeUsuario(txt_email.Text, txt_password.Text) Then
+                    usuario = usrService.obtenerUsuario(txt_email.Text, txt_password.Text)
+                    validado = True
+                    Me.Close()
+                Else
+                    MessageBox.Show("Usuario y/o password incorrectos", "Validación de datos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    'Limpiamos las cajas de texto y dejamos el cursor sobre el control: txt_usuario.
+                    txt_password.Text = String.Empty
+                    txt_email.Text = String.Empty
+                    txt_email.Focus()
+                End If
+            Catch ex As Exception
+
+            End Try
         End If
     End Sub
 

@@ -27,7 +27,42 @@
         Return listaUsuarios
     End Function
 
+    'Funcion que sirve para chequera si el usuario y password ingresados en el login coinciden con algun usuario y pass
+    'de la base de datos. Devuelve un boolean
+    Friend Function existeUsuario(mailOUserName As String, pwd As String) As Boolean
+        Dim strSql = "Select * From USUARIOS u Where  ((u.email = '" & mailOUserName & "' AND u.password = '" & pwd & "') AND u.habilitado=1) OR ((u.username = '" & mailOUserName & "' AND u.password = '" & pwd & "') AND u.habilitado=1)"
+        Dim valorDevuelto = False
+        Try
+            If BDHelper.getDBHelper.ConsultaSQL(strSql).Rows.Count > 0 Then
+                valorDevuelto = True
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error", "Base de datos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+        Return valorDevuelto
 
+    End Function
+
+    'Funcion que permite obtener un usuario a partir de su mail o nombre de usuario y su contraseña. Sirve para el 
+    'login, primero se chequea que existe un usuario con esa pwd y mail y luego se lo recupera mediante este metodo
+    Friend Function getUsuario(mailOUsername As String, pwd As String) As Usuario
+        Dim strSql = "Select * From USUARIOS u Where  ((u.email = '" & mailOUsername & "' AND u.password = '" & pwd & "') AND u.habilitado=1) OR ((u.username = '" & mailOUsername & "' AND u.password = '" & pwd & "') AND u.habilitado=1)"
+
+        Try
+            Dim tabla = BDHelper.getDBHelper.ConsultaSQL(strSql)
+            If tabla.Rows.Count > 0 Then
+                Dim usuario As New Usuario
+                usuario.setNombre(tabla.Rows(0).Item("nombre").ToString())
+                usuario.setEmail(tabla.Rows(0).Item("email").ToString())
+                usuario.setBarrio(tabla.Rows(0).Item("id_barrio").ToString())
+                usuario.setUsername(tabla.Rows(0).Item("username").ToString())
+                usuario.setPassword(tabla.Rows(0).Item("password").ToString)
+                Return usuario
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Ocurrio un error tratando de obtener los datos de usuario", "Base de datos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Function
     Friend Function darDeBaja(usuario As Usuario) As Integer
         Dim str_sql_borrado = "Update Usuarios "
         str_sql_borrado += "SET habilitado= 0"
@@ -64,7 +99,7 @@
     Friend Function updateUsuario(usr As Usuario) As Integer
 
         Dim strSql = "Update Usuarios "
-        strSql += "SET nombre ='" & usr.getNombre & "', apellido ='" & usr.getApellido & "', num_telefono='" & usr.getNumTelefono & "', email='" & usr.getEmail & "', id_barrio=" & usr.getBarrio & ", calle='" & usr.getCalle & "', numero='" & usr.getNumeroCalle & "',piso=" & usr.getPiso & ", departamento='" & usr.getDepartamento & "'"
+        strSql += "SET nombre ='" & usr.getNombre & "', apellido ='" & usr.getApellido & "', num_telefono='" & usr.getNumTelefono & "', email='" & usr.getEmail & "', id_barrio=" & usr.getBarrio & ", calle='" & usr.getCalle & "', numero='" & usr.getNumeroCalle & "',piso=" & usr.getPiso & ", departamento='" & usr.getDepartamento & "', password='" & usr.getPassword & "'"
         strSql += "WHERE id_usuario = " & usr.getIdUsuario
 
         Try
@@ -83,6 +118,8 @@
     Friend Function existeUsername(usernameIngresado As String) As Boolean
         Return BDHelper.getDBHelper.ConsultaSQL("Select * from Usuarios where username = '" + usernameIngresado + "'").Rows.Count > 0
     End Function
+
+
 
 
 End Class

@@ -28,10 +28,11 @@
 
     Private Sub btn_modificar_Click(sender As Object, e As EventArgs) Handles btn_modificar.Click
         Dim str_sql = ""
+        Dim usrService As New UsuariosService
         If validar_campos() Then
             'Si esta todo OK debo chequear que
             'la contraseña actual coincida con la del usuario
-            If coincide_contrasena_actual() Then
+            If usrService.existeUsuario(usuario.getUsername, txt_pass_actual.Text) Then
                 'Si la contraseña coincide, puedo actualizar la contraseña del usuario por
                 'la ingresada. Primero le pregunto si esta seguro de querer cambiar la contra
                 Dim d As DialogResult
@@ -42,18 +43,19 @@
                     'Le asignamos al usuario en visual la nueva contraseña como atributo
                     'para poder pasarlo entre forms, ya actualizado. 
                     usuario.setPassword(txt_nueva_pass.Text)
-                    str_sql = "Update Usuarios "
-                    str_sql += "SET password ='" & usuario.getPassword & "'"
-                    str_sql += "WHERE id_usuario = " & usuario.getIdUsuario
-                    'Si la ejecucion de la actualizacion devuelve una fila entonces ya esta actualizado el usuario
-                    If BDHelper.getDBHelper.EjecutarSQL(str_sql) > 0 Then
-                        'Se le informa al usuario mediante msgbox
-                        MessageBox.Show("Sus datos fueron actualizados!", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        'Modificamos el valor de la bandera, para que otras forms puedan consultar
-                        'si el usuario modifico su pass. 
-                        bandera_modificado = True
-                        Me.Close()
-                    End If
+                    Try
+                        'Si la ejecucion de la actualizacion devuelve una fila entonces ya esta actualizado el usuario
+                        If usrService.updateUsuario(usuario) = 1 Then
+                            'Se le informa al usuario mediante msgbox
+                            MessageBox.Show("Sus datos fueron actualizados!", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            'Modificamos el valor de la bandera, para que otras forms puedan consultar
+                            'si el usuario modifico su pass. 
+                            bandera_modificado = True
+                            Me.Close()
+                        End If
+                    Catch ex As Exception
+
+                    End Try
                 End If
             Else
                 informar_error(Err.contrasena_actual_no_coincide)
@@ -103,11 +105,6 @@
         Return True
     End Function
 
-    'Funcion que permite determinar si el mail ingresado ya ha sido utilizado por otro usuario
-    'No deberian estar estas funciones friend en algun otro lugar separado????????????????
-    Friend Function coincide_contrasena_actual() As Boolean
-        Return BDHelper.getDBHelper.ConsultaSQL("Select * from Usuarios where password = '" + txt_pass_actual.Text + "'").Rows.Count > 0
-    End Function
     'Funcion que, dependiendo del error que este sucediendo, lo informa. El tipo de error se pasa por
     'parametro como una variable del tipo Err definida arriba de todo en esta clase.
     Friend Sub informar_error(ByVal identificador As Err)
