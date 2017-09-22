@@ -1,9 +1,15 @@
 ﻿Public Class Frm_main
+    'TODO aplicar el patron singleton para la variable usuario. Para que pueda ser accedida global
+    'mente desde todas las forms
+
+    'RESOLVER el tema de cuando un usuario elimina la cuenta y como hacer para que se vuelva a 
+    'Iniciar el proceso de login. 
+
     'Idem fmr_loguin
     Dim usuario As Usuario
     Dim bandera_eliminado = False
     Dim bandera_modificado = False
-    Dim form_logueo As New frm_login
+    Dim instancia_form_logueo As New frm_login
     'Bandera que sirve para saber si esta form esta escondida para poder mostrarla despues del logueo
     Dim bandera_escondida = False
 
@@ -11,12 +17,12 @@
     Private Sub Frm_main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         bandera_escondida = True
         'Al cargar el formulario principal cargamos y mostramos el formulario: Frm_login en forma MODAL.
-        form_logueo.ShowDialog()
-        If form_logueo.getValidado Then
+        instancia_form_logueo.ShowDialog()
+        If instancia_form_logueo.getValidado Then
             If bandera_escondida Then
                 Me.Show()
             End If
-            usuario = form_logueo.getUsuario()
+            usuario = instancia_form_logueo.getUsuario()
             actualizarUsuarioLogueado(usuario.getUsername)
         Else
             Me.Close()
@@ -68,5 +74,10 @@
     End Sub
     Public Sub setModificado(valor As Boolean)
         bandera_modificado = True
+    End Sub
+
+    Private Sub lbl_agregar_publicacion_Click(sender As Object, e As EventArgs) Handles lbl_agregar_publicacion.Click
+        Dim seleccionar_tipo_aviso As New frm_seleccion_tipo_aviso
+        seleccionar_tipo_aviso.ShowDialog()
     End Sub
 End Class

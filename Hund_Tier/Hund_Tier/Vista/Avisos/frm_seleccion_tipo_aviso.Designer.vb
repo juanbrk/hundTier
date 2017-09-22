@@ -23,12 +23,12 @@ Partial Class frm_seleccion_tipo_aviso
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.btn_adopcion_perro = New System.Windows.Forms.Button()
         Me.btn_adopcion_gato = New System.Windows.Forms.Button()
+        Me.btn_adopcion_perro = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.btn_perdido_gato = New System.Windows.Forms.Button()
         Me.btn_perdido_perro = New System.Windows.Forms.Button()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.btn_encontrado_gato = New System.Windows.Forms.Button()
         Me.btn_encontrado_perro = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
@@ -40,34 +40,21 @@ Partial Class frm_seleccion_tipo_aviso
         '
         Me.GroupBox1.Controls.Add(Me.btn_adopcion_gato)
         Me.GroupBox1.Controls.Add(Me.btn_adopcion_perro)
-        Me.GroupBox1.Location = New System.Drawing.Point(13, 13)
+        Me.GroupBox1.Location = New System.Drawing.Point(13, 24)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(190, 55)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "En adopcion"
+        Me.GroupBox1.Text = "Adopcion"
         '
-        'GroupBox2
+        'btn_adopcion_gato
         '
-        Me.GroupBox2.Controls.Add(Me.btn_perdido_gato)
-        Me.GroupBox2.Controls.Add(Me.btn_perdido_perro)
-        Me.GroupBox2.Location = New System.Drawing.Point(13, 74)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(191, 64)
-        Me.GroupBox2.TabIndex = 1
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Perdido"
-        '
-        'GroupBox3
-        '
-        Me.GroupBox3.Controls.Add(Me.btn_encontrado_gato)
-        Me.GroupBox3.Controls.Add(Me.btn_encontrado_perro)
-        Me.GroupBox3.Location = New System.Drawing.Point(13, 144)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(192, 56)
-        Me.GroupBox3.TabIndex = 2
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Encontrado"
+        Me.btn_adopcion_gato.Location = New System.Drawing.Point(100, 19)
+        Me.btn_adopcion_gato.Name = "btn_adopcion_gato"
+        Me.btn_adopcion_gato.Size = New System.Drawing.Size(75, 23)
+        Me.btn_adopcion_gato.TabIndex = 1
+        Me.btn_adopcion_gato.Text = "Gato"
+        Me.btn_adopcion_gato.UseVisualStyleBackColor = True
         '
         'btn_adopcion_perro
         '
@@ -78,14 +65,16 @@ Partial Class frm_seleccion_tipo_aviso
         Me.btn_adopcion_perro.Text = "Perro"
         Me.btn_adopcion_perro.UseVisualStyleBackColor = True
         '
-        'btn_adopcion_gato
+        'GroupBox2
         '
-        Me.btn_adopcion_gato.Location = New System.Drawing.Point(100, 19)
-        Me.btn_adopcion_gato.Name = "btn_adopcion_gato"
-        Me.btn_adopcion_gato.Size = New System.Drawing.Size(75, 23)
-        Me.btn_adopcion_gato.TabIndex = 1
-        Me.btn_adopcion_gato.Text = "Gato"
-        Me.btn_adopcion_gato.UseVisualStyleBackColor = True
+        Me.GroupBox2.Controls.Add(Me.btn_perdido_gato)
+        Me.GroupBox2.Controls.Add(Me.btn_perdido_perro)
+        Me.GroupBox2.Location = New System.Drawing.Point(13, 85)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(191, 64)
+        Me.GroupBox2.TabIndex = 1
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Perdido"
         '
         'btn_perdido_gato
         '
@@ -104,6 +93,17 @@ Partial Class frm_seleccion_tipo_aviso
         Me.btn_perdido_perro.TabIndex = 2
         Me.btn_perdido_perro.Text = "Perro"
         Me.btn_perdido_perro.UseVisualStyleBackColor = True
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.btn_encontrado_gato)
+        Me.GroupBox3.Controls.Add(Me.btn_encontrado_perro)
+        Me.GroupBox3.Location = New System.Drawing.Point(13, 155)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(192, 56)
+        Me.GroupBox3.TabIndex = 2
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Encontrado"
         '
         'btn_encontrado_gato
         '
@@ -127,12 +127,12 @@ Partial Class frm_seleccion_tipo_aviso
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(214, 209)
+        Me.ClientSize = New System.Drawing.Size(214, 223)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Name = "frm_seleccion_tipo_aviso"
-        Me.Text = "frm_seleccion_tipo_aviso"
+        Me.Text = "Publicar un aviso"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)

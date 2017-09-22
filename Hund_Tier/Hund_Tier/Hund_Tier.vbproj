@@ -100,6 +100,12 @@
     <Compile Include="Vista\Avisos\frm_seleccion_tipo_aviso.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vista\Avisos\publicar_aviso.Designer.vb">
+      <DependentUpon>publicar_aviso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Avisos\publicar_aviso.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Vista\Barrios\agregadaBarrios.vb" />
     <Compile Include="Vista\Login\frm_login.Designer.vb">
       <DependentUpon>frm_login.vb</DependentUpon>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vista\Avisos\frm_seleccion_tipo_aviso.resx">
       <DependentUpon>frm_seleccion_tipo_aviso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\Avisos\publicar_aviso.resx">
+      <DependentUpon>publicar_aviso.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vista\Login\frm_login.resx">
       <DependentUpon>frm_login.vb</DependentUpon>
