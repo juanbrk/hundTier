@@ -80,12 +80,20 @@
     'Funcion que se ejecuta cuando se carga el formulario, es la primer funcion que se ejecuta
     'carga el combo barrio con los barrios de la BD
     Public Sub cargarBarrios(comboACargar As ComboBox)
-        Dim barriosService As BarriosService = New BarriosService
-        comboACargar.DataSource = New List(Of Object) 'sirve de clear'
-        comboACargar.DataSource = barriosService.listarBarrios
+        Dim cmbServicio As New CombosService
+        Dim tabla = cmbServicio.getBarrios
+        comboACargar.DataSource = tabla
         comboACargar.DisplayMember = "nombre"
         comboACargar.ValueMember = "ID_BARRIO"
         comboACargar.SelectedIndex = -1
+
+
+        'Dim barriosService As BarriosService = New BarriosService
+        'comboACargar.DataSource = New List(Of Object) 'sirve de clear'
+        'comboACargar.DataSource = barriosService.listarBarrios
+        'comboACargar.DisplayMember = "nombre"
+        'comboACargar.ValueMember = "ID_BARRIO"
+        'comboACargar.SelectedIndex = -1
 
     End Sub
 
