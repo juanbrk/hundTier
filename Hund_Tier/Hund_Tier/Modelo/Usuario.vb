@@ -23,10 +23,6 @@
         Return idUsuario
     End Function
 
-    Friend Sub setNumeroTelefono(v As String)
-        num_telefono = v
-    End Sub
-
     Public Function getBarrio() As Integer
         Return barrio_id
     End Function
@@ -46,10 +42,6 @@
     Public Function getEmail() As String
         Return email
     End Function
-
-    Friend Sub setBarrioString(v As String)
-        barrioAsString = v
-    End Sub
 
     Public Function getPassword() As String
         Return contrasena
@@ -73,11 +65,17 @@
         Return habilitado
     End Function
 
+
+
     Public Sub setNombre(ByVal nombreUsuario As String)
         nombre = nombreUsuario
     End Sub
     Public Sub setApellido(ByVal apellido_usuario As String)
         apellido = apellido_usuario
+    End Sub
+
+    Friend Sub setBarrioString(v As String)
+        barrioAsString = v
     End Sub
 
     Public Sub setUsername(ByVal nombreUsuario As String)
@@ -115,8 +113,10 @@
     Public Sub setId(ByVal id_user As Integer)
         idUsuario = id_user
     End Sub
+    Friend Sub setNumeroTelefono(v As String)
+        num_telefono = v
+    End Sub
 
-    'Esto no se deberia poder hacer 
     Public Overrides Function toString() As String
         Return nombre
     End Function

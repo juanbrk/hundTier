@@ -10,8 +10,6 @@
 
 
     Private Sub btn_ingresar_Click(sender As Object, e As EventArgs) Handles btn_ingresar.Click
-        Dim strSQL As String
-        Dim tabla As DataTable
         'Validamos que las cajas no esten vacías
         'If String.IsNullOrEmpty(txt_password.Text) Or String.IsNullOrEmpty(txt_usuario.Text) Then
         If txt_password.Text = String.Empty Or txt_email.Text = String.Empty Then

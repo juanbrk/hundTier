@@ -16,8 +16,10 @@
 
 
     Private Sub frm_UsuarioABM_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'Se carga el combo con los barrios provistos por la clase barriosDAO
-        cargarBarrios(cmb_barrio)
+        'Cargamos el combo Barrios a partir de CombosService
+        Dim cmbServicio As New CombosService
+        Dim tablaDatos = cmbServicio.getBarrios
+        cmbServicio.llenarCombo(cmb_barrio, tablaDatos, "nombre", "ID_BARRIO")
     End Sub
 
 
@@ -72,28 +74,6 @@
             End If
         End If
 
-
-    End Sub
-
-    'Funcion que carga los barrios en el combo a partir de una lista de objetos retornada por el 
-    'metodo barriosService.listarBarrios
-    'Funcion que se ejecuta cuando se carga el formulario, es la primer funcion que se ejecuta
-    'carga el combo barrio con los barrios de la BD
-    Public Sub cargarBarrios(comboACargar As ComboBox)
-        Dim cmbServicio As New CombosService
-        Dim tabla = cmbServicio.getBarrios
-        comboACargar.DataSource = tabla
-        comboACargar.DisplayMember = "nombre"
-        comboACargar.ValueMember = "ID_BARRIO"
-        comboACargar.SelectedIndex = -1
-
-
-        'Dim barriosService As BarriosService = New BarriosService
-        'comboACargar.DataSource = New List(Of Object) 'sirve de clear'
-        'comboACargar.DataSource = barriosService.listarBarrios
-        'comboACargar.DisplayMember = "nombre"
-        'comboACargar.ValueMember = "ID_BARRIO"
-        'comboACargar.SelectedIndex = -1
 
     End Sub
 

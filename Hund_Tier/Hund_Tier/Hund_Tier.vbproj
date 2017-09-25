@@ -73,7 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDatos\DAOs\AvisosDAO.vb" />
-    <Compile Include="BaseDatos\DAOs\BarriosDao.vb" />
     <Compile Include="BaseDatos\DAOs\CombosDAO.vb" />
     <Compile Include="BaseDatos\DAOs\GatosDAO.vb" />
     <Compile Include="BaseDatos\DAOs\PerrosDAO.vb" />
@@ -97,7 +96,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Servicios\BarriosService.vb" />
     <Compile Include="Servicios\CombosService.vb" />
     <Compile Include="Servicios\UsuariosService.vb" />
     <Compile Include="Vista\Avisos\frm_seleccion_tipo_aviso.Designer.vb">

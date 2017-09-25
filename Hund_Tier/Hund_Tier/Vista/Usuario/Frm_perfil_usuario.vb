@@ -63,9 +63,8 @@
     End Sub
 
     Private Sub llenar_campos()
-        Dim barrioService As New BarriosService
 
-        Dim nombre_barrio = barrioService.getNombreBarrio(usuario.getBarrio)
+        Dim nombre_barrio = usuario.getBarrio
         txt_nombre.Text = usuario.getNombre
         txt_apellido.Text = usuario.getApellido
         txt_email.Text = usuario.getEmail
@@ -81,7 +80,9 @@
         txt_telefono.Text = usuario.getNumTelefono
         'Cargamos el combo mediante la funcion publica del formulario frm_UsuarioABM que acepta
         'el combo que queremos cargar como parametro
-        frm_UsuarioABM.cargarBarrios(cmb_barrio)
+        Dim cmbServicio As New CombosService
+        Dim tablaDatos = cmbServicio.getBarrios
+        cmbServicio.llenarCombo(cmb_barrio, tablaDatos, "nombre", "ID_BARRIO")
         cmb_barrio.Text = nombre_barrio
 
     End Sub
