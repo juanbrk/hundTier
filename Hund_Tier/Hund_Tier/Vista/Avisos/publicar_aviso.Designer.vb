@@ -23,6 +23,9 @@ Partial Class frm_publicar_aviso
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.rbtn_NoSabe = New System.Windows.Forms.RadioButton()
+        Me.cmb_color2 = New System.Windows.Forms.ComboBox()
+        Me.cmb_color1 = New System.Windows.Forms.ComboBox()
         Me.Imagen = New System.Windows.Forms.Label()
         Me.rbtn_no = New System.Windows.Forms.RadioButton()
         Me.rb_si = New System.Windows.Forms.RadioButton()
@@ -59,8 +62,6 @@ Partial Class frm_publicar_aviso
         Me.lbl_nombre_responsable = New System.Windows.Forms.Label()
         Me.btn_publicar = New System.Windows.Forms.Button()
         Me.btn_cancelar = New System.Windows.Forms.Button()
-        Me.cmb_color1 = New System.Windows.Forms.ComboBox()
-        Me.cmb_color2 = New System.Windows.Forms.ComboBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -68,6 +69,7 @@ Partial Class frm_publicar_aviso
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.rbtn_NoSabe)
         Me.GroupBox1.Controls.Add(Me.cmb_color2)
         Me.GroupBox1.Controls.Add(Me.cmb_color1)
         Me.GroupBox1.Controls.Add(Me.Imagen)
@@ -94,6 +96,35 @@ Partial Class frm_publicar_aviso
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Datos del animal"
+        '
+        'rbtn_NoSabe
+        '
+        Me.rbtn_NoSabe.AutoSize = True
+        Me.rbtn_NoSabe.Location = New System.Drawing.Point(396, 112)
+        Me.rbtn_NoSabe.Name = "rbtn_NoSabe"
+        Me.rbtn_NoSabe.Size = New System.Drawing.Size(85, 17)
+        Me.rbtn_NoSabe.TabIndex = 22
+        Me.rbtn_NoSabe.TabStop = True
+        Me.rbtn_NoSabe.Text = "Desconozco"
+        Me.rbtn_NoSabe.UseVisualStyleBackColor = True
+        '
+        'cmb_color2
+        '
+        Me.cmb_color2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmb_color2.FormattingEnabled = True
+        Me.cmb_color2.Location = New System.Drawing.Point(75, 96)
+        Me.cmb_color2.Name = "cmb_color2"
+        Me.cmb_color2.Size = New System.Drawing.Size(166, 21)
+        Me.cmb_color2.TabIndex = 21
+        '
+        'cmb_color1
+        '
+        Me.cmb_color1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmb_color1.FormattingEnabled = True
+        Me.cmb_color1.Location = New System.Drawing.Point(75, 70)
+        Me.cmb_color1.Name = "cmb_color1"
+        Me.cmb_color1.Size = New System.Drawing.Size(166, 21)
+        Me.cmb_color1.TabIndex = 20
         '
         'Imagen
         '
@@ -155,6 +186,7 @@ Partial Class frm_publicar_aviso
         '
         'cmb_pelo
         '
+        Me.cmb_pelo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_pelo.FormattingEnabled = True
         Me.cmb_pelo.Location = New System.Drawing.Point(351, 65)
         Me.cmb_pelo.Name = "cmb_pelo"
@@ -172,6 +204,7 @@ Partial Class frm_publicar_aviso
         '
         'cmb_edad
         '
+        Me.cmb_edad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_edad.FormattingEnabled = True
         Me.cmb_edad.Location = New System.Drawing.Point(261, 65)
         Me.cmb_edad.Name = "cmb_edad"
@@ -189,6 +222,7 @@ Partial Class frm_publicar_aviso
         '
         'cmb_tamano
         '
+        Me.cmb_tamano.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_tamano.FormattingEnabled = True
         Me.cmb_tamano.Location = New System.Drawing.Point(351, 26)
         Me.cmb_tamano.Name = "cmb_tamano"
@@ -206,6 +240,7 @@ Partial Class frm_publicar_aviso
         '
         'cmb_sexo
         '
+        Me.cmb_sexo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_sexo.FormattingEnabled = True
         Me.cmb_sexo.Location = New System.Drawing.Point(261, 26)
         Me.cmb_sexo.Name = "cmb_sexo"
@@ -223,6 +258,7 @@ Partial Class frm_publicar_aviso
         '
         'cmb_raza
         '
+        Me.cmb_raza.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_raza.FormattingEnabled = True
         Me.cmb_raza.Location = New System.Drawing.Point(75, 43)
         Me.cmb_raza.Name = "cmb_raza"
@@ -425,22 +461,6 @@ Partial Class frm_publicar_aviso
         Me.btn_cancelar.Text = "Cancelar"
         Me.btn_cancelar.UseVisualStyleBackColor = True
         '
-        'cmb_color1
-        '
-        Me.cmb_color1.FormattingEnabled = True
-        Me.cmb_color1.Location = New System.Drawing.Point(75, 70)
-        Me.cmb_color1.Name = "cmb_color1"
-        Me.cmb_color1.Size = New System.Drawing.Size(166, 21)
-        Me.cmb_color1.TabIndex = 20
-        '
-        'cmb_color2
-        '
-        Me.cmb_color2.FormattingEnabled = True
-        Me.cmb_color2.Location = New System.Drawing.Point(75, 96)
-        Me.cmb_color2.Name = "cmb_color2"
-        Me.cmb_color2.Size = New System.Drawing.Size(166, 21)
-        Me.cmb_color2.TabIndex = 21
-        '
         'frm_publicar_aviso
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -502,4 +522,5 @@ Partial Class frm_publicar_aviso
     Friend WithEvents btn_cancelar As Button
     Friend WithEvents cmb_color2 As ComboBox
     Friend WithEvents cmb_color1 As ComboBox
+    Friend WithEvents rbtn_NoSabe As RadioButton
 End Class

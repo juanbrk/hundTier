@@ -18,6 +18,8 @@
         'Obtenemos la tabla con todos los barrios
         Dim TablaDatos = cmbServicio.getBarrios
         'Cargamos el combo mediante el metodo llenarCombo de CombosService
+        'Es todo lo mismo, lo unico que cambia es el combo a rellenar y 
+        ' los ultimos dos parametros
         cmbServicio.llenarCombo(cmb_barrio, TablaDatos, "nombre", "ID_BARRIO")
         'Reutilizamos la tabla, pero ahora le cargamos las razas
         TablaDatos = cmbServicio.getRazasPerros
@@ -25,10 +27,21 @@
         'Reutilizamos la tabla para cargar los combos color1 y color2
         TablaDatos = cmbServicio.getColores
         cmbServicio.llenarCombo(cmb_color1, TablaDatos, "nombre", "id_color")
+        'Volvemos a cargar con los colores
+        TablaDatos = cmbServicio.getColores
         cmbServicio.llenarCombo(cmb_color2, TablaDatos, "nombre", "id_color")
         'Cargamos combo sexos
         TablaDatos = cmbServicio.getSexos
         cmbServicio.llenarCombo(cmb_sexo, TablaDatos, "nombre_sexo", "codigo_sexo")
+        'Cargamos combo edades
+        TablaDatos = cmbServicio.getEdadesAnimal
+        cmbServicio.llenarCombo(cmb_edad, TablaDatos, "nombre_edad", "codigo_edad")
+        'Cargamos el combo tamaño
+        TablaDatos = cmbServicio.getTamanosAnimal
+        cmbServicio.llenarCombo(cmb_tamano, TablaDatos, "nombre_tamano", "codigo_tamano")
+        'Cargamos el combo pelo
+        TablaDatos = cmbServicio.getPelosAnimal
+        cmbServicio.llenarCombo(cmb_pelo, TablaDatos, "nombre_pelo", "codigo_pelo")
 
 
 
@@ -40,6 +53,85 @@
 
 
 
+
+
+    End Sub
+
+    'Funcion que sirve para validar que se hayan rellenado todos los campos obligatorios, caso contrario
+    'se informa con una ventana para que cada campo se complete
+    Private Function validar_campos() As Boolean
+        'campos obligatorios
+        If txt_nombre_animal.Text = String.Empty Then
+            txt_nombre_animal.BackColor = Color.Red
+            txt_nombre_animal.Focus()
+            frm_UsuarioABM.informar_campo_faltante(lbl_nombre_animal.Text)
+            Return False
+        Else
+            txt_nombre_animal.BackColor = Color.White
+        End If
+
+        If cmb_raza.SelectedItem Is Nothing Then
+            frm_UsuarioABM.informar_campo_faltante(lbl_raza.Text)
+            Return False
+        End If
+        If cmb_color1.SelectedItem Is Nothing Then
+            frm_UsuarioABM.informar_campo_faltante(lbl_color_1.Text)
+            Return False
+        End If
+        If cmb_sexo.SelectedItem Is Nothing Then
+            frm_UsuarioABM.informar_campo_faltante(lbl_sexo_animal.Text)
+            Return False
+        End If
+        If cmb_edad.SelectedItem Is Nothing Then
+            frm_UsuarioABM.informar_campo_faltante(lbl_edad.Text)
+            Return False
+        End If
+        If cmb_tamano.SelectedItem Is Nothing Then
+            frm_UsuarioABM.informar_campo_faltante(lbl_tamano.Text)
+            Return False
+        End If
+        If cmb_pelo.SelectedItem Is Nothing Then
+            frm_UsuarioABM.informar_campo_faltante(lbl_pelo.Text)
+            Return False
+        End If
+
+        Return True
+    End Function
+
+    Private Sub btn_publicar_Click(sender As Object, e As EventArgs) Handles btn_publicar.Click
+        If validar_campos() Then
+            'Animal que agregaremos a la BD
+            Dim unAni As New Animal
+
+            unAni.idAnimal = BDHelper.getDBHelper.generarId("Perros")
+            unAni.nombre = txt_nombre_animal.Text
+            unAni.tamano = cmb_tamano.SelectedValue
+            unAni.idTipoPelo = cmb_pelo.SelectedValue
+            unAni.idRaza = cmb_raza.SelectedValue
+            unAni.idEdad = cmb_edad.SelectedValue
+            unAni.idSexo = cmb_sexo.SelectedValue
+            unAni.idColor1 = cmb_color1.SelectedValue
+            If cmb_color2.SelectedValue IsNot Nothing Then
+                unAni.idColor2 = cmb_color2.SelectedValue
+            End If
+
+            If rb_si.Checked Then
+                unAni.idCondicionCastrado = 1
+            End If
+
+            If rbtn_no.Checked Then
+                unAni.idCondicionCastrado = 2
+            End If
+
+            If rbtn_NoSabe.Checked Then
+                unAni.idCondicionCastrado = 3
+            End If
+
+
+
+            Dim publiServicio As New PublicacionService
+            publiServicio.agregarAnimal(unAni)
+        End If
 
 
     End Sub

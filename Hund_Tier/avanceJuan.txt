@@ -1,23 +1,24 @@
 *frm_perfilUsuario
-Carga de combo barrios se hace a partir de CombosService y ya no
-desde frm_ABMUsuarios
 
-+ Rehacer cargar el nombre del barrio del usuario a partir del id
+- Rehacer cargar el nombre del barrio del usuario a partir del id
 de usuario que tiene en visual
 
 
 *frm_publicarAviso
 
-+ si el usuario ingresa un segundo numero de telefono agregarlo
+- si el usuario ingresa un segundo numero de telefono agregarlo
 en la BD en la tabla avisos. Que sea obligatorio un numero de 
 telefono al menos. 
-+ Cargados combo barrios, razasPerros, color1, color2,
 
-- Hacer carga de combos edad, tamaño, pelo.
++ Ya se agrega el animal a la BD. Se hacen todos los chequeos. 
+
+- Cargar la publicacion a la BD
+- Mostrar una ventana de confirmacion antes de publicar el aviso
+
+
 
 *frm_ABMUSuarios
 
-- llenarCombos() Ahora se hace desde CombosServicios
 
 *Base de datos
 - crear tabla para avisos. 

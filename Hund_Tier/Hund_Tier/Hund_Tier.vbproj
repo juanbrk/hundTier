@@ -72,14 +72,14 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseDatos\DAOs\AvisosDAO.vb" />
+    <Compile Include="BaseDatos\DAOs\PublicacionDAO.vb" />
     <Compile Include="BaseDatos\DAOs\CombosDAO.vb" />
     <Compile Include="BaseDatos\DAOs\GatosDAO.vb" />
     <Compile Include="BaseDatos\DAOs\PerrosDAO.vb" />
     <Compile Include="BaseDatos\DAOs\UsuariosDAO.vb" />
     <Compile Include="BaseDatos\Helper\BDHelper.vb" />
     <Compile Include="Modelo\Barrio.vb" />
-    <Compile Include="Modelo\Perro.vb" />
+    <Compile Include="Modelo\Animal.vb" />
     <Compile Include="Modelo\Usuario.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -97,6 +97,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Servicios\CombosService.vb" />
+    <Compile Include="Servicios\PublicacionService.vb" />
     <Compile Include="Servicios\UsuariosService.vb" />
     <Compile Include="Vista\Avisos\frm_seleccion_tipo_aviso.Designer.vb">
       <DependentUpon>frm_seleccion_tipo_aviso.vb</DependentUpon>
