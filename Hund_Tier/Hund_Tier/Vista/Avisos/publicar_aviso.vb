@@ -122,9 +122,13 @@
         If validar_campos() Then
             'Animal que agregaremos a la BD
             Dim unAni As New Animal
+            'Creamos una variable del tipo booleana para saber que tipo de animal es, si es perro da verdadero
+            'Si es gato da falso
+            Dim esPerro = (tipo_animal = 1)
 
             'Si lo que se va a agregar es un perro. 
-            If tipo_animal = 1 Then
+            If esPerro Then
+                unAni.tipoAnimal = 1
                 unAni.idAnimal = BDHelper.getDBHelper.generarIdAnimal(tipo_animal)
                 unAni.nombre = txt_nombre_animal.Text
                 unAni.tamano = cmb_tamano.SelectedValue
@@ -156,20 +160,11 @@
             Dim infoAdicional = txt_descripcion.Text
             Dim idResponsable = usuario.getIdUsuario
 
-
-
-
-
-
-
-
-
-
             Dim publiServicio As New PublicacionService
-            'Agregamos el animal, pasando como parametro el animal y el tipo de animal que queremos
+            'Agregamos el animal, pasando como parametro el animal  que queremos
             'Que se agregue a la BD. Segun el tipo de animal, se le dira a la base dedatos a que 
             ' tabla agregar el animal si a perros o a gatos.
-            publiServicio.agregarAnimal(unAni, tipo_animal)
+            publiServicio.agregarAnimal(unAni)
         End If
 
 

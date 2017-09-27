@@ -11,5 +11,6 @@
     Public Property idCondicionCastrado As Integer
     Public Property idCOndicionCrias As Integer
     Public Property idColorCollar As Integer
+    Public Property tipoAnimal As Integer
 
 End Class
