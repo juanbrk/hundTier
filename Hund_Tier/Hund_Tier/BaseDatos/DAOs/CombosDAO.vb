@@ -14,8 +14,10 @@
         End Try
     End Function
 
+    'Funcion que cargara a partir de la tabla Animal en BD las razas unicamente de perros
+    'es decir, aquellas donde el tipo_animal sea 1
     Friend Function cargarRazasPerros() As DataTable
-        str_sql = "SELECT * FROM Razas_Perros WHERE 1=1"
+        str_sql = "SELECT * FROM Razas WHERE cod_tipo_animal=1"
         Dim tabla As DataTable
         tabla = BDHelper.getDBHelper.ConsultaSQL(str_sql)
         Try

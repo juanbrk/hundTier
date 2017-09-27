@@ -37,11 +37,16 @@
             'Chequeamos los valores que pueden ser null en la BD para saber si agregarlos o no.
             If tieneColor2 Then
                 str_sql += "," & ani.idColor2.ToString & ""
-            ElseIf estaCastrado Then
+            End If
+
+            If estaCastrado Then
                 str_sql += "," & ani.idCondicionCastrado.ToString & ""
-            ElseIf tieneColorCollar Then
+            End If
+
+            If tieneColorCollar Then
                 str_sql += "," & ani.idColorCollar & ""
             End If
+
             str_sql += ")"
             Try
                 Return BDHelper.getDBHelper().EjecutarSQL(str_sql)

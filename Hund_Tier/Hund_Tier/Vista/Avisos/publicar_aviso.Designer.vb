@@ -277,6 +277,7 @@ Partial Class frm_publicar_aviso
         'txt_nombre_animal
         '
         Me.txt_nombre_animal.Location = New System.Drawing.Point(75, 17)
+        Me.txt_nombre_animal.MaxLength = 50
         Me.txt_nombre_animal.Name = "txt_nombre_animal"
         Me.txt_nombre_animal.Size = New System.Drawing.Size(166, 20)
         Me.txt_nombre_animal.TabIndex = 1

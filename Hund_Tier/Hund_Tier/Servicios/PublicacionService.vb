@@ -4,8 +4,8 @@
         publiDao = New PublicacionDAO()
     End Sub
 
-    Public Function agregarAnimal(unAnimal As Animal) As Integer
-        Return publiDao.addAnimal(unAnimal, 1)
+    Public Function agregarAnimal(unAnimal As Animal, tipo_animal As Integer) As Integer
+        Return publiDao.addAnimal(unAnimal, tipo_animal)
     End Function
 
 

@@ -80,6 +80,7 @@
     <Compile Include="BaseDatos\Helper\BDHelper.vb" />
     <Compile Include="Modelo\Barrio.vb" />
     <Compile Include="Modelo\Animal.vb" />
+    <Compile Include="Modelo\Publicacion.vb" />
     <Compile Include="Modelo\Usuario.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -99,6 +100,12 @@
     <Compile Include="Servicios\CombosService.vb" />
     <Compile Include="Servicios\PublicacionService.vb" />
     <Compile Include="Servicios\UsuariosService.vb" />
+    <Compile Include="Vista\Avisos\Frm_confirmacionPublicacion.Designer.vb">
+      <DependentUpon>Frm_confirmacionPublicacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Avisos\Frm_confirmacionPublicacion.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Vista\Avisos\frm_seleccion_tipo_aviso.Designer.vb">
       <DependentUpon>frm_seleccion_tipo_aviso.vb</DependentUpon>
     </Compile>
@@ -149,6 +156,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\Avisos\Frm_confirmacionPublicacion.resx">
+      <DependentUpon>Frm_confirmacionPublicacion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vista\Avisos\frm_seleccion_tipo_aviso.resx">
       <DependentUpon>frm_seleccion_tipo_aviso.vb</DependentUpon>

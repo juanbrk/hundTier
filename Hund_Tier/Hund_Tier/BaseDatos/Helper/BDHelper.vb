@@ -75,12 +75,47 @@ Public Class BDHelper
         End Try
     End Function
 
-    'Funcion que genera automaticamente un id para agregar en la BD que se desee, segun el string
+    'Funcion que genera automaticamente un id para agregar en la tabla que se desee, segun el string
     'pasado por parametro
     Public Function generarId(ByVal nombreTablaAAgregar As String) As Integer
         ' Se utiliza para sentencias SQL del tipo “Select”
         ' La función recibe por valor una sentencia sql como string, devuelve un objeto de tipo DataTable
         Dim strSql = "Select * From " & nombreTablaAAgregar
+        Dim conexion As New SqlConnection
+        Dim cmd As New SqlCommand
+        Dim tabla As New DataTable
+        Dim nuevo_id = 0
+        Dim filas_tabla = 0
+        Try
+            conexion.ConnectionString = string_conexion
+            conexion.Open()
+            cmd.Connection = conexion
+            cmd.CommandType = CommandType.Text
+            cmd.CommandText = strSql
+            ' El datatable se carga con el resultado de ejecutar la sentencia en el motor de base de datos
+            tabla.Load(cmd.ExecuteReader)
+            ' 'segun la cantidad de filas que retorne la tabla, creamos un id que sea un numero mayor al numero devuelto
+            filas_tabla = tabla.Rows.Count
+            If filas_tabla > 0 Then
+                nuevo_id = filas_tabla + 1
+            Else
+                nuevo_id = 1
+            End If
+        Catch ex As Exception
+            Throw ex
+        Finally
+            If conexion.State = ConnectionState.Open Then conexion.Close()
+            'Dispose() libera los recursos asociados a la conexón
+            conexion.Dispose()
+        End Try
+        Return nuevo_id
+    End Function
+
+    'Funcion que permite generar un id al animal, segun sea perro o gato. Se busca en la tabla animal
+    'los animales con el mismo tipo de animal ingresado por parametro y se cuentan las filas que hay de
+    'ese tipo de animal. El nuevo id es el numero de filas + 1
+    Public Function generarIdAnimal(tipoAnimal As Integer) As Integer
+        Dim strSql = "Select * From Animal  Where cod_tipo_animal =" & tipoAnimal
         Dim conexion As New SqlConnection
         Dim cmd As New SqlCommand
         Dim tabla As New DataTable

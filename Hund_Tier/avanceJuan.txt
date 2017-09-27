@@ -7,19 +7,23 @@ de usuario que tiene en visual
 *frm_publicarAviso
 
 - si el usuario ingresa un segundo numero de telefono agregarlo
-en la BD en la tabla avisos. Que sea obligatorio un numero de 
+en la BD en la tabla Publicaciones. Que sea obligatorio un numero de 
 telefono al menos. 
 
-+ Ya se agrega el animal a la BD. Se hacen todos los chequeos. 
++ Ya se agrega el perroa la BD. Se hacen todos los chequeos. 
 
 - Cargar la publicacion a la BD
 - Mostrar una ventana de confirmacion antes de publicar el aviso
 
 
-
-*frm_ABMUSuarios
-
-
 *Base de datos
-- crear tabla para avisos. 
+- crear tabla para publicaciones. ¿Debe tener un id_tipo_animal y un id_animal? ¿o creo una tabla publicacion perros y otra publicacion gatos?
+
+27/09
+
++ Cambiadas tablas de BD animal y publicacion. Animal ahora tiene dos PK (id_animal y tipo_animal) de esta forma evitamos tener una tabla
+para perros y otra para gatos.  La tabla publicacion ahora tiene 4 PK (codigo_publicacion, tipo_publicacion, y las 2 de animal)
+
++ Creada tabla Razas en BD. Ahora tiene 3 columnas cod_raza, tipo_animal y nombre_raza. Entonces en una misma tabla guardamos las razas
+de perros y gatos. 
 

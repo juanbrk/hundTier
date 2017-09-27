@@ -1,6 +1,11 @@
 ﻿Public Class frm_publicar_aviso
     Dim usuario As Usuario
+    'Bandera que me permite saber si lo que se publicara es un gato(tipoAnimal = 2) o un perro (tipoAnimal = 1)
+    'Por defecto es 1
+    Dim tipo_animal = 1
 
+    'Bandera para saber que tipo de publicacion es, adopcion = 1, perdido = 2, encontrado = 3
+    Dim tipo_publicacion = 1
     'Cuando carga la form hay que cargar los combos Barrio y los campos nombre y email con los datos del 
     'usuario
     Private Sub frm_publicar_aviso_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -10,6 +15,12 @@
 
     Public Sub setTitulo(titulo As String)
         Me.Text = titulo
+    End Sub
+    Public Sub setTipoAnimal(valor As Integer)
+        tipo_animal = valor
+    End Sub
+    Public Sub setTipoPublicacion(valor As Integer)
+        tipo_publicacion = valor
     End Sub
 
     Private Sub llenarCampos()
@@ -22,14 +33,23 @@
         ' los ultimos dos parametros
         cmbServicio.llenarCombo(cmb_barrio, TablaDatos, "nombre", "ID_BARRIO")
         'Reutilizamos la tabla, pero ahora le cargamos las razas
-        TablaDatos = cmbServicio.getRazasPerros
-        cmbServicio.llenarCombo(cmb_raza, TablaDatos, "nombre_raza", "id_raza")
-        'Reutilizamos la tabla para cargar los combos color1 y color2
-        TablaDatos = cmbServicio.getColores
-        cmbServicio.llenarCombo(cmb_color1, TablaDatos, "nombre", "id_color")
-        'Volvemos a cargar con los colores
-        TablaDatos = cmbServicio.getColores
-        cmbServicio.llenarCombo(cmb_color2, TablaDatos, "nombre", "id_color")
+
+        'Si el tipo de animal es un perro, cargamos los combos con lo que le corresponde a perros. 
+        If tipo_animal = 1 Then
+            TablaDatos = cmbServicio.getRazasPerros
+            cmbServicio.llenarCombo(cmb_raza, TablaDatos, "nombre_raza", "cod_raza")
+            'Reutilizamos la tabla para cargar los combos color1 y color2
+            TablaDatos = cmbServicio.getColores
+            cmbServicio.llenarCombo(cmb_color1, TablaDatos, "nombre", "id_color")
+            'Volvemos a cargar con los colores
+            TablaDatos = cmbServicio.getColores
+            cmbServicio.llenarCombo(cmb_color2, TablaDatos, "nombre", "id_color")
+
+            'Si el animal es un gato llenamos los combos con lo relativo a gatos. 
+        Else
+
+        End If
+
         'Cargamos combo sexos
         TablaDatos = cmbServicio.getSexos
         cmbServicio.llenarCombo(cmb_sexo, TablaDatos, "nombre_sexo", "codigo_sexo")
@@ -103,34 +123,53 @@
             'Animal que agregaremos a la BD
             Dim unAni As New Animal
 
-            unAni.idAnimal = BDHelper.getDBHelper.generarId("Perros")
-            unAni.nombre = txt_nombre_animal.Text
-            unAni.tamano = cmb_tamano.SelectedValue
-            unAni.idTipoPelo = cmb_pelo.SelectedValue
-            unAni.idRaza = cmb_raza.SelectedValue
-            unAni.idEdad = cmb_edad.SelectedValue
-            unAni.idSexo = cmb_sexo.SelectedValue
-            unAni.idColor1 = cmb_color1.SelectedValue
-            If cmb_color2.SelectedValue IsNot Nothing Then
-                unAni.idColor2 = cmb_color2.SelectedValue
+            'Si lo que se va a agregar es un perro. 
+            If tipo_animal = 1 Then
+                unAni.idAnimal = BDHelper.getDBHelper.generarIdAnimal(tipo_animal)
+                unAni.nombre = txt_nombre_animal.Text
+                unAni.tamano = cmb_tamano.SelectedValue
+                unAni.idTipoPelo = cmb_pelo.SelectedValue
+                unAni.idRaza = cmb_raza.SelectedValue
+                unAni.idEdad = cmb_edad.SelectedValue
+                unAni.idSexo = cmb_sexo.SelectedValue
+                unAni.idColor1 = cmb_color1.SelectedValue
+                If cmb_color2.SelectedValue IsNot Nothing Then
+                    unAni.idColor2 = cmb_color2.SelectedValue
+                End If
+
+                If rb_si.Checked Then
+                    unAni.idCondicionCastrado = 1
+                End If
+
+                If rbtn_no.Checked Then
+                    unAni.idCondicionCastrado = 2
+                End If
+
+                If rbtn_NoSabe.Checked Then
+                    unAni.idCondicionCastrado = 3
+                End If
             End If
 
-            If rb_si.Checked Then
-                unAni.idCondicionCastrado = 1
-            End If
+            'Pasamos a la seccion de la informacion adicional
+            Dim idBarrio = cmb_barrio.SelectedValue
+            Dim ciudad = txt_ciudad.Text
+            Dim infoAdicional = txt_descripcion.Text
+            Dim idResponsable = usuario.getIdUsuario
 
-            If rbtn_no.Checked Then
-                unAni.idCondicionCastrado = 2
-            End If
 
-            If rbtn_NoSabe.Checked Then
-                unAni.idCondicionCastrado = 3
-            End If
+
+
+
+
+
 
 
 
             Dim publiServicio As New PublicacionService
-            publiServicio.agregarAnimal(unAni)
+            'Agregamos el animal, pasando como parametro el animal y el tipo de animal que queremos
+            'Que se agregue a la BD. Segun el tipo de animal, se le dira a la base dedatos a que 
+            ' tabla agregar el animal si a perros o a gatos.
+            publiServicio.agregarAnimal(unAni, tipo_animal)
         End If
 
 
