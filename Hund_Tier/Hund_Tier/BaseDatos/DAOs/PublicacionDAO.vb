@@ -69,6 +69,53 @@
 
     End Function
 
+    Friend Function addPublicacionAdopcion(unaPublicacion As Publicacion) As Integer
+        'Variable que almacena el valor que se retornara. se actualiza en cada try catch. 
+        Dim valorRetorno As New Integer
+
+        Try
+            If addAnimal(unaPublicacion.animal) = 1 Then
+                'Generamos los datos que faltan para subir la publicacion a la BD. Codigo de publicacion y estadoPublicacion
+                'La fecha de publicacion la agregara el motor de la BD
+                unaPublicacion.codigoPublicacion = BDHelper.getDBHelper.generarId("Publicacion")
+                unaPublicacion.estadoPublicacion = 1
+
+                'Creamos un booleano para verificar si la publicacion tiene telefono2
+                Dim tieneTelefono = (unaPublicacion.telefono2 IsNot Nothing)
+
+                str_sql = "Insert into Publicacion(cod_publicacion, tipo_animal, id_animal, tipo_publicacion, fecha_publicacion, barrio, descripcion, usuario_responsable"
+                'si ingresaron un telefono2 en la publicacion, lo agregamos. si no no.
+                If tieneTelefono Then
+                    str_sql += ", telefono2"
+                End If
+                str_sql += ", estado_publicacion, ciudad) VALUES ("
+
+                '(1,1,2,1,GETDATE(),4,'asdasda',3,'156546',1,'Cordoba')
+                str_sql += unaPublicacion.codigoPublicacion.ToString & "," & unaPublicacion.animal.tipoAnimal.ToString & "," & unaPublicacion.animal.idAnimal.ToString & "," & unaPublicacion.tipoPublicacion.ToString & ","
+                str_sql += " GETDATE()," & unaPublicacion.idBarrio.ToString & ",'" & unaPublicacion.descripcionPublicacion & "'," & unaPublicacion.usuario.getIdUsuario.ToString & ","
+                'Si la publi tiene telefono, la agregamos
+                If tieneTelefono Then
+                    str_sql += "'" & unaPublicacion.telefono2 & "',"
+                End If
+                str_sql += unaPublicacion.estadoPublicacion.ToString & ",'" & unaPublicacion.nombreCiudad & "')"
+
+                Try
+                    valorRetorno = BDHelper.getDBHelper().EjecutarSQL(str_sql)
+                Catch ex As Exception
+                    MsgBox("Error al agregar La publicacion", MsgBoxStyle.OkOnly, "Base de Datos")
+                    valorRetorno = 0
+                End Try
+            End If
+
+        Catch ex As Exception
+            MsgBox("Error al agregar el animal", MsgBoxStyle.OkOnly, "Base de Datos")
+            valorRetorno = 0
+        End Try
+
+        Return valorRetorno
+
+    End Function
+
 
 
 End Class

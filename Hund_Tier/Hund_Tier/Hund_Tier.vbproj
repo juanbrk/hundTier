@@ -100,22 +100,22 @@
     <Compile Include="Servicios\CombosService.vb" />
     <Compile Include="Servicios\PublicacionService.vb" />
     <Compile Include="Servicios\UsuariosService.vb" />
-    <Compile Include="Vista\Avisos\Frm_confirmacionPublicacion.Designer.vb">
+    <Compile Include="Vista\Publicaciones\Frm_confirmacionPublicacion.Designer.vb">
       <DependentUpon>Frm_confirmacionPublicacion.vb</DependentUpon>
     </Compile>
-    <Compile Include="Vista\Avisos\Frm_confirmacionPublicacion.vb">
+    <Compile Include="Vista\Publicaciones\Frm_confirmacionPublicacion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vista\Avisos\frm_seleccion_tipo_aviso.Designer.vb">
+    <Compile Include="Vista\Publicaciones\frm_seleccion_tipo_aviso.Designer.vb">
       <DependentUpon>frm_seleccion_tipo_aviso.vb</DependentUpon>
     </Compile>
-    <Compile Include="Vista\Avisos\frm_seleccion_tipo_aviso.vb">
+    <Compile Include="Vista\Publicaciones\frm_seleccion_tipo_aviso.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vista\Avisos\publicar_aviso.Designer.vb">
+    <Compile Include="Vista\Publicaciones\publicar_aviso.Designer.vb">
       <DependentUpon>publicar_aviso.vb</DependentUpon>
     </Compile>
-    <Compile Include="Vista\Avisos\publicar_aviso.vb">
+    <Compile Include="Vista\Publicaciones\publicar_aviso.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Vista\Barrios\agregadaBarrios.vb" />
@@ -157,13 +157,13 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vista\Avisos\Frm_confirmacionPublicacion.resx">
+    <EmbeddedResource Include="Vista\Publicaciones\Frm_confirmacionPublicacion.resx">
       <DependentUpon>Frm_confirmacionPublicacion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vista\Avisos\frm_seleccion_tipo_aviso.resx">
+    <EmbeddedResource Include="Vista\Publicaciones\frm_seleccion_tipo_aviso.resx">
       <DependentUpon>frm_seleccion_tipo_aviso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vista\Avisos\publicar_aviso.resx">
+    <EmbeddedResource Include="Vista\Publicaciones\publicar_aviso.resx">
       <DependentUpon>publicar_aviso.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vista\Login\frm_login.resx">

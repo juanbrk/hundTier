@@ -57,6 +57,7 @@
                 usuario.setBarrio(tabla.Rows(0).Item("id_barrio").ToString())
                 usuario.setUsername(tabla.Rows(0).Item("username").ToString())
                 usuario.setPassword(tabla.Rows(0).Item("password").ToString)
+                usuario.setId(tabla.Rows(0).Item("id_usuario").ToString)
                 Return usuario
             End If
         Catch ex As Exception

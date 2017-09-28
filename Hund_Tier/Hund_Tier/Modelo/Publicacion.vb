@@ -1,8 +1,7 @@
 ﻿Public Class Publicacion
     Public Property codigoPublicacion As Integer
     Public Property tipoPublicacion As Integer
-    Public Property idAnimal As Integer
-    Public Property idTipoAnimal As Integer
+    Public Property animal As Animal
     Public Property idBarrio As Integer
     Public Property nombreCiudad As String
     Public Property descripcionPublicacion As String

@@ -4,12 +4,14 @@
     'Por defecto es 1
     Dim tipo_animal = 1
 
+
     'Bandera para saber que tipo de publicacion es, adopcion = 1, perdido = 2, encontrado = 3
     Dim tipo_publicacion = 1
     'Cuando carga la form hay que cargar los combos Barrio y los campos nombre y email con los datos del 
     'usuario
     Private Sub frm_publicar_aviso_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         llenarCampos()
+        usuario = Frm_main.getUsuario()
 
     End Sub
 
@@ -115,13 +117,27 @@
             Return False
         End If
 
+        'Si el usuario no agrego un telefono cuando se dio de alta, vamos a necesitar que agregue al menos uno.
+        If txt_telefono_1.Text = "" Then
+            If txt_telefono_2.Text = "" Then
+                MsgBox("Debe agregar al menos un telefono", MsgBoxStyle.OkOnly, "Error con telefono")
+                txt_telefono_2.BackColor = Color.Red
+                txt_telefono_2.Focus()
+                Return False
+            End If
+        End If
+
         Return True
     End Function
 
     Private Sub btn_publicar_Click(sender As Object, e As EventArgs) Handles btn_publicar.Click
         If validar_campos() Then
-            'Animal que agregaremos a la BD
+            'Animal  y publicacion que agregaremos a la BD
             Dim unAni As New Animal
+            Dim publi As New Publicacion
+
+            'Chequeamos todo lo pertinente al animal de la publicacion.
+
             'Creamos una variable del tipo booleana para saber que tipo de animal es, si es perro da verdadero
             'Si es gato da falso
             Dim esPerro = (tipo_animal = 1)
@@ -152,19 +168,42 @@
                 If rbtn_NoSabe.Checked Then
                     unAni.idCondicionCastrado = 3
                 End If
+
+            'Si lo que agregamos es un gato
+            Else
+
             End If
 
-            'Pasamos a la seccion de la informacion adicional
-            Dim idBarrio = cmb_barrio.SelectedValue
-            Dim ciudad = txt_ciudad.Text
-            Dim infoAdicional = txt_descripcion.Text
-            Dim idResponsable = usuario.getIdUsuario
+
+            'Pasamos a la seccion de la informacion adicional y empezamos a completar los datos de
+            'la publicacion que se cargara a la BD
+            publi.usuario = usuario
+            publi.idBarrio = cmb_barrio.SelectedValue
+            publi.nombreCiudad = txt_ciudad.Text
+            publi.descripcionPublicacion = txt_descripcion.Text
+            publi.animal = unAni
+            publi.tipoPublicacion = tipo_publicacion
+
+            If publi.usuario.getNumTelefono Is Nothing Then
+                usuario.setNumeroTelefono("")
+            End If
+
+            If txt_telefono_2.Text IsNot Nothing Then
+                publi.telefono2 = txt_telefono_2.Text
+            End If
+
+
 
             Dim publiServicio As New PublicacionService
             'Agregamos el animal, pasando como parametro el animal  que queremos
             'Que se agregue a la BD. Segun el tipo de animal, se le dira a la base dedatos a que 
             ' tabla agregar el animal si a perros o a gatos.
-            publiServicio.agregarAnimal(unAni)
+            'Esto deberia estar dentro de otra funcion agregarPublicacion()
+            'publiServicio.agregarAnimal(unAni)
+
+            publiServicio.agregarPublicacionAdopcion(publi)
+
+
         End If
 
 

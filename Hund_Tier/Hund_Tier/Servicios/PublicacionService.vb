@@ -8,6 +8,12 @@
         Return publiDao.addAnimal(unAnimal)
     End Function
 
+    'Funcion que agrega publicacion de adopcion. Puede que sea solo agregarPublicacion y que haga el chequeo del 
+    'tipo de publicacion en el DAO
+    Public Function agregarPublicacionAdopcion(unaPublicacion As Publicacion) As Integer
+        Return publiDao.addPublicacionAdopcion(unaPublicacion)
+    End Function
+
 
 
 End Class

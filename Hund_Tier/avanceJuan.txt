@@ -27,3 +27,8 @@ para perros y otra para gatos.  La tabla publicacion ahora tiene 4 PK (codigo_pu
 + Creada tabla Razas en BD. Ahora tiene 3 columnas cod_raza, tipo_animal y nombre_raza. Entonces en una misma tabla guardamos las razas
 de perros y gatos. 
 
++ Creada funcion en BDHELPER generarIdAnimal, que permite generar un id al animal según sea perro o gato. 
+
++ Modificado el getRazasPerro en combosDao para que solo busque las razas de los perros dentro de la nueva tabla razas, segun el tipo_animal
+
+
