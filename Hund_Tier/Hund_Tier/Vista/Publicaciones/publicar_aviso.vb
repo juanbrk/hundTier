@@ -132,17 +132,17 @@
 
     Private Sub btn_publicar_Click(sender As Object, e As EventArgs) Handles btn_publicar.Click
         If validar_campos() Then
-            'Animal  y publicacion que agregaremos a la BD
+            ' Animal  y publicacion que agregaremos a la BD
             Dim unAni As New Animal
             Dim publi As New Publicacion
 
             'Chequeamos todo lo pertinente al animal de la publicacion.
 
-            'Creamos una variable del tipo booleana para saber que tipo de animal es, si es perro da verdadero
-            'Si es gato da falso
+            ' Creamos una variable del tipo booleana para saber que tipo de animal es, si es perro da verdadero
+            ' Si es gato da falso
             Dim esPerro = (tipo_animal = 1)
 
-            'Si lo que se va a agregar es un perro. 
+            ' Si lo que se va a agregar es un perro. 
             If esPerro Then
                 unAni.tipoAnimal = 1
                 unAni.idAnimal = BDHelper.getDBHelper.generarIdAnimal(tipo_animal)
@@ -169,14 +169,13 @@
                     unAni.idCondicionCastrado = 3
                 End If
 
-            'Si lo que agregamos es un gato
+                ' Si lo que agregamos es un gato
             Else
 
             End If
 
-
-            'Pasamos a la seccion de la informacion adicional y empezamos a completar los datos de
-            'la publicacion que se cargara a la BD
+            ' Pasamos a la seccion de la informacion adicional y empezamos a completar los datos de
+            ' la publicacion que se cargara a la BD
             publi.usuario = usuario
             publi.idBarrio = cmb_barrio.SelectedValue
             publi.nombreCiudad = txt_ciudad.Text
@@ -192,20 +191,25 @@
                 publi.telefono2 = txt_telefono_2.Text
             End If
 
+            ' Por ahora no mostramos confirmacion con los datos de la publicacion
+            '  Solo un cartelito que diga estas seguro que deseas publicar. 
 
+            Dim d As DialogResult
+            d = MessageBox.Show("¿Desea continuar y realizar la publicacion?", "Aviso", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
+            If (d = DialogResult.OK) Then
 
-            Dim publiServicio As New PublicacionService
-            'Agregamos el animal, pasando como parametro el animal  que queremos
-            'Que se agregue a la BD. Segun el tipo de animal, se le dira a la base dedatos a que 
-            ' tabla agregar el animal si a perros o a gatos.
-            'Esto deberia estar dentro de otra funcion agregarPublicacion()
-            'publiServicio.agregarAnimal(unAni)
+                ' Con todos los datos de la publicacion, la cargamos en la BD mediante la clase PublicacionService
+                ' Pasandole la publicacion como parametro.
+                Dim publiServicio As New PublicacionService
 
-            publiServicio.agregarPublicacionAdopcion(publi)
+                ' Si la publicacion se cargo correctamente en la BD mostramos una ventana de confirmacion. 
+                If publiServicio.agregarPublicacionAdopcion(publi) = 1 Then
+                    MessageBox.Show("La publicacion fue realizada con éxito", "Exito", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
+                End If
 
+            End If
 
         End If
-
 
     End Sub
 End Class

@@ -345,6 +345,7 @@ Partial Class frm_publicar_aviso
         '
         'cmb_barrio
         '
+        Me.cmb_barrio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_barrio.FormattingEnabled = True
         Me.cmb_barrio.Location = New System.Drawing.Point(47, 17)
         Me.cmb_barrio.Name = "cmb_barrio"

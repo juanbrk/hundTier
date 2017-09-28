@@ -74,6 +74,9 @@
         Dim valorRetorno As New Integer
 
         Try
+            ' Agregamos el animal, pasando como parametro el animal  que queremos
+            ' Que se agregue a la BD. Segun el tipo de animal, se le dira a la base dedatos a que 
+            ' tabla agregar el animal si a perros o a gatos.
             If addAnimal(unaPublicacion.animal) = 1 Then
                 'Generamos los datos que faltan para subir la publicacion a la BD. Codigo de publicacion y estadoPublicacion
                 'La fecha de publicacion la agregara el motor de la BD
