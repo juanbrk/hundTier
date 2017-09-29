@@ -4,9 +4,12 @@
     'guardaran los datos del usuario traido desde la BD. De esta manera será mas facil para pasar
     'los datos del usuario de una form a otra sin tener que volver a entrar a la BD
     Private Property usuario As Usuario
+
     'La variable validado estará en false hasta que un usuario se loguee correctamente
     'ahi pasara a true. Se pedira desde frm_main para saber si se logueo algun usuario
     Private Property validado = False
+
+    Private Property bandera_escondida = True
 
 
     Private Sub btn_ingresar_Click(sender As Object, e As EventArgs) Handles btn_ingresar.Click
@@ -20,7 +23,14 @@
             Try
                 'Verificamos si el usuario existe
                 If usrService.existeUsuario(txt_email.Text, txt_password.Text) Then
-                    usuario = usrService.obtenerUsuario(txt_email.Text, txt_password.Text)
+
+                    ' Si el usuario existe inicializamos la variable global y unica de usuario que se usara en toda la 
+                    ' aplicacion primero llamando al metodo getUsuario y luego inicializando el usuario al valor devuelto
+                    'por la funcion obtenerUsuario
+                    Frm_main.getusuario.inicializarUsuario(usrService.obtenerUsuario(txt_email.Text, txt_password.Text))
+
+
+
                     validado = True
                     Me.Close()
                 Else
@@ -60,6 +70,9 @@
     Public Function getValidado() As Boolean
         Return validado
     End Function
+    Public Sub setEscondido(valor As Boolean)
+        bandera_escondida = valor
+    End Sub
 
     Private Sub lbl_info_username_Click(sender As Object, e As EventArgs) Handles lbl_info_username.Click
         MessageBox.Show("Si no recuerda su nombre de usuario puede intentar con su email", "Inicio de sesión", MessageBoxButtons.OK, MessageBoxIcon.Information)

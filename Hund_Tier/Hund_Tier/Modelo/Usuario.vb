@@ -1,23 +1,18 @@
 ﻿Public Class Usuario
-    Private Property idUsuario As Integer
-    Private Property nombre As String
-    Private Property apellido As String
-    Private Property barrio_id As Integer
-    Private Property username As String
-    Private Property email As String
-    Private Property contrasena As String
-    Private Property num_telefono As String
-    Private Property calle As String
-    Private Property numero As String
-    Private Property piso As Integer
-    Private Property departamento As String
-    Private Property habilitado As Integer
-    Private Property barrioAsString As String
-
-
-
-
-
+    Public Property idUsuario As Integer
+    Public Property nombre As String
+    Public Property apellido As String
+    Public Property barrio_id As Integer
+    Public Property username As String
+    Public Property email As String
+    Public Property contrasena As String
+    Public Property num_telefono As String
+    Public Property calle As String
+    Public Property numero As String
+    Public Property piso As Integer
+    Public Property departamento As String
+    Public Property habilitado As Integer
+    Public Property barrioAsString As String
 
     Public Function getIdUsuario() As Integer
         Return idUsuario
@@ -121,6 +116,16 @@
         Return nombre
     End Function
 
+    'Metodo que sirve para inicializr la unica instancia de la form frm_main con los datos
+    'del usuario que se logueo en frm_login
+    Public Sub inicializarUsuario(usr As Usuario)
+        idUsuario = usr.getIdUsuario
+        nombre = usr.nombre
+        email = usr.email
+        barrio_id = usr.getBarrio
+        username = usr.getUsername
+        contrasena = usr.getPassword
 
+    End Sub
 
 End Class

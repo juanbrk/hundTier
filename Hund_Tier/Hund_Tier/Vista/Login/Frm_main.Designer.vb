@@ -30,6 +30,7 @@ Partial Class Frm_main
         Me.lbl_agregar_publicacion = New System.Windows.Forms.Button()
         Me.lbl_mis_publicaciones = New System.Windows.Forms.Button()
         Me.btn_busqueda = New System.Windows.Forms.Button()
+        Me.CerrarSesionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnu_frm_main.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -44,6 +45,7 @@ Partial Class Frm_main
         '
         'MiPerfilToolStripMenuItem
         '
+        Me.MiPerfilToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CerrarSesionToolStripMenuItem})
         Me.MiPerfilToolStripMenuItem.Name = "MiPerfilToolStripMenuItem"
         Me.MiPerfilToolStripMenuItem.Size = New System.Drawing.Size(63, 20)
         Me.MiPerfilToolStripMenuItem.Text = "Mi perfil"
@@ -105,6 +107,12 @@ Partial Class Frm_main
         Me.btn_busqueda.Text = "Buscar animal"
         Me.btn_busqueda.UseVisualStyleBackColor = True
         '
+        'CerrarSesionToolStripMenuItem
+        '
+        Me.CerrarSesionToolStripMenuItem.Name = "CerrarSesionToolStripMenuItem"
+        Me.CerrarSesionToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CerrarSesionToolStripMenuItem.Text = "Cerrar sesion"
+        '
         'Frm_main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -136,4 +144,5 @@ Partial Class Frm_main
     Friend WithEvents lbl_agregar_publicacion As Button
     Friend WithEvents lbl_mis_publicaciones As Button
     Friend WithEvents btn_busqueda As Button
+    Friend WithEvents CerrarSesionToolStripMenuItem As ToolStripMenuItem
 End Class
