@@ -39,6 +39,9 @@
         Return usrDao.getUsuario(mailOUsername, pwd)
     End Function
 
+    Public Function obtenerNombreBarrioUsuario(idBarrio As Integer) As String
+        Return usrDao.getNombreBarrioUsuario(idBarrio)
+    End Function
 
 
 

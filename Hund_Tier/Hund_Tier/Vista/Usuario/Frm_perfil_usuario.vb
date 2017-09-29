@@ -64,7 +64,9 @@
 
     Private Sub llenar_campos()
 
-        Dim nombre_barrio = usuario.getBarrio
+        Dim usrService As New UsuariosService
+
+        Dim nombre_barrio = usrService.obtenerNombreBarrioUsuario(usuario.getBarrio)
         txt_nombre.Text = usuario.getNombre
         txt_apellido.Text = usuario.getApellido
         txt_email.Text = usuario.getEmail

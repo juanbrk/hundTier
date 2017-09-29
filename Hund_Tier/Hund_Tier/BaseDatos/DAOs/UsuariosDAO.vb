@@ -120,6 +120,22 @@
         Return BDHelper.getDBHelper.ConsultaSQL("Select * from Usuarios where username = '" + usernameIngresado + "'").Rows.Count > 0
     End Function
 
+    Friend Function getNombreBarrioUsuario(idBarrio As Integer) As String
+        Dim valorDevuelto = ""
+        Dim strSql = "Select B.nombre AS 'nombre barrio' From Barrios B Where B.id_barrio = " & idBarrio.ToString
+
+        Try
+            Dim tabla = BDHelper.getDBHelper.ConsultaSQL(strSql)
+            If tabla.Rows.Count > 0 Then
+                valorDevuelto = tabla.Rows(0).Item("nombre barrio")
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Ocurrio un error tratando de obtener los datos de usuario", "Base de datos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return valorDevuelto
+    End Function
+
 
 
 

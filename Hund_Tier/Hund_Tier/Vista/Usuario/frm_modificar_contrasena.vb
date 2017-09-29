@@ -30,24 +30,33 @@
         Dim str_sql = ""
         Dim usrService As New UsuariosService
         If validar_campos() Then
+
             'Si esta todo OK debo chequear que
             'la contraseña actual coincida con la del usuario
             If usrService.existeUsuario(usuario.getUsername, txt_pass_actual.Text) Then
+
                 'Si la contraseña coincide, puedo actualizar la contraseña del usuario por
                 'la ingresada. Primero le pregunto si esta seguro de querer cambiar la contra
                 Dim d As DialogResult
+
                 d = MessageBox.Show("¿Desea modificar sus datos?", "Aviso", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
+
                 'Si el usuario esta de acuerdo con cambiar la contraseña, es decir, selecciona
                 'el boton ok, lo actualizamos
                 If (d = DialogResult.OK) Then
+
                     'Le asignamos al usuario en visual la nueva contraseña como atributo
                     'para poder pasarlo entre forms, ya actualizado. 
                     usuario.setPassword(txt_nueva_pass.Text)
+
                     Try
+
                         'Si la ejecucion de la actualizacion devuelve una fila entonces ya esta actualizado el usuario
                         If usrService.updateUsuario(usuario) = 1 Then
+
                             'Se le informa al usuario mediante msgbox
                             MessageBox.Show("Sus datos fueron actualizados!", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
                             'Modificamos el valor de la bandera, para que otras forms puedan consultar
                             'si el usuario modifico su pass. 
                             bandera_modificado = True
@@ -64,6 +73,7 @@
         End If
     End Sub
     Private Function validar_campos() As Boolean
+
         'campos obligatorios
         If txt_pass_actual.Text = String.Empty Then
             txt_pass_actual.BackColor = Color.Red
@@ -90,6 +100,7 @@
             txt_confirmar_pass.BackColor = Color.White
         End If
         If txt_nueva_pass.Text <> txt_confirmar_pass.Text Then
+
             'Deberia hacerlo con el metodo informar error de ABM pero no puedo porque el tipo de 
             'parametro que acepta es privado dentro de la clase ABM, por lo que no puedo accederla
             informar_error(Err.passwords_no_coinciden)
