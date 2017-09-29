@@ -48,7 +48,7 @@
             'Si esta ventana estaba escondida , mostramos la ventana. 
             mostrarMain()
 
-            actualizarUsuarioLogueado(instanciaUsuario.getUsername)
+            actualizarUsuario(instanciaUsuario.getUsername)
         Else
             Me.Close()
         End If
@@ -70,7 +70,7 @@
         End If
     End Sub
 
-    Public Sub actualizarUsuarioLogueado(ByVal userLogin As String)
+    Public Sub actualizarUsuario(ByVal userLogin As String)
         Dim user As Usuario
         lbl_nombre_usuario.Text = userLogin
         mnu_frm_main.Visible = True
@@ -81,7 +81,7 @@
         'asignar un usuario como atributo de ese form, para que cuando mostremos el form
         'podamos cargar los campos con los datos del usuario pasado.
         Dim form_ajuste_perfil As New Frm_perfil_usuario
-        form_ajuste_perfil.seleccionar_usuario(instanciaUsuario)
+        'form_ajuste_perfil.seleccionar_usuario(instanciaUsuario)
         form_ajuste_perfil.ShowDialog()
         'Si el usuario elimino su cuenta tenemos que cerrar este formulario, borrar los datos del usuario y mandarlo
         'al form login de vuelta. 

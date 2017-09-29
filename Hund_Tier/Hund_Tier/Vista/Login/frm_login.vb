@@ -1,10 +1,5 @@
 ﻿Public Class frm_login
 
-    'La property usuario es una variable del tipo Usuario de Visual studio donde se 
-    'guardaran los datos del usuario traido desde la BD. De esta manera será mas facil para pasar
-    'los datos del usuario de una form a otra sin tener que volver a entrar a la BD
-    Private Property usuario As Usuario
-
     'La variable validado estará en false hasta que un usuario se loguee correctamente
     'ahi pasara a true. Se pedira desde frm_main para saber si se logueo algun usuario
     Private Property validado = False
@@ -63,9 +58,6 @@
         'End termina la ejecucion de la app
         End
     End Sub
-    Public Function getUsuario() As Usuario
-        Return usuario
-    End Function
 
     Public Function getValidado() As Boolean
         Return validado

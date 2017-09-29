@@ -1,5 +1,4 @@
 ﻿Public Class frm_modificar_contrasena
-    Private Property usuario As Usuario
     Private Property bandera_modificado As Boolean
     Enum Err
         passwords_no_coinciden
@@ -11,10 +10,10 @@
     'de ese usuario obtendremos la contraseña
     'Cuando se crea la form se establece la variable modificado a false
     'Se establecera a true si el usuario modifico su contraseña
-    Public Sub New(ByVal usuario_pasado As Usuario)
+    Public Sub New()
         InitializeComponent()
         bandera_modificado = False
-        usuario = usuario_pasado
+        'usr = usuario_pasado
     End Sub
 
 
@@ -22,9 +21,6 @@
         Return bandera_modificado
     End Function
 
-    Public Function getUsuario() As Usuario
-        Return usuario
-    End Function
 
     Private Sub btn_modificar_Click(sender As Object, e As EventArgs) Handles btn_modificar.Click
         Dim str_sql = ""
@@ -33,7 +29,7 @@
 
             'Si esta todo OK debo chequear que
             'la contraseña actual coincida con la del usuario
-            If usrService.existeUsuario(usuario.getUsername, txt_pass_actual.Text) Then
+            If usrService.existeUsuario(Frm_main.getusuario.username, Frm_main.getusuario.contrasena) Then
 
                 'Si la contraseña coincide, puedo actualizar la contraseña del usuario por
                 'la ingresada. Primero le pregunto si esta seguro de querer cambiar la contra
@@ -47,12 +43,12 @@
 
                     'Le asignamos al usuario en visual la nueva contraseña como atributo
                     'para poder pasarlo entre forms, ya actualizado. 
-                    usuario.setPassword(txt_nueva_pass.Text)
+                    actualizarUsuario()
 
                     Try
 
                         'Si la ejecucion de la actualizacion devuelve una fila entonces ya esta actualizado el usuario
-                        If usrService.updateUsuario(usuario) = 1 Then
+                        If usrService.updateUsuario(Frm_main.getusuario) = 1 Then
 
                             'Se le informa al usuario mediante msgbox
                             MessageBox.Show("Sus datos fueron actualizados!", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -72,6 +68,12 @@
 
         End If
     End Sub
+
+    'Metodo que permite actualizar la password del usuario que esta como unica instancia de frm_main
+    Private Sub actualizarUsuario()
+        Frm_main.getusuario.setPassword(txt_nueva_pass.Text)
+    End Sub
+
     Private Function validar_campos() As Boolean
 
         'campos obligatorios

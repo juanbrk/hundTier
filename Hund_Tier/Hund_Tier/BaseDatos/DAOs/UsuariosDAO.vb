@@ -52,14 +52,30 @@
             Dim tabla = BDHelper.getDBHelper.ConsultaSQL(strSql)
             If tabla.Rows.Count > 0 Then
                 Dim usuario As New Usuario
+                usuario.setId(tabla.Rows(0).Item("id_usuario").ToString)
                 usuario.setNombre(tabla.Rows(0).Item("nombre").ToString())
-                usuario.setEmail(tabla.Rows(0).Item("email").ToString())
+                usuario.setApellido(tabla.Rows(0).Item("apellido").ToString())
                 usuario.setBarrio(tabla.Rows(0).Item("id_barrio").ToString())
                 usuario.setUsername(tabla.Rows(0).Item("username").ToString())
+                usuario.setEmail(tabla.Rows(0).Item("email").ToString())
                 usuario.setPassword(tabla.Rows(0).Item("password").ToString)
-                usuario.setId(tabla.Rows(0).Item("id_usuario").ToString)
+                'Si el usuario tiene ingresado algun valor en la columna numero
+                If Not IsDBNull(tabla.Rows(0).Item("num_telefono")) Then
+                    usuario.setNumeroTelefono(tabla.Rows(0).Item("num_telefono").ToString())
+                End If
+                'Si hay una calle ingresada en la columna calle
+                If Not IsDBNull(tabla.Rows(0).Item("calle")) Then
+                    usuario.setCalle(tabla.Rows(0).Item("calle").ToString())
+                    usuario.setNumCalle(tabla.Rows(0).Item("numero").ToString())
+                    'Si el usuario vive en departamento (piso y depto)
+                    If Not IsDBNull(tabla.Rows(0).Item("piso")) Then
+                        usuario.setPiso(tabla.Rows(0).Item("piso"))
+                        usuario.setDepartamento(tabla.Rows(0).Item("departamento"))
+                    End If
+                End If
+
                 Return usuario
-            End If
+                End If
         Catch ex As Exception
             MessageBox.Show("Ocurrio un error tratando de obtener los datos de usuario", "Base de datos", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
