@@ -128,4 +128,8 @@
 
     End Sub
 
+    Private Sub btn_busqueda_Click(sender As Object, e As EventArgs) Handles btn_busqueda.Click
+        Dim seleccionar_tipo_aviso As New frm_seleccion_tipo_aviso
+        seleccionar_tipo_aviso.ShowDialog()
+    End Sub
 End Class

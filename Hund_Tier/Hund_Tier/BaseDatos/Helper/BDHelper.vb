@@ -49,6 +49,58 @@ Public Class BDHelper
         End Try
     End Function
 
+    'Chequear como hacer la transacción
+    'Public Function ejecutarSQLTransaction(ByVal strSql As List(Of String), ByVal fecha As Date) As Integer
+    '    Dim tran As SqlTransaction = Nothing
+    '    Dim cmd As SqlCommand = New SqlCommand
+    '    Dim comm As SqlConnection = New SqlConnection
+    '    Dim conexion As New SqlConnection
+    '    Try
+    '        conexion.ConnectionString = string_conexion
+    '        conexion.Open()
+    '        conexion.BeginTransaction()
+
+
+    '        cmd.Connection = conexion
+    '        cmd.CommandType = CommandType.Text
+    '        cmd.Transaction = tran
+    '        cmd.CommandText = strSql.ElementAt(0) 'REGISTRA EL PEDIDO'
+    '        cmd.Parameters.AddWithValue("@FechaEntrega", fecha)
+    '        Dim bandera As Integer = cmd.ExecuteNonQuery()
+    '        cmd.CommandText = "SELECT MAX(Pedido_id) as id FROM Pedido"
+    '        Dim tabla As DataTable = New DataTable
+    '        tabla.Load(cmd.ExecuteReader)
+    '        Dim idpedido As Integer = Convert.ToInt32(tabla.Rows.Item(0).Item("id"))
+    '        cmd.Parameters.Clear()
+
+
+    '        cmd.CommandText = "SET IDENTITY_INSERT Detalle_pedido ON"
+    '        cmd.ExecuteNonQuery()
+
+    '        cmd.Parameters.AddWithValue("@id", idpedido)
+    '        For i = 1 To strSql.Count - 1
+    '            cmd.CommandText = strSql.ElementAt(i)
+
+    '            If cmd.ExecuteNonQuery() <> 1 Then
+    '                MsgBox("Error en la sentencia: " + strSql.ElementAt(i), MsgBoxStyle.Critical)
+    '                Throw New Exception
+    '            End If
+
+    '        Next
+    '        cmd.CommandText = "SET IDENTITY_INSERT Detalle_pedido OFF"
+    '        cmd.ExecuteNonQuery()
+    '        tran.Commit()
+    '        Return 1
+    '    Catch ex As Exception
+    '        tran.Rollback()
+    '        Throw ex
+    '    Finally
+    '        ' Cierra la conexión
+    '        tran.Dispose()
+    '        comm.Close()
+    '        comm.Dispose()
+    '    End Try
+    'End Function
 
     Public Function ConsultaSQL(ByVal strSql As String) As Data.DataTable
         ' Se utiliza para sentencias SQL del tipo “Select”
