@@ -17,6 +17,14 @@
     'Bandera que sirve para saber si esta form esta escondida para poder mostrarla despues del logueo
     Dim bandera_escondida = False
 
+    'Bandera que sirve para saber que selecciona el usuario para cuando se muestre la form
+    'de seleccion de tipo de aviso, puede ser para buscar animales o para publicar una nueva
+    'publicacion
+    Enum SeleccionUsuario As Integer
+        publicarAviso
+        buscarAnimales
+    End Enum
+
     Public Shared Function getInstanciaLogin() As frm_login
         If IsNothing(instancia_form_logueo) Then
             instancia_form_logueo = New frm_login()
@@ -120,8 +128,7 @@
     End Sub
 
     Private Sub lbl_agregar_publicacion_Click(sender As Object, e As EventArgs) Handles lbl_agregar_publicacion.Click
-        Dim seleccionar_tipo_aviso As New frm_seleccion_tipo_aviso
-        seleccionar_tipo_aviso.ShowDialog()
+        mostrarFormSeleccionTipoAvisoPara(SeleccionUsuario.publicarAviso)
     End Sub
 
     Private Sub CerrarSesionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarSesionToolStripMenuItem.Click
@@ -129,7 +136,23 @@
     End Sub
 
     Private Sub btn_busqueda_Click(sender As Object, e As EventArgs) Handles btn_busqueda.Click
+        'se muestra el form seleccion Tipo aviso, se le pasa por parametro un entero que dice si vamos a agregar
+        'Un nuevo aviso o si vamos a consultar la BD para ver los animales. 
+        mostrarFormSeleccionTipoAvisoPara(SeleccionUsuario.buscarAnimales)
+    End Sub
+
+    'Funcion que permite pasar un parametro para que las siguientes forms sepan cual es la 
+    'eleccion del usuario. Si es hacer una nueva publicacion de un animal encontrado, perdido
+    'o en adopcion; o si es para buscar un animal. No cambia en nada como se presentan los siguientes
+    'forms sino que sirve a la hora de ver el form frm_publicar_aviso. que va a cambiar su 
+    'logica si es para buscar animales. 
+    Private Shared Sub mostrarFormSeleccionTipoAvisoPara(tipoMuestraForm As SeleccionUsuario)
         Dim seleccionar_tipo_aviso As New frm_seleccion_tipo_aviso
+        seleccionar_tipo_aviso.setEleccionUsuario(tipoMuestraForm)
         seleccionar_tipo_aviso.ShowDialog()
+    End Sub
+
+    Private Sub lbl_verPublicaciones_Click(sender As Object, e As EventArgs) Handles lbl_verPublicaciones.Click
+
     End Sub
 End Class

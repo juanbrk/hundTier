@@ -1,17 +1,27 @@
 ﻿Public Class frm_publicar_aviso
     Dim usuario As Usuario
+
+    Enum TipoAnimal As Integer
+        perro = 1
+        gato = 2
+    End Enum
     'Bandera que me permite saber si lo que se publicara es un gato(tipoAnimal = 2) o un perro (tipoAnimal = 1)
     'Por defecto es 1
-    Dim tipo_animal = 1
+    Dim tipo_animal = TipoAnimal.perro
 
-
+    Enum AccionUsuario As Integer
+        adopcion = 1
+        perdido = 2
+        encontrado = 3
+        busqueda = 4
+    End Enum
     'Bandera para saber que tipo de publicacion es, adopcion = 1, perdido = 2, encontrado = 3
-    Dim tipo_publicacion = 1
+    Dim accion_usuario = 1
     'Cuando carga la form hay que cargar los combos Barrio y los campos nombre y email con los datos del 
     'usuario
     Private Sub frm_publicar_aviso_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         llenarCampos()
-        usuario = Frm_main.getUsuario()
+        usuario = Frm_main.getusuario()
 
     End Sub
 
@@ -22,7 +32,7 @@
         tipo_animal = valor
     End Sub
     Public Sub setTipoPublicacion(valor As Integer)
-        tipo_publicacion = valor
+        accion_usuario = valor
     End Sub
 
     Private Sub llenarCampos()
@@ -37,7 +47,7 @@
         'Reutilizamos la tabla, pero ahora le cargamos las razas
 
         'Si el tipo de animal es un perro, cargamos los combos con lo que le corresponde a perros. 
-        If tipo_animal = 1 Then
+        If tipo_animal = TipoAnimal.perro Then
             TablaDatos = cmbServicio.getRazasPerros
             cmbServicio.llenarCombo(cmb_raza, TablaDatos, "nombre_raza", "cod_raza")
             'Reutilizamos la tabla para cargar los combos color1 y color2
@@ -52,6 +62,9 @@
 
         End If
 
+        'Carga de combos que son iguales tanto para perros como para gatos, de aca para abajo. 
+
+
         'Cargamos combo sexos
         TablaDatos = cmbServicio.getSexos
         cmbServicio.llenarCombo(cmb_sexo, TablaDatos, "nombre_sexo", "codigo_sexo")
@@ -65,13 +78,25 @@
         TablaDatos = cmbServicio.getPelosAnimal
         cmbServicio.llenarCombo(cmb_pelo, TablaDatos, "nombre_pelo", "codigo_pelo")
 
+        'Si el tipo de publicacion es cualquiera menos busqueda cargamos los nombres del usuario
+        'Si es busqueda no necesitamos el nombre del usuario
+        If accion_usuario <> AccionUsuario.busqueda Then
 
+            'El nombre y email del usuario lo conseguimos desde el usuario de la frm_main
+            usuario = Frm_main.getusuario()
+            txt_nombre_responsable.Text = usuario.getNombre
+            txt_mail_responsable.Text = usuario.getEmail
+            txt_telefono_1.Text = usuario.getNumTelefono
 
-        'El nombre y email del usuario lo conseguimos desde el usuario de la frm_main
-        usuario = Frm_main.getUsuario()
-        txt_nombre_responsable.Text = usuario.getNombre
-        txt_mail_responsable.Text = usuario.getEmail
-        txt_telefono_1.Text = usuario.getNumTelefono
+            'Si el tipo de publicacion es busqueda anulamos los campos que no hacen falta para la 
+            'busqueda. 
+        Else
+
+            txt_descripcion.ReadOnly = True
+            txt_telefono_2.ReadOnly = True
+
+        End If
+
 
 
 
@@ -82,136 +107,228 @@
     'Funcion que sirve para validar que se hayan rellenado todos los campos obligatorios, caso contrario
     'se informa con una ventana para que cada campo se complete
     Private Function validar_campos() As Boolean
-        'campos obligatorios
-        If txt_nombre_animal.Text = String.Empty Then
-            txt_nombre_animal.BackColor = Color.Red
-            txt_nombre_animal.Focus()
-            frm_UsuarioABM.informar_campo_faltante(lbl_nombre_animal.Text)
-            Return False
-        Else
-            txt_nombre_animal.BackColor = Color.White
-        End If
 
-        If cmb_raza.SelectedItem Is Nothing Then
-            frm_UsuarioABM.informar_campo_faltante(lbl_raza.Text)
-            Return False
-        End If
-        If cmb_color1.SelectedItem Is Nothing Then
-            frm_UsuarioABM.informar_campo_faltante(lbl_color_1.Text)
-            Return False
-        End If
-        If cmb_sexo.SelectedItem Is Nothing Then
-            frm_UsuarioABM.informar_campo_faltante(lbl_sexo_animal.Text)
-            Return False
-        End If
-        If cmb_edad.SelectedItem Is Nothing Then
-            frm_UsuarioABM.informar_campo_faltante(lbl_edad.Text)
-            Return False
-        End If
-        If cmb_tamano.SelectedItem Is Nothing Then
-            frm_UsuarioABM.informar_campo_faltante(lbl_tamano.Text)
-            Return False
-        End If
-        If cmb_pelo.SelectedItem Is Nothing Then
-            frm_UsuarioABM.informar_campo_faltante(lbl_pelo.Text)
-            Return False
-        End If
+        'Si el tipo de publicacion es cualquiera menos busqueda, validamos los campos obligatorios y demas
 
-        'Si el usuario no agrego un telefono cuando se dio de alta, vamos a necesitar que agregue al menos uno.
-        If txt_telefono_1.Text = "" Then
-            If txt_telefono_2.Text = "" Then
-                MsgBox("Debe agregar al menos un telefono", MsgBoxStyle.OkOnly, "Error con telefono")
-                txt_telefono_2.BackColor = Color.Red
-                txt_telefono_2.Focus()
+        If accion_usuario <> AccionUsuario.busqueda Then
+            'campos obligatorios
+            If txt_nombre_animal.Text = String.Empty Then
+                txt_nombre_animal.BackColor = Color.Red
+                txt_nombre_animal.Focus()
+                frm_UsuarioABM.informar_campo_faltante(lbl_nombre_animal.Text)
+                Return False
+            Else
+                txt_nombre_animal.BackColor = Color.White
+            End If
+
+            If cmb_raza.SelectedItem Is Nothing Then
+                frm_UsuarioABM.informar_campo_faltante(lbl_raza.Text)
                 Return False
             End If
+            If cmb_color1.SelectedItem Is Nothing Then
+                frm_UsuarioABM.informar_campo_faltante(lbl_color_1.Text)
+                Return False
+            End If
+            If cmb_sexo.SelectedItem Is Nothing Then
+                frm_UsuarioABM.informar_campo_faltante(lbl_sexo_animal.Text)
+                Return False
+            End If
+            If cmb_edad.SelectedItem Is Nothing Then
+                frm_UsuarioABM.informar_campo_faltante(lbl_edad.Text)
+                Return False
+            End If
+            If cmb_tamano.SelectedItem Is Nothing Then
+                frm_UsuarioABM.informar_campo_faltante(lbl_tamano.Text)
+                Return False
+            End If
+            If cmb_pelo.SelectedItem Is Nothing Then
+                frm_UsuarioABM.informar_campo_faltante(lbl_pelo.Text)
+                Return False
+            End If
+
+            'Si el usuario no agrego un telefono cuando se dio de alta, vamos a necesitar que agregue al menos uno.
+            If txt_telefono_1.Text = "" Then
+                If txt_telefono_2.Text = "" Then
+                    MsgBox("Debe agregar al menos un telefono", MsgBoxStyle.OkOnly, "Error con telefono")
+                    txt_telefono_2.BackColor = Color.Red
+                    txt_telefono_2.Focus()
+                    Return False
+                End If
+            End If
+
+            ' Si el tipo de publicacion es una busqueda Validamos que haya ingresado algo. 
+        Else
+            If txt_nombre_animal.Text = String.Empty Then
+                If cmb_raza.SelectedItem Is Nothing Then
+                    If cmb_color1.SelectedItem Is Nothing Then
+                        If cmb_color2.SelectedItem Is Nothing Then
+                            If cmb_sexo.SelectedItem Is Nothing Then
+                                If cmb_edad.SelectedItem Is Nothing Then
+                                    If cmb_pelo.SelectedItem Is Nothing Then
+                                        If cmb_barrio.SelectedItem Is Nothing Then
+                                            MsgBox("Debe completar al menos un campo para continuar", MsgBoxStyle.OkOnly, "Error ")
+                                            Return False
+                                        End If
+                                    End If
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+            End If
+
+
         End If
+
 
         Return True
     End Function
 
     Private Sub btn_publicar_Click(sender As Object, e As EventArgs) Handles btn_publicar.Click
         If validar_campos() Then
-            ' Animal  y publicacion que agregaremos a la BD
+            ' Animal  y publicacion que agregaremos a la BD o con los que buscaremos un animal
             Dim unAni As New Animal
             Dim publi As New Publicacion
 
-            'Chequeamos todo lo pertinente al animal de la publicacion.
+            'Si el usuario esta haciendo una publicacion ´se crea una publiacion y se la carga con
+            'los datos del animal, usuario y la publicacion.
+            If accion_usuario <> AccionUsuario.busqueda Then
 
-            ' Creamos una variable del tipo booleana para saber que tipo de animal es, si es perro da verdadero
-            ' Si es gato da falso
-            Dim esPerro = (tipo_animal = 1)
+                'Chequeamos todo lo pertinente al animal de la publicacion.
 
-            ' Si lo que se va a agregar es un perro. 
-            If esPerro Then
-                unAni.tipoAnimal = 1
-                unAni.idAnimal = BDHelper.getDBHelper.generarIdAnimal(tipo_animal)
-                unAni.nombre = txt_nombre_animal.Text
-                unAni.tamano = cmb_tamano.SelectedValue
-                unAni.idTipoPelo = cmb_pelo.SelectedValue
-                unAni.idRaza = cmb_raza.SelectedValue
-                unAni.idEdad = cmb_edad.SelectedValue
-                unAni.idSexo = cmb_sexo.SelectedValue
-                unAni.idColor1 = cmb_color1.SelectedValue
-                If cmb_color2.SelectedValue IsNot Nothing Then
-                    unAni.idColor2 = cmb_color2.SelectedValue
+                ' Creamos una variable del tipo booleana para saber que tipo de animal es, si es perro da verdadero
+                ' Si es gato da falso
+                Dim esPerro = (tipo_animal = TipoAnimal.perro)
+
+                ' Si lo que se va a agregar es un perro. 
+                If esPerro Then
+                    unAni.tipoAnimal = TipoAnimal.perro
+                    unAni.idAnimal = BDHelper.getDBHelper.generarIdAnimal(tipo_animal)
+                    unAni.nombre = txt_nombre_animal.Text
+                    unAni.tamano = cmb_tamano.SelectedValue
+                    unAni.idTipoPelo = cmb_pelo.SelectedValue
+                    unAni.idRaza = cmb_raza.SelectedValue
+                    unAni.idEdad = cmb_edad.SelectedValue
+                    unAni.idSexo = cmb_sexo.SelectedValue
+                    unAni.idColor1 = cmb_color1.SelectedValue
+                    If cmb_color2.SelectedValue IsNot Nothing Then
+                        unAni.idColor2 = cmb_color2.SelectedValue
+                    End If
+
+                    If rb_si.Checked Then
+                        unAni.idCondicionCastrado = 1
+                    End If
+
+                    If rbtn_no.Checked Then
+                        unAni.idCondicionCastrado = 2
+                    End If
+
+                    If rbtn_NoSabe.Checked Then
+                        unAni.idCondicionCastrado = 3
+                    End If
+
+                    ' Si lo que agregamos es un gato
+                Else
+
                 End If
 
-                If rb_si.Checked Then
-                    unAni.idCondicionCastrado = 1
+                ' Pasamos a la seccion de la informacion adicional y empezamos a completar los datos de
+                ' la publicacion que se cargara a la BD
+                publi.usuario = usuario
+                publi.idBarrio = cmb_barrio.SelectedValue
+                publi.nombreCiudad = txt_ciudad.Text
+                publi.descripcionPublicacion = txt_descripcion.Text
+                publi.animal = unAni
+                publi.tipoPublicacion = accion_usuario
+
+                If publi.usuario.getNumTelefono Is Nothing Then
+                    usuario.setNumeroTelefono("")
                 End If
 
-                If rbtn_no.Checked Then
-                    unAni.idCondicionCastrado = 2
+                If txt_telefono_2.Text IsNot Nothing Then
+                    publi.telefono2 = txt_telefono_2.Text
                 End If
 
-                If rbtn_NoSabe.Checked Then
-                    unAni.idCondicionCastrado = 3
+                ' Por ahora no mostramos confirmacion con los datos de la publicacion
+                '  Solo un cartelito que diga estas seguro que deseas publicar. 
+
+                Dim d As DialogResult
+                d = MessageBox.Show("¿Desea continuar y realizar la publicacion?", "Aviso", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
+                If (d = DialogResult.OK) Then
+
+                    ' Con todos los datos de la publicacion, la cargamos en la BD mediante la clase PublicacionService
+                    ' Pasandole la publicacion como parametro.
+                    Dim publiServicio As New PublicacionService
+
+                    ' Si la publicacion se cargo correctamente en la BD mostramos una ventana de confirmacion. 
+                    If publiServicio.agregarPublicacionAdopcion(publi) = 1 Then
+                        MessageBox.Show("La publicacion fue realizada con éxito", "Exito", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
+                        Me.Close()
+                    End If
+
                 End If
 
-                ' Si lo que agregamos es un gato
+                'Si el usuario esta realizando una busqueda accion_usuario = TipoUsuario.busqueda
+                'Se busca entre todas las publicaciones con los datos del animal proporcionado
             Else
+                'Completamos los datos del animal que se quiere encontrar
 
-            End If
+                If txt_nombre_animal.Text IsNot Nothing Then
+                    unAni.nombre = txt_nombre_animal.Text
+                End If 'Fin if de nombreANimal.text
 
-            ' Pasamos a la seccion de la informacion adicional y empezamos a completar los datos de
-            ' la publicacion que se cargara a la BD
-            publi.usuario = usuario
-            publi.idBarrio = cmb_barrio.SelectedValue
-            publi.nombreCiudad = txt_ciudad.Text
-            publi.descripcionPublicacion = txt_descripcion.Text
-            publi.animal = unAni
-            publi.tipoPublicacion = tipo_publicacion
+                If Not cmb_raza.SelectedItem Is Nothing Then
+                    unAni.idRaza = cmb_raza.SelectedValue
+                End If ' If de cmbRaza.selectedVAlue
 
-            If publi.usuario.getNumTelefono Is Nothing Then
-                usuario.setNumeroTelefono("")
-            End If
+                If Not cmb_color1.SelectedItem Is Nothing Then
+                    unAni.idColor1 = cmb_color1.SelectedValue
+                End If ' If de cmb.color1
 
-            If txt_telefono_2.Text IsNot Nothing Then
-                publi.telefono2 = txt_telefono_2.Text
-            End If
+                If Not cmb_color2.SelectedItem Is Nothing Then
+                    unAni.idColor2 = cmb_color2.SelectedValue
+                End If ' If de cmb_color2
 
-            ' Por ahora no mostramos confirmacion con los datos de la publicacion
-            '  Solo un cartelito que diga estas seguro que deseas publicar. 
+                If Not cmb_edad.SelectedItem Is Nothing Then
+                    unAni.idEdad = cmb_edad.SelectedValue
+                End If ' If de cmb_edad
 
-            Dim d As DialogResult
-            d = MessageBox.Show("¿Desea continuar y realizar la publicacion?", "Aviso", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
-            If (d = DialogResult.OK) Then
+                If Not cmb_sexo.SelectedItem Is Nothing Then
+                    unAni.idSexo = cmb_sexo.SelectedValue
+                End If ' If de cmb_sexo
 
-                ' Con todos los datos de la publicacion, la cargamos en la BD mediante la clase PublicacionService
-                ' Pasandole la publicacion como parametro.
-                Dim publiServicio As New PublicacionService
+                If Not cmb_tamano.SelectedItem Is Nothing Then
+                    unAni.tamano = cmb_tamano.SelectedValue
+                End If ' If de cmb_tamaño
 
-                ' Si la publicacion se cargo correctamente en la BD mostramos una ventana de confirmacion. 
-                If publiServicio.agregarPublicacionAdopcion(publi) = 1 Then
-                    MessageBox.Show("La publicacion fue realizada con éxito", "Exito", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
+                If Not cmb_pelo.SelectedItem Is Nothing Then
+                    unAni.idTipoPelo = cmb_pelo.SelectedValue
+                End If ' If de cmb_pelo
+
+                If Not cmb_barrio.SelectedItem Is Nothing Then
+                    publi.idBarrio = cmb_barrio.SelectedValue
+                End If ' If de cmb_barrio
+
+                publi.nombreCiudad = txt_ciudad.Text
+
+                'Mostramos las fechas para las cuales se va a realizar la busqueda y esperamos el resultado
+                Dim frm_seleccionFechas As New Frm_fechasBusqueda
+                Dim d As DialogResult
+                d = frm_seleccionFechas.ShowDialog()
+
+                'Si el resultado es OK (el usuario coloco fechas y apreto aceptar)
+                If d = DialogResult.OK Then
+                    MsgBox("User clicked Aceptar button")
+                    'TODO completar con la validacion de fechas y pasar a la lista de animales.
+                Else
+                    MsgBox("User clicked Cancelar button")
                 End If
 
-            End If
+            End If 'If de TipoAccionUsuario <> TipoAccionUsuario.busqueda
+            End If 'If de validarCampos()
 
-        End If
 
-        Me.Close()
+
 
     End Sub
 End Class

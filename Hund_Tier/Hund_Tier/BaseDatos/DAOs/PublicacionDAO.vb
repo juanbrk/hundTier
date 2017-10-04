@@ -119,6 +119,35 @@
 
     End Function
 
+    'TODO hacer funcionar esta funcion para buscar animales segun los datos pasados por param
+    ' y el barrio o ciudad de la publicacion
+    Friend Function buscarAnimal(unAni As Animal, publi As Publicacion) As List(Of Usuario)
+        Dim data As DataTable = BDHelper.getDBHelper.ConsultaSQL("SELECT U.*, B.nombre as nombre_barrio FROM Usuarios U JOIN  Barrios B on  U.id_barrio = B.id_barrio")
+
+        Dim usr As Usuario
+        Dim listaUsuarios As New List(Of Usuario)
+        For Each fila As DataRow In data.Rows
+            usr = New Usuario()
+            With usr
+                .setId(fila.Item("id_usuario"))
+                .setNombre(fila.Item("nombre").ToString)
+                .setApellido(fila.Item("apellido").ToString)
+                .setNumeroTelefono(fila.Item("num_telefono").ToString())
+                .setEmail(fila.Item("email").ToString)
+                .setBarrio(fila.Item("barrio_id"))
+                .setCalle(fila.Item("calle").ToString())
+                .setNumCalle(fila.Item("numero").ToString())
+                .setPiso(fila.Item("piso"))
+                .setDepartamento(fila.Item("departamento").ToString())
+                .setUsername(fila.Item("username").ToString())
+                .setPassword(fila.Item("password").ToString())
+                .setHabilitado(fila.Item("habilitado").ToString())
+                .setBarrioString(fila.Item("nombre_barrio").ToString())
+            End With
+            listaUsuarios.Add(usr)
+        Next
+        Return listaUsuarios
+    End Function
 
 
 End Class
