@@ -139,6 +139,7 @@
         'se muestra el form seleccion Tipo aviso, se le pasa por parametro un entero que dice si vamos a agregar
         'Un nuevo aviso o si vamos a consultar la BD para ver los animales. 
         mostrarFormSeleccionTipoAvisoPara(SeleccionUsuario.buscarAnimales)
+
     End Sub
 
     'Funcion que permite pasar un parametro para que las siguientes forms sepan cual es la 

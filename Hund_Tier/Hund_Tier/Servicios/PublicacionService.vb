@@ -14,6 +14,13 @@
         Return publiDao.addPublicacionAdopcion(unaPublicacion)
     End Function
 
+    ' Funcion que nos permite pedirle a la DAO que consulte a la BD segun los parametros pasados
+    ' Devuelve una lista de publicaciones
+    ' La lista devuelta servirá para llenar la dgv
+    Public Function consultarPublicacionesConFiltro(params As Object()) As List(Of Publicacion)
+        Return publiDao.getPublicacionConFiltros(params)
+    End Function
+
 
 
 End Class

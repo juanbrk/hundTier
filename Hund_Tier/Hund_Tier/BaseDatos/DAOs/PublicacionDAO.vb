@@ -149,5 +149,203 @@
         Return listaUsuarios
     End Function
 
+    Public Function getPublicacionConFiltros(ByVal params As Object()) As IList(Of Publicacion)
+        Dim lst As New List(Of Publicacion)
+
+        'String que se le pasara a la consulta en la BD con parametros, es larga porque tiene muchas uniones con
+        'diferentes tablas para poder armar el formato que aparece en dgv_publicaciones en el form frm_listarPublicaciones
+        Dim sql_str As String = "Select P.cod_publicacion AS 'Codigo publicacion'," &
+        "A.nombre As 'nombre animal'," &
+        "R.nombre_raza AS 'raza'," &
+        "TA.nombre_tipo AS 'tipo animal'," &
+        " E.nombre_edad As 'edad', PA.nombre_pelo AS 'pelo'," &
+        " S.nombre_sexo AS 'sexo', B.nombre As 'Barrio'," &
+        " P.ciudad As 'ciudad', U.nombre As 'responsable'" &
+        "From ((((((((Publicacion P " &
+        "Join Animal A  ON (P.id_animal = A.id_animal AND P.tipo_animal = A.cod_tipo_animal))" &
+        "Join Razas R On (A.cod_raza = R.cod_raza AND A.cod_tipo_animal = R.cod_tipo_animal))" &
+        "Join Tipo_Animal TA ON A.cod_tipo_animal = TA.codigo_animal)" &
+        "Join Edad_Animal E ON A.cod_edad = E.codigo_edad)" &
+        "Join Pelo_Animal PA ON A.cod_pelo = PA.codigo_pelo)" &
+        "Join Sexo_Animal S ON A.cod_sexo = S.codigo_sexo)" &
+        "Join Barrios B On P.barrio = B.id_barrio)" &
+        "Join Usuarios U ON P.usuario_responsable = U.id_usuario)" &
+        "Where "
+
+        Dim andString As String = " AND "
+        'Booleano que permite saber si ya se agrego algun parametro, para saber si agregar la palabra
+        'And a sql_str
+        Dim yaPasoParametro As Boolean = False
+        'Validamos filtro nombre animal
+        If Not IsNothing(params(0)) Then
+            'Si ya hubo algun parametro pasado, le agregamos la palabra AND, si no no se la 
+            'agregamos pero actualizamos la flag
+            If yaPasoParametro Then
+                sql_str += andString & " "
+                sql_str += "A.nombre = @param1 "
+            Else
+                sql_str += " A.nombre = @param1 "
+                yaPasoParametro = True
+            End If
+
+        End If
+
+        'Agregamos el tipo de animal como filtro
+        If yaPasoParametro Then
+            sql_str += andString & " "
+            sql_str += " A.cod_tipo_animal = @param2"
+        Else
+            sql_str += " A.cod_tipo_animal = @param2"
+            yaPasoParametro = True
+        End If
+        'Validamos filtro raza
+        If Not IsNothing(params(2)) Then
+            If yaPasoParametro Then
+                sql_str += andString & " "
+                sql_str += " A.cod_raza = @param3 "
+            Else
+                sql_str += " A.cod_raza = @param3 "
+                yaPasoParametro = True
+            End If
+        End If
+        'Validamos filtro color1
+        If Not IsNothing(params(3)) Then
+            If yaPasoParametro Then
+                sql_str += andString & " "
+                sql_str += " A.color1 = @param4 "
+            Else
+                sql_str += " A.color1 = @param4 "
+                yaPasoParametro = True
+            End If
+
+        End If
+        'Validamos filtro color2
+        If Not IsNothing(params(4)) Then
+            If yaPasoParametro Then
+                sql_str += andString & " "
+                sql_str += " A.color2 = @param5 "
+            Else
+                sql_str += " A.color2 = @param5 "
+                yaPasoParametro = True
+            End If
+
+        End If
+        'Validamos filtro edad
+        If Not IsNothing(params(5)) Then
+            If yaPasoParametro Then
+                sql_str += andString & " "
+                sql_str += " A.cod_edad = @param6 "
+            Else
+                sql_str += " A.cod_edad = @param6 "
+                yaPasoParametro = True
+            End If
+
+        End If
+        'Validamos filtro sexo
+        If Not IsNothing(params(6)) Then
+            If yaPasoParametro Then
+                sql_str += andString & " "
+                sql_str += " A.cod_sexo = @param7 "
+            Else
+                sql_str += " A.cod_sexo = @param7 "
+                yaPasoParametro = True
+            End If
+
+        End If
+        'Validamos filtro tamaño
+        If Not IsNothing(params(7)) Then
+            If yaPasoParametro Then
+                sql_str += andString & " "
+                sql_str += " A.cod_tamano = @param8 "
+            Else
+                sql_str += " A.cod_tamano = @param8 "
+                yaPasoParametro = True
+            End If
+
+        End If
+        'Validamos filtro pelo
+        If Not IsNothing(params(8)) Then
+            If yaPasoParametro Then
+                sql_str += andString & " "
+                sql_str += "  A.cod_pelo = @param9 "
+            Else
+                sql_str += "  A.cod_pelo = @param9  "
+                yaPasoParametro = True
+            End If
+        End If
+        'Validamos filtro barrio
+        If Not IsNothing(params(9)) Then
+            If yaPasoParametro Then
+                sql_str += andString & " "
+                sql_str += "  P.barrio = @param10 "
+            Else
+                sql_str += "  P.barrio = @param10  "
+                yaPasoParametro = True
+            End If
+        End If
+        'Validamos el filtro ciudad
+        If Not IsNothing(params(10)) Then
+            If yaPasoParametro Then
+                sql_str += andString & " "
+                sql_str += " P.ciudad = @param11 "
+            Else
+                sql_str += "  P.ciudad = @param11  "
+                yaPasoParametro = True
+            End If
+        End If
+        'Validamos filtro de fechas
+        'If Not IsNothing(params(11)) And Not IsNothing(params(12)) Then
+        '    If yaPasoParametro Then
+        '        sql_str += andString & " "
+        '        sql_str += " (P.fecha_publicacion>=@param12 AND P.fecha_publicacion<=@param13) "
+        '    Else
+        '        sql_str += "  (P.fecha_publicacion>=@param12 AND P.fecha_publicacion<=@param13)  "
+        '        yaPasoParametro = True
+        '    End If
+        'End If
+        'Validamos filtro de estado castrado
+        If Not IsNothing(params(11)) Then
+            If yaPasoParametro Then
+                sql_str += andString & " "
+                sql_str += "A.cod_castrado=@param12 "
+            Else
+                sql_str += "  A.cod_castrado=@param12  "
+                yaPasoParametro = True
+            End If
+        End If
+
+        sql_str += " And P.estado_publicacion = 1"
+
+        '' TODO
+        ' Por cada fila devuelta en la consutla a la BD con parametros a traves de BDHelper
+        ' Mapeamos el resultado de la fila a una publicacion y lo agregamos a la lista que nos servira
+        ' como source para la dgv
+        For Each row As DataRow In BDHelper.getDBHelper.ConsultarSQLConParametros(sql_str, params).Rows
+            lst.Add(mapPublicacionChica(row))
+        Next
+
+        Return lst
+    End Function
+
+    ' Funcion que convierte el resultado de una consulta a una BD con filtros a una publicacion resumida
+    Private Function mapPublicacionChica(ByVal row As DataRow) As Publicacion
+        Dim oPubli As New Publicacion
+
+        oPubli.codigoPublicacion = Convert.ToInt32(row.Item("Codigo publicacion").ToString)
+        oPubli.animal = New Animal
+        oPubli.animal.nombre = row.Item("nombre animal").ToString
+        oPubli.animal.razaString = row.Item("raza").ToString
+        oPubli.animal.tipoAnimalString = row.Item("tipo animal").ToString
+        oPubli.animal.edadString = row.Item("edad").ToString
+        oPubli.animal.peloString = row.Item("pelo").ToString
+        oPubli.animal.sexoString = row.Item("sexo").ToString
+        oPubli.barrioString = row.Item("Barrio").ToString
+        oPubli.nombreCiudad = row.Item("ciudad").ToString
+        oPubli.nombreUsuario = row.Item("responsable").ToString
+
+
+        Return oPubli
+    End Function
+
 
 End Class

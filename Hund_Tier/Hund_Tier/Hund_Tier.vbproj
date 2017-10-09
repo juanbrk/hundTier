@@ -112,6 +112,12 @@
     <Compile Include="Vista\Publicaciones\Frm_fechasBusqueda.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Vista\Publicaciones\frm_listarPublicaciones.Designer.vb">
+      <DependentUpon>frm_listarPublicaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Publicaciones\frm_listarPublicaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Vista\Publicaciones\frm_seleccion_tipo_aviso.Designer.vb">
       <DependentUpon>frm_seleccion_tipo_aviso.vb</DependentUpon>
     </Compile>
@@ -168,6 +174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vista\Publicaciones\Frm_fechasBusqueda.resx">
       <DependentUpon>Frm_fechasBusqueda.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\Publicaciones\frm_listarPublicaciones.resx">
+      <DependentUpon>frm_listarPublicaciones.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vista\Publicaciones\frm_seleccion_tipo_aviso.resx">
       <DependentUpon>frm_seleccion_tipo_aviso.vb</DependentUpon>

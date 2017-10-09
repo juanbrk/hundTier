@@ -1,34 +1,12 @@
-*frm_perfilUsuario
+05/10
 
-- Rehacer cargar el nombre del barrio del usuario a partir del id
-de usuario que tiene en visual
+* frm_seleccionarFechas logica finalizada, chequea que los campos sean fechas y que desde sea menor que hasta
+* frm_publicarAviso para la busqueda se hara consulta con parametros a la BD. 
+* Pasados todos los parametros en frm_publicarAviso
+* Creada la funcion getPublicacionPorParametros en DAOPublicacion
 
-
-*frm_publicarAviso
-
-- si el usuario ingresa un segundo numero de telefono agregarlo
-en la BD en la tabla Publicaciones. Que sea obligatorio un numero de 
-telefono al menos. 
-
-+ Ya se agrega el perroa la BD. Se hacen todos los chequeos. 
-
-- Cargar la publicacion a la BD
-- Mostrar una ventana de confirmacion antes de publicar el aviso
-
-
-*Base de datos
-- crear tabla para publicaciones. ¿Debe tener un id_tipo_animal y un id_animal? ¿o creo una tabla publicacion perros y otra publicacion gatos?
-
-27/09
-
-+ Cambiadas tablas de BD animal y publicacion. Animal ahora tiene dos PK (id_animal y tipo_animal) de esta forma evitamos tener una tabla
-para perros y otra para gatos.  La tabla publicacion ahora tiene 4 PK (codigo_publicacion, tipo_publicacion, y las 2 de animal)
-
-+ Creada tabla Razas en BD. Ahora tiene 3 columnas cod_raza, tipo_animal y nombre_raza. Entonces en una misma tabla guardamos las razas
-de perros y gatos. 
-
-+ Creada funcion en BDHELPER generarIdAnimal, que permite generar un id al animal según sea perro o gato. 
-
-+ Modificado el getRazasPerro en combosDao para que solo busque las razas de los perros dentro de la nueva tabla razas, segun el tipo_animal
+- Crear funcion mapPublicacion
+- Crear funcion getPublicacionParametros en PublicacionService
+- Poblar la dgv en frm_listarPublicaciones
 
 

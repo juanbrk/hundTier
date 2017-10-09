@@ -17,3 +17,4 @@ C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\o
 C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\obj\Debug\Hund_Tier.frm_publicar_aviso.resources
 C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\obj\Debug\Hund_Tier.Frm_confirmacionPublicacion.resources
 C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\obj\Debug\Hund_Tier.Frm_fechasBusqueda.resources
+C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\obj\Debug\Hund_Tier.frm_listarPublicaciones.resources

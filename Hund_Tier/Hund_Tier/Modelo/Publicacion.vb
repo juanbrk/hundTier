@@ -3,9 +3,11 @@
     Public Property tipoPublicacion As Integer
     Public Property animal As Animal
     Public Property idBarrio As Integer
+    Public Property barrioString As String
     Public Property nombreCiudad As String
     Public Property descripcionPublicacion As String
     Public Property usuario As Usuario
+    Public Property nombreUsuario As String
     Public Property telefono2 As String
     Public Property estadoPublicacion As Integer
     Public Property fechaPublicada As DateTime
