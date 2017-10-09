@@ -29,17 +29,23 @@
             datosPublicacion_form.setTitulo("Publicar perro en adopcion")
             ' Le pasamos a la form el tipo de publicacion de que se trata, 1 = adopcion, 2= perdido, 3=encontrado
             datosPublicacion_form.setTipoPublicacion(frm_publicar_aviso.AccionUsuario.adopcion)
+            datosPublicacion_form.ShowDialog()
 
             'Si el usuario busca un animal, se hacen otras cosas.
         Else
-            ' Le cambiamos el titulo a la form por el que sea apropiado para cada caso
-            datosPublicacion_form.setTitulo("Buscar un animal")
-            ' Le pasamos a la form el tipo de publicacion de que se trata, 1 = adopcion, 2= perdido, 3=encontrado
-            datosPublicacion_form.setTipoPublicacion(frm_publicar_aviso.AccionUsuario.busqueda)
-            'Le cambiamos el texto del boton para que en lugar de decir publicar diga buscar
-            datosPublicacion_form.btn_publicar.Text = "Buscar"
+            'TODO terminar todo lo relativo a la form listarPublicacion para que sea independiente de 
+            'publicar aviso
+
+            '' Le cambiamos el titulo a la form por el que sea apropiado para cada caso
+            'datosPublicacion_form.setTitulo("Buscar un animal")
+            '' Le pasamos a la form el tipo de publicacion de que se trata, 1 = adopcion, 2= perdido, 3=encontrado
+            'datosPublicacion_form.setTipoPublicacion(frm_publicar_aviso.AccionUsuario.busqueda)
+            ''Le cambiamos el texto del boton para que en lugar de decir publicar diga buscar
+            'datosPublicacion_form.btn_publicar.Text = "Buscar"
+            Dim buscarAnimalForm As New frm_listarPublicaciones
+            buscarAnimalForm.ShowDialog()
         End If
-        datosPublicacion_form.ShowDialog()
+
         Me.Close()
 
     End Sub

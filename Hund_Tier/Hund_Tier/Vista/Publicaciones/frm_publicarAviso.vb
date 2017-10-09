@@ -17,7 +17,7 @@
         busqueda = 4
     End Enum
 
-    Enum idCastrado As Integer
+    Friend Enum idCastrado As Integer
         si = 1
         no = 2
         desconoce = 3
@@ -397,6 +397,20 @@
                 'Con todos los filtros agregados vamos a buscar en la BD para mostrar en la grilla 
                 ' De la siguiente ventana. 
                 lstPubli = publiServicio.consultarPublicacionesConFiltro(filters.ToArray)
+
+                ' Chequeamos la cantidad de objetos que contiene la lista devuelta para saber si se 
+                ' encontraron coincidencias o no
+                If lstPubli.Count <> 0 Then
+                    'Si la lista no esta vacia se muestra el form donde se listan las publicaciones obtenidas
+                    Dim listarPublicacionesFrm As New frm_listarPublicaciones
+                    listarPublicacionesFrm.llenarGrid(lstPubli)
+                    listarPublicacionesFrm.ShowDialog()
+
+                Else
+                    'Si la lista esta vacia se le avisa al usuario
+                    MessageBox.Show("No se encontraron coincidencias para el/los filtros ingresados",
+                   "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
 
             End If 'If de TipoAccionUsuario <> TipoAccionUsuario.busqueda
         End If 'If de validarCampos()
