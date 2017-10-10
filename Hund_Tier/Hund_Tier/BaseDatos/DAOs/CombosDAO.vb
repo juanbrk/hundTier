@@ -29,6 +29,19 @@
         End Try
     End Function
 
+    Friend Function cargarRazasGatos() As DataTable
+        str_sql = "SELECT * FROM Razas WHERE cod_tipo_animal=2"
+        Dim tabla As DataTable
+        tabla = BDHelper.getDBHelper.ConsultaSQL(str_sql)
+        Try
+            If tabla.Rows.Count > 0 Then
+                Return tabla
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error", "Base de datos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Function
+
     Friend Function cargarColores() As DataTable
         str_sql = "SELECT * FROM Colores WHERE 1=1"
         Dim tabla As DataTable

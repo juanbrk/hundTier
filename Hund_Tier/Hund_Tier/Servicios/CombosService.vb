@@ -13,6 +13,10 @@
         Return combDao.cargarRazasPerros()
     End Function
 
+    Public Function getRazasGatos() As DataTable
+        Return combDao.cargarRazasGatos
+    End Function
+
     Public Function getColores() As DataTable
         Return combDao.cargarColores()
     End Function

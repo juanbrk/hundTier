@@ -61,21 +61,20 @@
         If tipo_animal = TipoAnimal.perro Then
             TablaDatos = cmbServicio.getRazasPerros
             cmbServicio.llenarCombo(cmb_raza, TablaDatos, "nombre_raza", "cod_raza")
-            'Reutilizamos la tabla para cargar los combos color1 y color2
-            TablaDatos = cmbServicio.getColores
-            cmbServicio.llenarCombo(cmb_color1, TablaDatos, "nombre", "id_color")
-            'Volvemos a cargar con los colores
-            TablaDatos = cmbServicio.getColores
-            cmbServicio.llenarCombo(cmb_color2, TablaDatos, "nombre", "id_color")
 
-            'Si el animal es un gato llenamos los combos con lo relativo a gatos. 
         Else
-
+            'Si el animal es un gato llenamos los combos con lo relativo a gatos. 
+            TablaDatos = cmbServicio.getRazasGatos
+            cmbServicio.llenarCombo(cmb_raza, TablaDatos, "nombre_raza", "cod_raza")
         End If
 
         'Carga de combos que son iguales tanto para perros como para gatos, de aca para abajo. 
-
-
+        'Reutilizamos la tabla para cargar los combos color1 y color2
+        TablaDatos = cmbServicio.getColores
+        cmbServicio.llenarCombo(cmb_color1, TablaDatos, "nombre", "id_color")
+        'Volvemos a cargar con los colores
+        TablaDatos = cmbServicio.getColores
+        cmbServicio.llenarCombo(cmb_color2, TablaDatos, "nombre", "id_color")
         'Cargamos combo sexos
         TablaDatos = cmbServicio.getSexos
         cmbServicio.llenarCombo(cmb_sexo, TablaDatos, "nombre_sexo", "codigo_sexo")
@@ -89,30 +88,17 @@
         TablaDatos = cmbServicio.getPelosAnimal
         cmbServicio.llenarCombo(cmb_pelo, TablaDatos, "nombre_pelo", "codigo_pelo")
 
-        'Si el tipo de publicacion es cualquiera menos busqueda cargamos los nombres del usuario
-        'Si es busqueda no necesitamos el nombre del usuario
+        'Si el tipo de publicacion es adopcion cargamos los nombres del usuario
         If accion_usuario = AccionUsuario.adopcion Then
 
-            'El nombre y email del usuario lo conseguimos desde el usuario de la frm_main
+            ' El nombre y email del usuario lo conseguimos desde el usuario de la frm_main
+            ' ????? Si es singleton, no deberia tomar todo directamente desde frm_main y no tener una 
+            ' instancia de usuario. ?????
             usuario = Frm_main.getusuario()
             txt_nombre_responsable.Text = usuario.getNombre
             txt_mail_responsable.Text = usuario.getEmail
             txt_telefono_1.Text = usuario.getNumTelefono
-
-            'Si el tipo de publicacion es busqueda anulamos los campos que no hacen falta para la 
-            'busqueda. 
-        Else
-
-            txt_descripcion.ReadOnly = True
-            txt_telefono_2.ReadOnly = True
-
         End If
-
-
-
-
-
-
     End Sub
 
     'Funcion que sirve para validar que se hayan rellenado todos los campos obligatorios, caso contrario
@@ -192,32 +178,35 @@
                 If esPerro Then
                     unAni.tipoAnimal = TipoAnimal.perro
                     unAni.idAnimal = BDHelper.getDBHelper.generarIdAnimal(tipo_animal)
-                    unAni.nombre = txt_nombre_animal.Text
-                    unAni.tamano = cmb_tamano.SelectedValue
-                    unAni.idTipoPelo = cmb_pelo.SelectedValue
-                    unAni.idRaza = cmb_raza.SelectedValue
-                    unAni.idEdad = cmb_edad.SelectedValue
-                    unAni.idSexo = cmb_sexo.SelectedValue
-                    unAni.idColor1 = cmb_color1.SelectedValue
-                    If cmb_color2.SelectedValue IsNot Nothing Then
-                        unAni.idColor2 = cmb_color2.SelectedValue
-                    End If
-
-                    If rb_si.Checked Then
-                        unAni.idCondicionCastrado = 1
-                    End If
-
-                    If rbtn_no.Checked Then
-                        unAni.idCondicionCastrado = 2
-                    End If
-
-                    If rbtn_NoSabe.Checked Then
-                        unAni.idCondicionCastrado = 3
-                    End If
 
                     ' Si lo que agregamos es un gato
                 Else
+                    unAni.tipoAnimal = TipoAnimal.gato
+                    unAni.idAnimal = BDHelper.getDBHelper.generarIdAnimal(tipo_animal)
+                End If
 
+                'Datos comunes tanto a perros como gatos
+                unAni.nombre = txt_nombre_animal.Text
+                unAni.tamano = cmb_tamano.SelectedValue
+                unAni.idTipoPelo = cmb_pelo.SelectedValue
+                unAni.idRaza = cmb_raza.SelectedValue
+                unAni.idEdad = cmb_edad.SelectedValue
+                unAni.idSexo = cmb_sexo.SelectedValue
+                unAni.idColor1 = cmb_color1.SelectedValue
+                If cmb_color2.SelectedValue IsNot Nothing Then
+                    unAni.idColor2 = cmb_color2.SelectedValue
+                End If
+
+                If rb_si.Checked Then
+                    unAni.idCondicionCastrado = 1
+                End If
+
+                If rbtn_no.Checked Then
+                    unAni.idCondicionCastrado = 2
+                End If
+
+                If rbtn_NoSabe.Checked Then
+                    unAni.idCondicionCastrado = 3
                 End If
 
                 ' Pasamos a la seccion de la informacion adicional y empezamos a completar los datos de
@@ -244,14 +233,24 @@
                 d = MessageBox.Show("¿Desea continuar y realizar la publicacion?", "Aviso", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
                 If (d = DialogResult.OK) Then
 
-                    ' Con todos los datos de la publicacion, la cargamos en la BD mediante la clase PublicacionService
-                    ' Pasandole la publicacion como parametro.
-
-                    ' Si la publicacion se cargo correctamente en la BD mostramos una ventana de confirmacion. 
-                    If publiServicio.agregarPublicacionAdopcion(publi) = 1 Then
-                        MessageBox.Show("La publicacion fue realizada con éxito", "Exito", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
-                        Me.Close()
+                    ' PRUEBA DE CARGA, si es perro se carga mediante carga normal
+                    If esPerro Then
+                        ' Con todos los datos de la publicacion, la cargamos en la BD mediante la clase PublicacionService
+                        ' Pasandole la publicacion como parametro.
+                        ' Si la publicacion se cargo correctamente en la BD mostramos una ventana de confirmacion. 
+                        If publiServicio.agregarPublicacionAdopcion(publi) = 1 Then
+                            MessageBox.Show("La publicacion fue realizada con éxito", "Exito", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
+                            Me.Close()
+                        End If
+                    Else
+                        ' Si es gato vamos a probar cargandolo con transaccion
+                        publiServicio.publicarAdopcionTransaccion(publi)
+                        If publiServicio.publicarAdopcionTransaccion(publi) = 1 Then
+                            MessageBox.Show("La publicacion fue realizada con éxito", "Exito", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
+                            Me.Close()
+                        End If
                     End If
+
 
                 End If
 

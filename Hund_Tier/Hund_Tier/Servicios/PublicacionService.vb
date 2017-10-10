@@ -21,6 +21,10 @@
         Return publiDao.getPublicacionConFiltros(params)
     End Function
 
+    Public Function publicarAdopcionTransaccion(unaPubli As Publicacion) As Integer
+        Return publiDao.publicarAdopcionConTransaccion(unaPubli)
+    End Function
+
 
 
 End Class

@@ -49,58 +49,126 @@ Public Class BDHelper
         End Try
     End Function
 
-    'Chequear como hacer la transacción
-    'Public Function ejecutarSQLTransaction(ByVal strSql As List(Of String), ByVal fecha As Date) As Integer
-    '    Dim tran As SqlTransaction = Nothing
-    '    Dim cmd As SqlCommand = New SqlCommand
-    '    Dim comm As SqlConnection = New SqlConnection
-    '    Dim conexion As New SqlConnection
-    '    Try
-    '        conexion.ConnectionString = string_conexion
-    '        conexion.Open()
-    '        conexion.BeginTransaction()
+    'Funcion que hace el alta de una publicacion con una transaccion, es decir, primero se carga en la BD
+    'el animal de la publicacion en la tabla Animal y luego la publicacion en la tabla Publicacion.
+    'Durante el tiempo que esta en ejecucion la transaccion, no se puede acceder a la BD ni cambiarle valores
+    'esto garantiza que la BD quede en un estado coherente. 
+    Public Function ejecutarSQLTransaction(unaPublicacion As Publicacion) As Integer
+        Dim cnnx As New SqlConnection
+        'Comando para agregar la publicacion
+        Dim cmdPublicacion As New SqlCommand
+        'Comando para agregar el animal
+        Dim cmdAnimal As New SqlCommand
+        Dim miTransaccion As SqlTransaction
+        Dim tieneTelefono = (unaPublicacion.telefono2 IsNot Nothing)
 
+        Dim valorDevolucion As Integer = 1
+        cnnx.ConnectionString = string_conexion
 
-    '        cmd.Connection = conexion
-    '        cmd.CommandType = CommandType.Text
-    '        cmd.Transaction = tran
-    '        cmd.CommandText = strSql.ElementAt(0) 'REGISTRA EL PEDIDO'
-    '        cmd.Parameters.AddWithValue("@FechaEntrega", fecha)
-    '        Dim bandera As Integer = cmd.ExecuteNonQuery()
-    '        cmd.CommandText = "SELECT MAX(Pedido_id) as id FROM Pedido"
-    '        Dim tabla As DataTable = New DataTable
-    '        tabla.Load(cmd.ExecuteReader)
-    '        Dim idpedido As Integer = Convert.ToInt32(tabla.Rows.Item(0).Item("id"))
-    '        cmd.Parameters.Clear()
+        cnnx.Open()
+        miTransaccion = cnnx.BeginTransaction
 
+        Try
+            'Primero agregamos al animal
+            'Variable que me sirve para saber si el animal tiene color 2
+            Dim tieneColor2 = (unaPublicacion.animal.idColor2 <> 0)
+            'Variable que me sirve para saber si el animal esta castrado
+            Dim estaCastrado = (unaPublicacion.animal.idCondicionCastrado <> 0)
+            'Variable para saber si el animal tiene color de collar
+            Dim tieneColorCollar = (unaPublicacion.animal.idColorCollar <> 0)
 
-    '        cmd.CommandText = "SET IDENTITY_INSERT Detalle_pedido ON"
-    '        cmd.ExecuteNonQuery()
+            Dim str_sql_animal = "INSERT INTO Animal (id_animal, cod_tipo_animal, nombre, cod_raza, cod_sexo, cod_tamano, cod_edad, cod_pelo, color1"
+            If tieneColor2 Then
+                str_sql_animal += ", color2"
+            End If
 
-    '        cmd.Parameters.AddWithValue("@id", idpedido)
-    '        For i = 1 To strSql.Count - 1
-    '            cmd.CommandText = strSql.ElementAt(i)
+            If estaCastrado Then
+                str_sql_animal += ", cod_castrado"
+            End If
 
-    '            If cmd.ExecuteNonQuery() <> 1 Then
-    '                MsgBox("Error en la sentencia: " + strSql.ElementAt(i), MsgBoxStyle.Critical)
-    '                Throw New Exception
-    '            End If
+            If tieneColorCollar Then
+                str_sql_animal += ", cod_color_collar"
+            End If
+            str_sql_animal += ") VALUES(@idAnimal, @tipoAnimal, @nombre, @idRaza, @idSexo, @tamano, @edad, @idPelo, @idColor1"
+            If tieneColor2 Then
+                str_sql_animal += ",@idColor2"
+            End If
 
-    '        Next
-    '        cmd.CommandText = "SET IDENTITY_INSERT Detalle_pedido OFF"
-    '        cmd.ExecuteNonQuery()
-    '        tran.Commit()
-    '        Return 1
-    '    Catch ex As Exception
-    '        tran.Rollback()
-    '        Throw ex
-    '    Finally
-    '        ' Cierra la conexión
-    '        tran.Dispose()
-    '        comm.Close()
-    '        comm.Dispose()
-    '    End Try
-    'End Function
+            If estaCastrado Then
+                str_sql_animal += ",@condicionCastrado"
+            End If
+
+            If tieneColorCollar Then
+                str_sql_animal += ",@colorCollar"
+            End If
+            str_sql_animal += ")"
+            cmdAnimal = New SqlCommand(str_sql_animal, cnnx, miTransaccion)
+            cmdAnimal.Connection = cnnx
+            cmdAnimal.Parameters.Add("@idAnimal", SqlDbType.Int).Value = unaPublicacion.animal.idAnimal
+            cmdAnimal.Parameters.Add("@tipoAnimal", SqlDbType.Int).Value = unaPublicacion.animal.tipoAnimal
+            cmdAnimal.Parameters.Add("@nombre", SqlDbType.VarChar).Value = unaPublicacion.animal.nombre
+            cmdAnimal.Parameters.Add("@idRaza", SqlDbType.Int).Value = unaPublicacion.animal.idRaza
+            cmdAnimal.Parameters.Add("@idSexo", SqlDbType.Int).Value = unaPublicacion.animal.idSexo
+            cmdAnimal.Parameters.Add("@tamano", SqlDbType.Int).Value = unaPublicacion.animal.tamano
+            cmdAnimal.Parameters.Add("@edad", SqlDbType.Int).Value = unaPublicacion.animal.idEdad
+            cmdAnimal.Parameters.Add("@idPelo", SqlDbType.Int).Value = unaPublicacion.animal.idTipoPelo
+            cmdAnimal.Parameters.Add("@idColor1", SqlDbType.Int).Value = unaPublicacion.animal.idColor1
+            If tieneColor2 Then
+                cmdAnimal.Parameters.Add("@idColor2", SqlDbType.Int).Value = unaPublicacion.animal.idColor2
+            End If
+
+            If estaCastrado Then
+                cmdAnimal.Parameters.Add("@condicionCastrado", SqlDbType.Int).Value = unaPublicacion.animal.idCondicionCastrado
+            End If
+
+            If tieneColorCollar Then
+                cmdAnimal.Parameters.Add("@colorCollar", SqlDbType.Int).Value = unaPublicacion.animal.idColorCollar
+            End If
+            cmdAnimal.ExecuteNonQuery()
+            MsgBox("INSERT DE ANIMAL")
+
+            'EN EL CONSTRUCTOR DEL COMMAND LE PASAMOS LA TRANSACCION 
+
+            Dim str_sql_publicacion = "Insert into Publicacion(cod_publicacion, tipo_animal, id_animal, tipo_publicacion, fecha_publicacion, barrio, descripcion, usuario_responsable"
+            If tieneTelefono Then
+                str_sql_publicacion += ", telefono2"
+            End If
+            str_sql_publicacion += ", estado_publicacion, ciudad) VALUES (@codigoPublicacion,@tipoAnimal,@idAnimal,@tipoPublicacion, @fecha, @barrio, @descripcion,@idResponsable, "
+            If tieneTelefono Then
+                str_sql_publicacion += "@telefono,"
+            End If
+            str_sql_publicacion += "@estadoPublicacion,@ciudad)"
+
+            cmdPublicacion = New SqlCommand(str_sql_publicacion, cnnx, miTransaccion)
+            cmdPublicacion.Connection = cnnx
+            cmdPublicacion.Parameters.Add("@codigoPublicacion", SqlDbType.Int).Value = unaPublicacion.codigoPublicacion
+            cmdPublicacion.Parameters.Add("@tipoAnimal", SqlDbType.Int).Value = unaPublicacion.animal.tipoAnimal
+            cmdPublicacion.Parameters.Add("@idAnimal", SqlDbType.Int).Value = unaPublicacion.animal.idAnimal
+            cmdPublicacion.Parameters.Add("@tipoPublicacion", SqlDbType.Int).Value = unaPublicacion.tipoPublicacion
+            cmdPublicacion.Parameters.Add("@fecha", SqlDbType.DateTime).Value = Date.Now
+            cmdPublicacion.Parameters.Add("@barrio", SqlDbType.Int).Value = unaPublicacion.idBarrio
+            cmdPublicacion.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = unaPublicacion.descripcionPublicacion
+            cmdPublicacion.Parameters.Add("@idResponsable", SqlDbType.Int).Value = unaPublicacion.usuario.getIdUsuario
+            If tieneTelefono Then
+                cmdPublicacion.Parameters.Add("@telefono", SqlDbType.VarChar).Value = unaPublicacion.telefono2
+            End If
+            cmdPublicacion.Parameters.Add("@estadoPublicacion", SqlDbType.Int).Value = unaPublicacion.estadoPublicacion
+            cmdPublicacion.Parameters.Add("@ciudad", SqlDbType.VarChar).Value = unaPublicacion.nombreCiudad
+
+            cmdPublicacion.ExecuteNonQuery()
+
+            miTransaccion.Commit()
+
+        Catch ex As Exception
+            miTransaccion.Rollback()
+            MessageBox.Show("Ocurrio un error al intentar publicar su aviso", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            valorDevolucion = 0
+        Finally
+            cnnx.Close()
+            cnnx.Dispose()
+        End Try
+        Return valorDevolucion
+    End Function
 
     Public Function ConsultaSQL(ByVal strSql As String) As Data.DataTable
         ' Se utiliza para sentencias SQL del tipo “Select”

@@ -44,4 +44,29 @@
     Public Sub setEleccionUsuario(valor As mostrarSiguienteFormPara)
         elUsuarioVaA = valor
     End Sub
+
+    Private Sub btn_adopcion_gato_Click(sender As Object, e As EventArgs) Handles btn_adopcion_gato.Click
+        Dim datosPublicacion_form As New frm_publicar_aviso
+        ' Le seteamos el tipo de animal con el que trabajaremos
+        datosPublicacion_form.setTipoAnimal(frm_publicar_aviso.TipoAnimal.gato)
+
+        ' Chequeamos para ver como se mostrara la ventana de publicarAviso, puede mostrarse
+        'para publicar un nuevo aviso o para hacer busqueda de animales que cumplan con ciertos
+        'criterios
+
+        If elUsuarioVaA = mostrarSiguienteFormPara.publicarAviso Then
+            ' Le cambiamos el titulo a la form por el que sea apropiado para cada caso
+            datosPublicacion_form.setTitulo("Publicar nuevo gato en adopcion")
+            ' Le pasamos a la form el tipo de publicacion de que se trata, 1 = adopcion, 2= perdido, 3=encontrado
+            datosPublicacion_form.setTipoPublicacion(frm_publicar_aviso.AccionUsuario.adopcion)
+            datosPublicacion_form.ShowDialog()
+
+            'Si el usuario busca un animal, se hacen otras cosas.
+        Else
+            Dim buscarAnimalForm As New frm_listarPublicaciones
+            buscarAnimalForm.ShowDialog()
+        End If
+
+        Me.Close()
+    End Sub
 End Class
