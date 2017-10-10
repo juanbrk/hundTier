@@ -147,9 +147,9 @@
     'o en adopcion; o si es para buscar un animal. No cambia en nada como se presentan los siguientes
     'forms sino que sirve a la hora de ver el form frm_publicar_aviso. que va a cambiar su 
     'logica si es para buscar animales. 
-    Private Shared Sub mostrarFormSeleccionTipoAvisoPara(tipoMuestraForm As SeleccionUsuario)
+    Private Shared Sub mostrarFormSeleccionTipoAvisoPara(eleccionUsuario As SeleccionUsuario)
         Dim seleccionar_tipo_aviso As New frm_seleccion_tipo_aviso
-        seleccionar_tipo_aviso.setEleccionUsuario(tipoMuestraForm)
+        seleccionar_tipo_aviso.setEleccionUsuario(eleccionUsuario)
         seleccionar_tipo_aviso.ShowDialog()
     End Sub
 

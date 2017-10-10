@@ -231,4 +231,23 @@
         cmbServicio.llenarCombo(cmb_pelo, TablaDatos, "nombre_pelo", "codigo_pelo")
     End Sub
 
+    Private Sub btn_clear_Click(sender As Object, e As EventArgs) Handles btn_clear.Click
+        resetearCampos()
+
+    End Sub
+
+    Private Sub resetearCampos()
+        txt_nombre_animal.Text = ""
+        cmb_raza.SelectedValue = -1
+        cmb_edad.SelectedValue = -1
+        cmb_pelo.SelectedValue = -1
+        cmb_sexo.SelectedValue = -1
+        cmb_tamano.SelectedValue = -1
+        cmb_color1.SelectedValue = -1
+        cmb_color2.SelectedValue = -1
+        cmb_barrio.SelectedValue = -1
+        rb_si.Checked = False
+        rbtn_no.Checked = False
+        rbtn_NoSabe.Checked = False
+    End Sub
 End Class

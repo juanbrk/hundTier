@@ -6,15 +6,14 @@
         perro = 1
         gato = 2
     End Enum
-    'Bandera que me permite saber si lo que se publicara es un gato(tipoAnimal = 2) o un perro (tipoAnimal = 1)
-    'Por defecto es 1
+    'Bandera que me permite setear el tipo de animal para el quie se hara la publicacion, desde otras ventanas)
+    'Por defecto es 1 = perro
     Dim tipo_animal = TipoAnimal.perro
 
     Enum AccionUsuario As Integer
         adopcion = 1
         perdido = 2
         encontrado = 3
-        busqueda = 4
     End Enum
 
     Friend Enum idCastrado As Integer
@@ -29,6 +28,8 @@
 
     'Instancia de PublicacionService para usar en los distintos metodos
     Dim publiServicio As New PublicacionService
+
+
     Private Sub frm_publicar_aviso_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         llenarCampos()
         usuario = Frm_main.getusuario()
@@ -90,7 +91,7 @@
 
         'Si el tipo de publicacion es cualquiera menos busqueda cargamos los nombres del usuario
         'Si es busqueda no necesitamos el nombre del usuario
-        If accion_usuario <> AccionUsuario.busqueda Then
+        If accion_usuario = AccionUsuario.adopcion Then
 
             'El nombre y email del usuario lo conseguimos desde el usuario de la frm_main
             usuario = Frm_main.getusuario()
@@ -118,9 +119,9 @@
     'se informa con una ventana para que cada campo se complete
     Private Function validar_campos() As Boolean
 
-        'Si el tipo de publicacion es cualquiera menos busqueda, validamos los campos obligatorios y demas
+        'validamos los campos obligatorios  segun el tipo de publicacion 
 
-        If accion_usuario <> AccionUsuario.busqueda Then
+        If accion_usuario = AccionUsuario.adopcion Then
             'campos obligatorios
             If txt_nombre_animal.Text = String.Empty Then
                 txt_nombre_animal.BackColor = Color.Red
@@ -165,31 +166,6 @@
                     Return False
                 End If
             End If
-
-            ' Si el tipo de publicacion es una busqueda Validamos que haya ingresado algo. 
-        Else
-            If txt_nombre_animal.Text = String.Empty Then
-                If cmb_raza.SelectedItem Is Nothing Then
-                    If cmb_color1.SelectedItem Is Nothing Then
-                        If cmb_color2.SelectedItem Is Nothing Then
-                            If cmb_sexo.SelectedItem Is Nothing Then
-                                If cmb_edad.SelectedItem Is Nothing Then
-                                    If cmb_pelo.SelectedItem Is Nothing Then
-                                        If cmb_barrio.SelectedItem Is Nothing Then
-                                            If cmb_tamano.SelectedItem Is Nothing Then
-                                                MsgBox("Debe completar al menos un campo para continuar", MsgBoxStyle.OkOnly, "Error ")
-                                                Return False
-                                            End If
-                                        End If
-                                    End If
-                                End If
-                            End If
-                        End If
-                    End If
-                End If
-            End If
-
-
         End If
 
 
@@ -202,9 +178,9 @@
             Dim unAni As New Animal
             Dim publi As New Publicacion
 
-            'Si el usuario esta haciendo una publicacion ´se crea una publiacion y se la carga con
+            'Si el usuario esta haciendo una publicacion se crea una publiacion y se la carga con
             'los datos del animal, usuario y la publicacion.
-            If accion_usuario <> AccionUsuario.busqueda Then
+            If accion_usuario = AccionUsuario.adopcion Then
 
                 'Chequeamos todo lo pertinente al animal de la publicacion.
 
@@ -281,143 +257,9 @@
 
                 'Si el usuario esta realizando una busqueda accion_usuario = TipoUsuario.busqueda
                 'Se busca entre todas las publicaciones con los datos del animal proporcionado
-            Else
-                'Definimos una lista de publicaciones que es la que le vamos a pasar a la siguiente
-                ' Ventana
 
-                Dim lstPubli As List(Of Publicacion)
-
-                'Completamos los datos del animal que se quiere encontrar
-
-                'Vamos a hacer la consulta en la BD con parametros. Es decir con una lista de filtros
-                Dim filters As New List(Of Object)
-
-                If txt_nombre_animal.Text <> "" Then
-                    'Si el txt tiene un texto no vacìo entonces enviamos como filtro el nombre del animal a consultar
-                    filters.Add(txt_nombre_animal.Text)
-                Else
-                    filters.Add(Nothing)
-                End If 'Fin if de nombreANimal.text
-
-                'Agregamos el tipo del animal que se busca
-                filters.Add(tipo_animal)
-
-                If Not cmb_raza.SelectedItem Is Nothing Then
-                    'Si el cbo tiene un valor distinto de nulo entonces enviamos como filtro la raza  a consultar
-                    filters.Add(cmb_raza.SelectedValue)
-                Else
-                    filters.Add(Nothing)
-                End If ' If de cmbRaza.selectedVAlue
-
-                If Not cmb_color1.SelectedItem Is Nothing Then
-                    'Si el cbo tiene un valor distinto de nulo entonces enviamos como filtro el id del color a consultar
-                    filters.Add(cmb_color1.SelectedValue)
-                Else
-                    filters.Add(Nothing)
-                End If
-
-                If Not cmb_color2.SelectedItem Is Nothing Then
-                    'Si el cbo tiene un valor distinto de nulo entonces enviamos como filtro el id del color a consultar
-                    filters.Add(cmb_color2.SelectedValue)
-                Else
-                    filters.Add(Nothing)
-                End If
-
-                If Not cmb_edad.SelectedItem Is Nothing Then
-                    'Si el cbo tiene un valor distinto de nulo entonces enviamos como filtro el id de la edad a consultar
-                    filters.Add(cmb_edad.SelectedValue)
-                Else
-                    filters.Add(Nothing)
-                End If
-
-                If Not cmb_sexo.SelectedItem Is Nothing Then
-                    'Si el cbo tiene un valor distinto de nulo entonces enviamos como filtro el id del sexo a consultar
-                    filters.Add(cmb_sexo.SelectedValue)
-                Else
-                    filters.Add(Nothing)
-                End If
-
-                If Not cmb_tamano.SelectedItem Is Nothing Then
-                    'Si el cbo tiene un valor distinto de nulo entonces enviamos como filtro el id del tamaño a consultar
-                    filters.Add(cmb_tamano.SelectedValue)
-                Else
-                    filters.Add(Nothing)
-                End If
-
-                If Not cmb_pelo.SelectedItem Is Nothing Then
-                    'Si el cbo tiene un valor distinto de nulo entonces enviamos como filtro el id del pelo a consultar
-                    filters.Add(cmb_pelo.SelectedValue)
-                Else
-                    filters.Add(Nothing)
-                End If
-
-                If Not cmb_barrio.SelectedItem Is Nothing Then
-                    'Si el cbo tiene un valor distinto de nulo entonces enviamos como filtro el id del barrio a consultar
-                    filters.Add(cmb_barrio.SelectedValue)
-                Else
-                    filters.Add(Nothing)
-                End If
-
-
-                ' Agregamos el nombre de la ciudad
-                filters.Add(txt_ciudad.Text)
-
-
-                ' TODO arreglar el tema de las fechas. Tengo formato dd/mm/yy y no me lo permite
-
-                'Mostramos las fechas para las cuales se va a realizar la busqueda y esperamos el resultado
-                'Dim frm_seleccionFechas As New Frm_fechasBusqueda
-                'frm_seleccionFechas.ShowDialog()
-
-                'Si las fechas son validas (El usuario apreto OK y se validaron las fechas) las agregamos a los filtros
-
-                'If frm_seleccionFechas.flagFechas Then
-                '    filters.Add(frm_seleccionFechas.getFechaDesde)
-                '    filters.Add(frm_seleccionFechas.getFechaHasta)
-                'Else
-                '    filters.Add(Nothing)
-                '    filters.Add(Nothing)
-                'End If
-
-                'Chequeamos los radiobuttons a ver cual esta chequeado
-                If rb_si.Checked Then
-                    filters.Add(idCastrado.si)
-                Else
-                    If rbtn_no.Checked Then
-                        filters.Add(idCastrado.no)
-                    Else
-                        If rbtn_NoSabe.Checked Then
-                            filters.Add(idCastrado.desconoce)
-                        Else
-                            filters.Add(Nothing)
-                        End If
-                    End If
-                End If
-
-                'Con todos los filtros agregados vamos a buscar en la BD para mostrar en la grilla 
-                ' De la siguiente ventana. 
-                lstPubli = publiServicio.consultarPublicacionesConFiltro(filters.ToArray)
-
-                ' Chequeamos la cantidad de objetos que contiene la lista devuelta para saber si se 
-                ' encontraron coincidencias o no
-                If lstPubli.Count <> 0 Then
-                    'Si la lista no esta vacia se muestra el form donde se listan las publicaciones obtenidas
-                    Dim listarPublicacionesFrm As New frm_listarPublicaciones
-                    listarPublicacionesFrm.llenarGrid(lstPubli)
-                    listarPublicacionesFrm.ShowDialog()
-
-                Else
-                    'Si la lista esta vacia se le avisa al usuario
-                    MessageBox.Show("No se encontraron coincidencias para el/los filtros ingresados",
-                   "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                End If
-
-            End If 'If de TipoAccionUsuario <> TipoAccionUsuario.busqueda
+            End If 'If de TipoAccionUsuario = TipoAccionUsuario.adopcion
         End If 'If de validarCampos()
-
-
-
-
     End Sub
 
 

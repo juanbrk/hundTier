@@ -7,7 +7,7 @@
         buscarAnimal
     End Enum
 
-    'Esta variable determinará como se mostrara el siguiente form, si para publicar aviso o para
+    'Esta variable determinará cual sera a la siguiente form, si para publicar aviso o para
     'buscar animales. Es una bandera
     Dim elUsuarioVaA = mostrarSiguienteFormPara.publicarAviso
 
@@ -33,15 +33,6 @@
 
             'Si el usuario busca un animal, se hacen otras cosas.
         Else
-            'TODO terminar todo lo relativo a la form listarPublicacion para que sea independiente de 
-            'publicar aviso
-
-            '' Le cambiamos el titulo a la form por el que sea apropiado para cada caso
-            'datosPublicacion_form.setTitulo("Buscar un animal")
-            '' Le pasamos a la form el tipo de publicacion de que se trata, 1 = adopcion, 2= perdido, 3=encontrado
-            'datosPublicacion_form.setTipoPublicacion(frm_publicar_aviso.AccionUsuario.busqueda)
-            ''Le cambiamos el texto del boton para que en lugar de decir publicar diga buscar
-            'datosPublicacion_form.btn_publicar.Text = "Buscar"
             Dim buscarAnimalForm As New frm_listarPublicaciones
             buscarAnimalForm.ShowDialog()
         End If

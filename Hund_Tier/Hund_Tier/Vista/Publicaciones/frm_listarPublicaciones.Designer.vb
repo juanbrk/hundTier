@@ -61,6 +61,7 @@ Partial Class frm_listarPublicaciones
         Me.lbl_barrio = New System.Windows.Forms.Label()
         Me.btn_cancelar = New System.Windows.Forms.Button()
         Me.btn_buscar = New System.Windows.Forms.Button()
+        Me.btn_clear = New System.Windows.Forms.Button()
         CType(Me.dgv_publicaciones, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -71,13 +72,13 @@ Partial Class frm_listarPublicaciones
         Me.dgv_publicaciones.AllowUserToAddRows = False
         Me.dgv_publicaciones.AllowUserToDeleteRows = False
         Me.dgv_publicaciones.AllowUserToOrderColumns = True
-        Me.dgv_publicaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv_publicaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.dgv_publicaciones.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.col_idPublicacion, Me.col_nombreAnimal, Me.col_raza, Me.col_tipoAnimal, Me.col_edadAnimal, Me.col_peloAnimal, Me.col_sexoAnimal, Me.col_barrio, Me.col_ciudad, Me.col_nombreResponsable})
         Me.dgv_publicaciones.Location = New System.Drawing.Point(12, 148)
         Me.dgv_publicaciones.Name = "dgv_publicaciones"
         Me.dgv_publicaciones.ReadOnly = True
         Me.dgv_publicaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_publicaciones.Size = New System.Drawing.Size(936, 135)
+        Me.dgv_publicaciones.Size = New System.Drawing.Size(924, 135)
         Me.dgv_publicaciones.TabIndex = 0
         '
         'col_idPublicacion
@@ -177,7 +178,7 @@ Partial Class frm_listarPublicaciones
         Me.GroupBox1.Size = New System.Drawing.Size(592, 109)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Filtros animal"
+        Me.GroupBox1.Text = "Filtros animal (Selecciona al menos 1)"
         '
         'rbtn_NoSabe
         '
@@ -432,11 +433,21 @@ Partial Class frm_listarPublicaciones
         Me.btn_buscar.Text = "Buscar"
         Me.btn_buscar.UseVisualStyleBackColor = True
         '
+        'btn_clear
+        '
+        Me.btn_clear.Location = New System.Drawing.Point(657, 119)
+        Me.btn_clear.Name = "btn_clear"
+        Me.btn_clear.Size = New System.Drawing.Size(117, 23)
+        Me.btn_clear.TabIndex = 15
+        Me.btn_clear.Text = "Limpiar campos"
+        Me.btn_clear.UseVisualStyleBackColor = True
+        '
         'frm_listarPublicaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(948, 295)
+        Me.Controls.Add(Me.btn_clear)
         Me.Controls.Add(Me.btn_cancelar)
         Me.Controls.Add(Me.btn_buscar)
         Me.Controls.Add(Me.GroupBox2)
@@ -492,4 +503,5 @@ Partial Class frm_listarPublicaciones
     Friend WithEvents lbl_barrio As Label
     Friend WithEvents btn_cancelar As Button
     Friend WithEvents btn_buscar As Button
+    Friend WithEvents btn_clear As Button
 End Class
