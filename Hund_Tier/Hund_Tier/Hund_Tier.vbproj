@@ -150,10 +150,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DS1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Vista\Reportes\Desgin\frm_nuevoReporte.Designer.vb">
+    <Compile Include="Vista\Reportes\Data\DS1.vb">
+      <DependentUpon>DS1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Reportes\frm_nuevoReporte.Designer.vb">
       <DependentUpon>frm_nuevoReporte.vb</DependentUpon>
     </Compile>
-    <Compile Include="Vista\Reportes\Desgin\frm_nuevoReporte.vb">
+    <Compile Include="Vista\Reportes\frm_nuevoReporte.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Vista\Usuario\frm_modificar_contrasena.Designer.vb">
@@ -203,7 +206,8 @@
     <EmbeddedResource Include="Vista\Login\Frm_main.resx">
       <DependentUpon>Frm_main.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vista\Reportes\Desgin\frm_nuevoReporte.resx">
+    <EmbeddedResource Include="Vista\Reportes\Desgin\ReporteUsuariosAlta.rdlc" />
+    <EmbeddedResource Include="Vista\Reportes\frm_nuevoReporte.resx">
       <DependentUpon>frm_nuevoReporte.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vista\Usuario\frm_modificar_contrasena.resx">

@@ -23,13 +23,13 @@ Partial Class frm_nuevoReporte
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.lbl_seleccionCombo = New System.Windows.Forms.Label()
-        Me.cmb_reportesPosibles = New System.Windows.Forms.ComboBox()
-        Me.btn_generarReporte = New System.Windows.Forms.Button()
-        Me.mtxt_fechaDesde = New System.Windows.Forms.MaskedTextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.mtxt_FechaHasta = New System.Windows.Forms.MaskedTextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.mtxt_fechaDesde = New System.Windows.Forms.MaskedTextBox()
+        Me.btn_generarReporte = New System.Windows.Forms.Button()
+        Me.cmb_reportesPosibles = New System.Windows.Forms.ComboBox()
+        Me.lbl_seleccionCombo = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -49,50 +49,6 @@ Partial Class frm_nuevoReporte
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Seleccione tipo de reporte"
         '
-        'lbl_seleccionCombo
-        '
-        Me.lbl_seleccionCombo.AutoSize = True
-        Me.lbl_seleccionCombo.Location = New System.Drawing.Point(7, 22)
-        Me.lbl_seleccionCombo.Name = "lbl_seleccionCombo"
-        Me.lbl_seleccionCombo.Size = New System.Drawing.Size(110, 17)
-        Me.lbl_seleccionCombo.TabIndex = 0
-        Me.lbl_seleccionCombo.Text = "Tipo de reporte:"
-        '
-        'cmb_reportesPosibles
-        '
-        Me.cmb_reportesPosibles.FormattingEnabled = True
-        Me.cmb_reportesPosibles.Location = New System.Drawing.Point(123, 22)
-        Me.cmb_reportesPosibles.Name = "cmb_reportesPosibles"
-        Me.cmb_reportesPosibles.Size = New System.Drawing.Size(379, 24)
-        Me.cmb_reportesPosibles.TabIndex = 1
-        '
-        'btn_generarReporte
-        '
-        Me.btn_generarReporte.Location = New System.Drawing.Point(395, 88)
-        Me.btn_generarReporte.Name = "btn_generarReporte"
-        Me.btn_generarReporte.Size = New System.Drawing.Size(107, 23)
-        Me.btn_generarReporte.TabIndex = 2
-        Me.btn_generarReporte.Text = "Generar"
-        Me.btn_generarReporte.UseVisualStyleBackColor = True
-        '
-        'mtxt_fechaDesde
-        '
-        Me.mtxt_fechaDesde.Location = New System.Drawing.Point(106, 52)
-        Me.mtxt_fechaDesde.Mask = "00/00/0000"
-        Me.mtxt_fechaDesde.Name = "mtxt_fechaDesde"
-        Me.mtxt_fechaDesde.Size = New System.Drawing.Size(100, 22)
-        Me.mtxt_fechaDesde.TabIndex = 3
-        Me.mtxt_fechaDesde.ValidatingType = GetType(Date)
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(6, 55)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(94, 17)
-        Me.Label1.TabIndex = 4
-        Me.Label1.Text = "Fecha desde:"
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
@@ -111,11 +67,55 @@ Partial Class frm_nuevoReporte
         Me.mtxt_FechaHasta.TabIndex = 5
         Me.mtxt_FechaHasta.ValidatingType = GetType(Date)
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(6, 55)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(94, 17)
+        Me.Label1.TabIndex = 4
+        Me.Label1.Text = "Fecha desde:"
+        '
+        'mtxt_fechaDesde
+        '
+        Me.mtxt_fechaDesde.Location = New System.Drawing.Point(106, 52)
+        Me.mtxt_fechaDesde.Mask = "00/00/0000"
+        Me.mtxt_fechaDesde.Name = "mtxt_fechaDesde"
+        Me.mtxt_fechaDesde.Size = New System.Drawing.Size(100, 22)
+        Me.mtxt_fechaDesde.TabIndex = 3
+        Me.mtxt_fechaDesde.ValidatingType = GetType(Date)
+        '
+        'btn_generarReporte
+        '
+        Me.btn_generarReporte.Location = New System.Drawing.Point(395, 88)
+        Me.btn_generarReporte.Name = "btn_generarReporte"
+        Me.btn_generarReporte.Size = New System.Drawing.Size(107, 23)
+        Me.btn_generarReporte.TabIndex = 2
+        Me.btn_generarReporte.Text = "Generar"
+        Me.btn_generarReporte.UseVisualStyleBackColor = True
+        '
+        'cmb_reportesPosibles
+        '
+        Me.cmb_reportesPosibles.FormattingEnabled = True
+        Me.cmb_reportesPosibles.Location = New System.Drawing.Point(123, 22)
+        Me.cmb_reportesPosibles.Name = "cmb_reportesPosibles"
+        Me.cmb_reportesPosibles.Size = New System.Drawing.Size(379, 24)
+        Me.cmb_reportesPosibles.TabIndex = 1
+        '
+        'lbl_seleccionCombo
+        '
+        Me.lbl_seleccionCombo.AutoSize = True
+        Me.lbl_seleccionCombo.Location = New System.Drawing.Point(7, 22)
+        Me.lbl_seleccionCombo.Name = "lbl_seleccionCombo"
+        Me.lbl_seleccionCombo.Size = New System.Drawing.Size(110, 17)
+        Me.lbl_seleccionCombo.TabIndex = 0
+        Me.lbl_seleccionCombo.Text = "Tipo de reporte:"
+        '
         'frm_nuevoReporte
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(533, 264)
+        Me.ClientSize = New System.Drawing.Size(533, 289)
         Me.Controls.Add(Me.GroupBox1)
         Me.Name = "frm_nuevoReporte"
         Me.Text = "frm_nuevoReporte"
