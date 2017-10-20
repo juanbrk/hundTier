@@ -73,6 +73,7 @@
                         usuario.setDepartamento(tabla.Rows(0).Item("departamento"))
                     End If
                 End If
+                usuario.setPerfilId(tabla.Rows(0).Item("id_perfil"))
 
                 Return usuario
                 End If
