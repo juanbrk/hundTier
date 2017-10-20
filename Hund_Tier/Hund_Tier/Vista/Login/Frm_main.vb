@@ -57,6 +57,12 @@
             mostrarMain()
 
             actualizarUsuario(instanciaUsuario.getUsername)
+
+            'si usario es admin, se cambia el texto de boton para generar reportes
+            If instanciaUsuario.id_perfil = 1 Then
+                btn_verPublicaciones.Text = "Generar reportes"
+            End If
+
         Else
             Me.Close()
         End If
@@ -153,7 +159,7 @@
         seleccionar_tipo_aviso.ShowDialog()
     End Sub
 
-    Private Sub lbl_verPublicaciones_Click(sender As Object, e As EventArgs) Handles lbl_verPublicaciones.Click
+    Private Sub lbl_verPublicaciones_Click(sender As Object, e As EventArgs) Handles btn_verPublicaciones.Click
 
     End Sub
 End Class
