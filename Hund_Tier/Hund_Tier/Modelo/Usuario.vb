@@ -13,6 +13,8 @@
     Public Property departamento As String
     Public Property habilitado As Integer
     Public Property barrioAsString As String
+    Public Property id_perfil As Integer
+    Public Property perfilAsString As String
 
     Public Function getIdUsuario() As Integer
         Return idUsuario
@@ -58,6 +60,10 @@
     End Function
     Public Function getHabilitado() As Integer
         Return habilitado
+    End Function
+
+    Public Function getPerfilId() As Integer
+        Return id_perfil
     End Function
 
 
@@ -108,6 +114,9 @@
     Public Sub setId(ByVal id_user As Integer)
         idUsuario = id_user
     End Sub
+    Public Sub setPerfilId(id As Integer)
+        id_perfil = id
+    End Sub
     Friend Sub setNumeroTelefono(v As String)
         num_telefono = v
     End Sub
@@ -115,6 +124,8 @@
     Public Overrides Function toString() As String
         Return nombre
     End Function
+
+
 
     'Metodo que sirve para inicializr la unica instancia de la form frm_main con los datos
     'del usuario que se logueo en frm_login
@@ -125,6 +136,7 @@
         barrio_id = usr.getBarrio
         username = usr.getUsername
         contrasena = usr.getPassword
+        id_perfil = usr.getPerfilId
 
     End Sub
 

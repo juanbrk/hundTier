@@ -51,6 +51,7 @@
                 usuario.setPassword(txt_password.Text)
                 'El 1 es el valor de la columna habilitado, que habilita al usuario.
                 usuario.setHabilitado(1)
+                usuario.id_perfil = 2
 
 
 

@@ -244,7 +244,6 @@
                         End If
                     Else
                         ' Si es gato vamos a probar cargandolo con transaccion
-                        publiServicio.publicarAdopcionTransaccion(publi)
                         If publiServicio.publicarAdopcionTransaccion(publi) = 1 Then
                             MessageBox.Show("La publicacion fue realizada con éxito", "Exito", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
                             Me.Close()

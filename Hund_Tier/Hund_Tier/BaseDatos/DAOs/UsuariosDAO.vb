@@ -94,7 +94,7 @@
 
     Friend Function addUsuario(usr As Usuario) As Integer
         Dim str_sql As String
-        str_sql = "INSERT INTO Usuarios (id_usuario, nombre, apellido, email, id_barrio, username, password, habilitado) VALUES("
+        str_sql = "INSERT INTO Usuarios (id_usuario, nombre, apellido, email, id_barrio, username, password, habilitado,id_perfil) VALUES("
         str_sql += usr.getIdUsuario.ToString + ",'"
         str_sql += usr.getNombre + "','"
         str_sql += usr.getApellido + "','"
@@ -103,7 +103,8 @@
         str_sql += usr.getUsername + "','"
         str_sql += usr.getPassword + "',"
         'El 1 es el valor de la columna habilitado, que habilita al usuario.
-        str_sql += usr.getHabilitado.ToString & ")"
+        str_sql += usr.getHabilitado.ToString + ","
+        str_sql += usr.getPerfilId.ToString & ")"
 
         Try
             Return BDHelper.getDBHelper().EjecutarSQL(str_sql)
