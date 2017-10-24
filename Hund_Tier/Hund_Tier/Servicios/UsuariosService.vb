@@ -43,6 +43,10 @@
         Return usrDao.getNombreBarrioUsuario(idBarrio)
     End Function
 
+    Public Function generarReporteAltaUsuario(ByVal fecDesde As String, ByVal fecHasta As String) As DataTable
+        Return usrDao.getReportePendientes(fecDesde, fecHasta)
+    End Function
+
 
 
 

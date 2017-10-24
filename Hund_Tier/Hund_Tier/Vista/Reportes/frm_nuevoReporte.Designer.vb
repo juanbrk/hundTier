@@ -24,6 +24,8 @@ Partial Class frm_nuevoReporte
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim ReportDataSource1 As Microsoft.Reporting.WinForms.ReportDataSource = New Microsoft.Reporting.WinForms.ReportDataSource()
+        Me.ReporteUsuariosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DS1 = New Hund_Tier.DS1()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.mtxt_FechaHasta = New System.Windows.Forms.MaskedTextBox()
@@ -32,13 +34,21 @@ Partial Class frm_nuevoReporte
         Me.btn_generarReporte = New System.Windows.Forms.Button()
         Me.cmb_reportesPosibles = New System.Windows.Forms.ComboBox()
         Me.lbl_seleccionCombo = New System.Windows.Forms.Label()
-        Me.ReportViewer1 = New Microsoft.Reporting.WinForms.ReportViewer()
-        Me.DS1 = New Hund_Tier.DS1()
-        Me.ReporteUsuariosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.GroupBox1.SuspendLayout()
-        CType(Me.DS1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.rpt_animales = New Microsoft.Reporting.WinForms.ReportViewer()
         CType(Me.ReporteUsuariosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DS1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
+        '
+        'ReporteUsuariosBindingSource
+        '
+        Me.ReporteUsuariosBindingSource.DataMember = "ReporteUsuarios"
+        Me.ReporteUsuariosBindingSource.DataSource = Me.DS1
+        '
+        'DS1
+        '
+        Me.DS1.DataSetName = "DS1"
+        Me.DS1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'GroupBox1
         '
@@ -50,9 +60,9 @@ Partial Class frm_nuevoReporte
         Me.GroupBox1.Controls.Add(Me.cmb_reportesPosibles)
         Me.GroupBox1.Controls.Add(Me.lbl_seleccionCombo)
         Me.GroupBox1.Location = New System.Drawing.Point(10, 11)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Size = New System.Drawing.Size(381, 95)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
@@ -71,7 +81,7 @@ Partial Class frm_nuevoReporte
         'mtxt_FechaHasta
         '
         Me.mtxt_FechaHasta.Location = New System.Drawing.Point(241, 42)
-        Me.mtxt_FechaHasta.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.mtxt_FechaHasta.Margin = New System.Windows.Forms.Padding(2)
         Me.mtxt_FechaHasta.Mask = "00/00/0000"
         Me.mtxt_FechaHasta.Name = "mtxt_FechaHasta"
         Me.mtxt_FechaHasta.Size = New System.Drawing.Size(76, 20)
@@ -91,7 +101,7 @@ Partial Class frm_nuevoReporte
         'mtxt_fechaDesde
         '
         Me.mtxt_fechaDesde.Location = New System.Drawing.Point(80, 42)
-        Me.mtxt_fechaDesde.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.mtxt_fechaDesde.Margin = New System.Windows.Forms.Padding(2)
         Me.mtxt_fechaDesde.Mask = "00/00/0000"
         Me.mtxt_fechaDesde.Name = "mtxt_fechaDesde"
         Me.mtxt_fechaDesde.Size = New System.Drawing.Size(76, 20)
@@ -101,7 +111,7 @@ Partial Class frm_nuevoReporte
         'btn_generarReporte
         '
         Me.btn_generarReporte.Location = New System.Drawing.Point(296, 72)
-        Me.btn_generarReporte.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btn_generarReporte.Margin = New System.Windows.Forms.Padding(2)
         Me.btn_generarReporte.Name = "btn_generarReporte"
         Me.btn_generarReporte.Size = New System.Drawing.Size(80, 19)
         Me.btn_generarReporte.TabIndex = 2
@@ -112,7 +122,7 @@ Partial Class frm_nuevoReporte
         '
         Me.cmb_reportesPosibles.FormattingEnabled = True
         Me.cmb_reportesPosibles.Location = New System.Drawing.Point(92, 18)
-        Me.cmb_reportesPosibles.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.cmb_reportesPosibles.Margin = New System.Windows.Forms.Padding(2)
         Me.cmb_reportesPosibles.Name = "cmb_reportesPosibles"
         Me.cmb_reportesPosibles.Size = New System.Drawing.Size(285, 21)
         Me.cmb_reportesPosibles.TabIndex = 1
@@ -127,41 +137,31 @@ Partial Class frm_nuevoReporte
         Me.lbl_seleccionCombo.TabIndex = 0
         Me.lbl_seleccionCombo.Text = "Tipo de reporte:"
         '
-        'ReportViewer1
+        'rpt_animales
         '
         ReportDataSource1.Name = "TablaUsuariosAlta"
         ReportDataSource1.Value = Me.ReporteUsuariosBindingSource
-        Me.ReportViewer1.LocalReport.DataSources.Add(ReportDataSource1)
-        Me.ReportViewer1.LocalReport.ReportEmbeddedResource = "Hund_Tier.ReporteUsuariosAlta.rdlc"
-        Me.ReportViewer1.Location = New System.Drawing.Point(10, 107)
-        Me.ReportViewer1.Name = "ReportViewer1"
-        Me.ReportViewer1.Size = New System.Drawing.Size(381, 116)
-        Me.ReportViewer1.TabIndex = 1
-        '
-        'DS1
-        '
-        Me.DS1.DataSetName = "DS1"
-        Me.DS1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'ReporteUsuariosBindingSource
-        '
-        Me.ReporteUsuariosBindingSource.DataMember = "ReporteUsuarios"
-        Me.ReporteUsuariosBindingSource.DataSource = Me.DS1
+        Me.rpt_animales.LocalReport.DataSources.Add(ReportDataSource1)
+        Me.rpt_animales.LocalReport.ReportEmbeddedResource = "Hund_Tier.ReporteUsuariosAlta.rdlc"
+        Me.rpt_animales.Location = New System.Drawing.Point(10, 107)
+        Me.rpt_animales.Name = "rpt_animales"
+        Me.rpt_animales.Size = New System.Drawing.Size(381, 116)
+        Me.rpt_animales.TabIndex = 1
         '
         'frm_nuevoReporte
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(400, 235)
-        Me.Controls.Add(Me.ReportViewer1)
+        Me.Controls.Add(Me.rpt_animales)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "frm_nuevoReporte"
         Me.Text = "frm_nuevoReporte"
+        CType(Me.ReporteUsuariosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DS1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        CType(Me.DS1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ReporteUsuariosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -174,7 +174,7 @@ Partial Class frm_nuevoReporte
     Friend WithEvents btn_generarReporte As Button
     Friend WithEvents cmb_reportesPosibles As ComboBox
     Friend WithEvents lbl_seleccionCombo As Label
-    Friend WithEvents ReportViewer1 As Microsoft.Reporting.WinForms.ReportViewer
+    Friend WithEvents rpt_animales As Microsoft.Reporting.WinForms.ReportViewer
     Friend WithEvents ReporteUsuariosBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents DS1 As Hund_Tier.DS1
 End Class
