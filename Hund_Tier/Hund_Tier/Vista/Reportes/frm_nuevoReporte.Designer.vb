@@ -59,11 +59,11 @@ Partial Class frm_nuevoReporte
         Me.GroupBox1.Controls.Add(Me.btn_generarReporte)
         Me.GroupBox1.Controls.Add(Me.cmb_reportesPosibles)
         Me.GroupBox1.Controls.Add(Me.lbl_seleccionCombo)
-        Me.GroupBox1.Location = New System.Drawing.Point(10, 11)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.GroupBox1.Location = New System.Drawing.Point(13, 14)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox1.Size = New System.Drawing.Size(381, 95)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.GroupBox1.Size = New System.Drawing.Size(508, 117)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Seleccione tipo de reporte"
@@ -71,49 +71,47 @@ Partial Class frm_nuevoReporte
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(166, 45)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label2.Location = New System.Drawing.Point(221, 55)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(71, 13)
+        Me.Label2.Size = New System.Drawing.Size(92, 17)
         Me.Label2.TabIndex = 6
         Me.Label2.Text = "Fecha Hasta:"
         '
         'mtxt_FechaHasta
         '
-        Me.mtxt_FechaHasta.Location = New System.Drawing.Point(241, 42)
-        Me.mtxt_FechaHasta.Margin = New System.Windows.Forms.Padding(2)
+        Me.mtxt_FechaHasta.Location = New System.Drawing.Point(321, 52)
+        Me.mtxt_FechaHasta.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.mtxt_FechaHasta.Mask = "00/00/0000"
         Me.mtxt_FechaHasta.Name = "mtxt_FechaHasta"
-        Me.mtxt_FechaHasta.Size = New System.Drawing.Size(76, 20)
+        Me.mtxt_FechaHasta.Size = New System.Drawing.Size(100, 22)
         Me.mtxt_FechaHasta.TabIndex = 5
         Me.mtxt_FechaHasta.ValidatingType = GetType(Date)
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(4, 45)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label1.Location = New System.Drawing.Point(5, 55)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(72, 13)
+        Me.Label1.Size = New System.Drawing.Size(94, 17)
         Me.Label1.TabIndex = 4
         Me.Label1.Text = "Fecha desde:"
         '
         'mtxt_fechaDesde
         '
-        Me.mtxt_fechaDesde.Location = New System.Drawing.Point(80, 42)
-        Me.mtxt_fechaDesde.Margin = New System.Windows.Forms.Padding(2)
+        Me.mtxt_fechaDesde.Location = New System.Drawing.Point(107, 52)
+        Me.mtxt_fechaDesde.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.mtxt_fechaDesde.Mask = "00/00/0000"
         Me.mtxt_fechaDesde.Name = "mtxt_fechaDesde"
-        Me.mtxt_fechaDesde.Size = New System.Drawing.Size(76, 20)
+        Me.mtxt_fechaDesde.Size = New System.Drawing.Size(100, 22)
         Me.mtxt_fechaDesde.TabIndex = 3
         Me.mtxt_fechaDesde.ValidatingType = GetType(Date)
         '
         'btn_generarReporte
         '
-        Me.btn_generarReporte.Location = New System.Drawing.Point(296, 72)
-        Me.btn_generarReporte.Margin = New System.Windows.Forms.Padding(2)
+        Me.btn_generarReporte.Location = New System.Drawing.Point(395, 89)
+        Me.btn_generarReporte.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btn_generarReporte.Name = "btn_generarReporte"
-        Me.btn_generarReporte.Size = New System.Drawing.Size(80, 19)
+        Me.btn_generarReporte.Size = New System.Drawing.Size(107, 23)
         Me.btn_generarReporte.TabIndex = 2
         Me.btn_generarReporte.Text = "Generar"
         Me.btn_generarReporte.UseVisualStyleBackColor = True
@@ -121,19 +119,18 @@ Partial Class frm_nuevoReporte
         'cmb_reportesPosibles
         '
         Me.cmb_reportesPosibles.FormattingEnabled = True
-        Me.cmb_reportesPosibles.Location = New System.Drawing.Point(92, 18)
-        Me.cmb_reportesPosibles.Margin = New System.Windows.Forms.Padding(2)
+        Me.cmb_reportesPosibles.Location = New System.Drawing.Point(123, 22)
+        Me.cmb_reportesPosibles.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.cmb_reportesPosibles.Name = "cmb_reportesPosibles"
-        Me.cmb_reportesPosibles.Size = New System.Drawing.Size(285, 21)
+        Me.cmb_reportesPosibles.Size = New System.Drawing.Size(379, 24)
         Me.cmb_reportesPosibles.TabIndex = 1
         '
         'lbl_seleccionCombo
         '
         Me.lbl_seleccionCombo.AutoSize = True
-        Me.lbl_seleccionCombo.Location = New System.Drawing.Point(5, 18)
-        Me.lbl_seleccionCombo.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lbl_seleccionCombo.Location = New System.Drawing.Point(7, 22)
         Me.lbl_seleccionCombo.Name = "lbl_seleccionCombo"
-        Me.lbl_seleccionCombo.Size = New System.Drawing.Size(82, 13)
+        Me.lbl_seleccionCombo.Size = New System.Drawing.Size(110, 17)
         Me.lbl_seleccionCombo.TabIndex = 0
         Me.lbl_seleccionCombo.Text = "Tipo de reporte:"
         '
@@ -143,21 +140,22 @@ Partial Class frm_nuevoReporte
         ReportDataSource1.Value = Me.ReporteUsuariosBindingSource
         Me.rpt_animales.LocalReport.DataSources.Add(ReportDataSource1)
         Me.rpt_animales.LocalReport.ReportEmbeddedResource = "Hund_Tier.ReporteUsuariosAlta.rdlc"
-        Me.rpt_animales.Location = New System.Drawing.Point(10, 107)
+        Me.rpt_animales.Location = New System.Drawing.Point(13, 132)
+        Me.rpt_animales.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.rpt_animales.Name = "rpt_animales"
-        Me.rpt_animales.Size = New System.Drawing.Size(381, 116)
+        Me.rpt_animales.Size = New System.Drawing.Size(507, 142)
         Me.rpt_animales.TabIndex = 1
         '
         'frm_nuevoReporte
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(400, 235)
+        Me.ClientSize = New System.Drawing.Size(533, 289)
         Me.Controls.Add(Me.rpt_animales)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Margin = New System.Windows.Forms.Padding(2)
+        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "frm_nuevoReporte"
-        Me.Text = "frm_nuevoReporte"
+        Me.Text = "```"
         CType(Me.ReporteUsuariosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DS1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
@@ -174,7 +172,7 @@ Partial Class frm_nuevoReporte
     Friend WithEvents btn_generarReporte As Button
     Friend WithEvents cmb_reportesPosibles As ComboBox
     Friend WithEvents lbl_seleccionCombo As Label
-    Friend WithEvents rpt_animales As Microsoft.Reporting.WinForms.ReportViewer
     Friend WithEvents ReporteUsuariosBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents DS1 As Hund_Tier.DS1
+    Private WithEvents rpt_animales As Microsoft.Reporting.WinForms.ReportViewer
 End Class

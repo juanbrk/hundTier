@@ -156,13 +156,8 @@
     End Function
 
     Public Function getReportePendientesAltaUsuario(ByVal fechaDesde As String, ByVal fechaHasta As String) As DataTable
-        Dim sql As String = "SELECT " & _
-        "t.id_bug," & _
-        "t.titulo," & _
-        "(SELECT n_usuario FROM Historiales_Bug h, users u WHERE h.id_bug = t.id_bug AND h.id_estado = 2 AND h.asignado_a = u.id_usuario AND h.id_detalle = (SELECT MAX(id_detalle) FROM Historiales_Bug h1 WHERE h1.id_bug = h.id_bug)) as asignado_a " & _
-        " FROM bugs t" & _
-        " WHERE t.fecha_alta>='" + fechaDesde + "' AND t.fecha_alta<='" + fechaHasta + "'"
-
+        Dim sql As String = "SELECT U.fecha_alta, U.username, U.nombre, U.apellido, U.email From usuarios U " &
+        " WHERE U.fecha_alta>='" + fechaDesde + "' AND U.fecha_alta<='" + fechaHasta + "'"
         Return BDHelper.getDBHelper.ConsultaSQL(sql)
     End Function
 

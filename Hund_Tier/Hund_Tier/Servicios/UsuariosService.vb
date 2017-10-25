@@ -44,7 +44,7 @@
     End Function
 
     Public Function generarReporteAltaUsuario(ByVal fecDesde As String, ByVal fecHasta As String) As DataTable
-        Return usrDao.getReportePendientes(fecDesde, fecHasta)
+        Return usrDao.getReportePendientesAltaUsuario(fecDesde, fecHasta)
     End Function
 
 

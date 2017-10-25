@@ -59,7 +59,7 @@
             actualizarUsuario(instanciaUsuario.getUsername)
 
             'si usario es admin, se cambia el texto de boton para generar reportes
-            If instanciaUsuario.id_perfil = 1 Then
+            If esAdministrador() Then
                 btn_verPublicaciones.Text = "Generar reportes"
             End If
 
@@ -67,6 +67,11 @@
             Me.Close()
         End If
     End Sub
+
+    'Funcion que sirve para saber si el usuario logueado es administrador. 
+    Private Shared Function esAdministrador() As Boolean
+        Return instanciaUsuario.id_perfil = 1
+    End Function
 
     'Funcion para mostrar la ventana de login
     Private Sub mostrarLoginForm()
@@ -160,6 +165,13 @@
     End Sub
 
     Private Sub lbl_verPublicaciones_Click(sender As Object, e As EventArgs) Handles btn_verPublicaciones.Click
+        'Si el usuario es admin, entonces al hacer click en el boton se va a mostrar el form para generar reporte
+        If esAdministrador() Then
+            Dim frm_reporte As New frm_nuevoReporte
+            frm_reporte.ShowDialog()
+            Me.Hide()
+            bandera_escondida = True
 
+        End If
     End Sub
 End Class

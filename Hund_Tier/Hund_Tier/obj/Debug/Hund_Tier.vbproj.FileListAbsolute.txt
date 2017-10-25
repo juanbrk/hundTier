@@ -42,3 +42,5 @@ C:\Users\Melissa Stoll\Documents\UTN\PAV\proyecto\hundTier\Hund_Tier\Hund_Tier\o
 C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\obj\Debug\Hund_Tier.frm_nuevoReporte.resources
 =======
 >>>>>>> 16b2b96060a4ca09bf4b638fc9e2dce3149b2c13
+C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\obj\Debug\RdlCompile.cache
+C:\Users\Juan\Documents\UTN\UTN 2017\PAV1\PerrosEnAdpocion\Hund_Tier\Hund_Tier\obj\Debug\RdlCompile.compiled
